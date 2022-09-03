@@ -33,69 +33,60 @@ menu-open
     <section class="content">
         <div class="container-fluid">
             <div class="col-12">
-              <table id="example1" class="table table-bordered table-striped ">
-                        <thead>
+                <table id="example1" class="table table-bordered table-striped ">
+                    <thead>
                         <tr>
                             <th>SI</th>
                             <th>Name</th>
-           
+
                             <th>Action</th>
-                         
+
                         </tr>
-                        </thead>
-                        <tbody>
+                    </thead>
+                    <tbody>
                         @foreach($concerns as $key => $concern)
-                            <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$concern->cocern_name}}</td>
-   
-               <form action="{{route('sister-concern.destroy',$concern->id)}}" method="post">
-                    
- 
-                    <td>
-                   
-                        <a style="padding: 7px 8px" href="{{route('sister-concern.edit',$concern->id)}}"
-                            class="btn-sm btn-primary">Edit</a>
-                   
-                        @csrf
-                    
-                        @method('delete')
-                        <button class="btn-sm btn-danger" type="submit">Delete</button>
-                 
-                </form>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                        <tfoot>
                         <tr>
-                             <th>SI</th>
-                            <th>Name</th>
-                            <th>Action</th>
-                           
+                            <td>{{$key+1}}</td>
+                            <td>{{$concern->cocern_name}}</td>
+
+                            <form action="{{route('sister-concern.destroy',$concern->id)}}" method="post">
+
+
+                                <td>
+
+                                    <a style="padding: 7px 8px" href="{{route('sister-concern.edit',$concern->id)}}"
+                                        class="btn-sm btn-primary">Edit</a>
+
+                                    @csrf
+
+                                    @method('delete')
+                                    <button class="btn-sm btn-danger" type="submit">Delete</button>
+
+                            </form>
                         </tr>
-                        </tfoot>
-                    </table>
- 
- 
- 
-          
-                <td class="text-center" colspan="10">No Data Available</td>
-       
-       
-       
+                        @endforeach
+                    </tbody>
+                </table>
+
+
+
+
+
+
+
             </div>
             <div class="text-right mt-2">
                 {{$concerns->links()}}
             </div>
             <!-- /.card -->
         </div>
- 
-</section>
+
+    </section>
 </div>
 @endsection
 @section('script_js')
 <script>
-$(document).ready( function () {
+    $(document).ready( function () {
     $('#order_table').DataTable();
 } );
 

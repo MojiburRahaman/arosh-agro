@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\SisterConcern;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
- 
-
-
 
 class SisterConcernController extends Controller
 {
@@ -18,8 +15,11 @@ class SisterConcernController extends Controller
      */
     public function index()
     {
-       $concerns = SisterConcern::latest()->paginate(10);
-        return view('backend.concern.index', compact('concerns'));
+        if (auth()->user()->can('Sister-Concern View')) {
+            $concerns = SisterConcern::latest()->simplePaginate(15);
+            return view('backend.concern.index', compact('concerns'));
+        }
+        abort('404');
     }
 
     /**
@@ -29,7 +29,10 @@ class SisterConcernController extends Controller
      */
     public function create()
     {
-        return view('backend.concern.create');
+        if (auth()->user()->can('Sister-Concern Create')) {
+            return view('backend.concern.create');
+        }
+        abort('404');
     }
 
     /**
@@ -40,20 +43,22 @@ class SisterConcernController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'cocern_name' => ['required'],
-             
-         
-        ]);
-         $concern = new SisterConcern;
+        if (auth()->user()->can('Sister-Concern Create')) {
+            $request->validate([
+                'cocern_name' => ['required'],
 
-        $concern->cocern_name = $request->cocern_name;
-        $concern->about_concern = $request->about_concern;
-        $concern->weblink = $request->weblink;
-        $concern->address = $request->address;
-         $concern->save();
-        return redirect()->route('sister-concern.index')->with('success', 'Sister Concern Added Successfully');
+            ]);
 
+            $concern = new SisterConcern();
+
+            $concern->cocern_name = $request->cocern_name;
+            $concern->about_concern = $request->about_concern;
+            $concern->weblink = $request->weblink;
+            $concern->address = $request->address;
+            $concern->save();
+            return redirect()->route('sister-concern.index')->with('success', 'Sister Concern Added Successfully');
+        }
+        abort('404');
     }
 
     /**
@@ -64,7 +69,7 @@ class SisterConcernController extends Controller
      */
     public function show($id)
     {
-         return redirect()->back();
+        return redirect()->back();
     }
 
     /**
@@ -75,10 +80,13 @@ class SisterConcernController extends Controller
      */
     public function edit($id)
     {
-              $concern = SisterConcern::findorfail($id);
-        return view('backend.concern.edit', [
-            'concern' => $concern,
-        ]);
+        if (auth()->user()->can('Sister-Concern Edit')) {
+            $concern = SisterConcern::findorfail($id);
+            return view('backend.concern.edit', [
+                'concern' => $concern,
+            ]);
+        }
+        abort('404');
     }
 
     /**
@@ -90,21 +98,23 @@ class SisterConcernController extends Controller
      */
     public function update(Request $request, $id)
     {
-                $request->validate([
-            'cocern_name' => ['required'],
-             
-         
-        ]);
-        
-        $concern = SisterConcern::findorfail($id);
-        $concern->cocern_name = $request->cocern_name;
-        $concern->about_concern = $request->about_concern;
-        $concern->weblink = $request->weblink;
-        $concern->address = $request->address;
-                     $concern->save();
+        if (auth()->user()->can('Sister-Concern Edit')) {
+            $request->validate([
+                'cocern_name' => ['required'],
 
-                    return redirect()->route('sister-concern.index')->with('success', 'Sister Concern Updated Successfully');
 
+            ]);
+
+            $concern = SisterConcern::findorfail($id);
+            $concern->cocern_name = $request->cocern_name;
+            $concern->about_concern = $request->about_concern;
+            $concern->weblink = $request->weblink;
+            $concern->address = $request->address;
+            $concern->save();
+
+            return redirect()->route('sister-concern.index')->with('success', 'Sister Concern Updated Successfully');
+        }
+        abort('404');
     }
 
     /**
@@ -115,8 +125,11 @@ class SisterConcernController extends Controller
      */
     public function destroy($id)
     {
-         $concern = SisterConcern::findorfail($id);
-         $concern->delete();
-        return back()->with('delete', 'Sister Concern Deleted Successfully');
+        if (auth()->user()->can('Sister-Concern Delete')) {
+            $concern = SisterConcern::findorfail($id);
+            $concern->delete();
+            return back()->with('delete', 'Sister Concern Deleted Successfully');
+        }
+        abort('404');
     }
 }

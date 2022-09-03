@@ -23,7 +23,6 @@ class CheckoutController extends Controller
 {
     function CheckoutView()
     {
-
         if (!session()->get('cart_total')) {
             return back();
         }
@@ -84,13 +83,18 @@ class CheckoutController extends Controller
             'shipping' => session()->get('shipping'),
             'created_at' => now(),
         ]);
-        $carts = Cart::Where('cookie_id', Cookie::get('cookie_id'))->with('Product:id,regular_price,sale_price')->get();
+        $carts = Cart::Where('cookie_id', Cookie::get('cookie_id'))->with('Product:id')->get();
         foreach ($carts as  $cart) {
 
-            if ($cart->sale_price != '') {
-                $price = $cart->sale_price;
+            $product =$cart->Product->Attribute
+            ->where('color_id',$cart->color_id)
+            ->where('size_id',$cart->size_id)->first();
+
+            
+            if ($product->sell_price != '') {
+                $price = $product->sell_price;
             } else {
-                $price = $cart->regular_price;
+                $price = $product->regular_price;
             }
 
             Order_Details::insert([

@@ -18,14 +18,14 @@ class UserProfileController extends Controller
         if ($request->ajax()) {
             # code...
             $orders = Order_Summaries::where('user_id', auth()->id())
-                ->latest('id')->simplepaginate(1);
+                ->latest('id')->simplepaginate(10);
             $view = view('frontend.Profile.order-list-pagination-data', [
                 'orders' => $orders,
             ])->render();
             return response()->json(['html' => $view,]);
         }
         $orders = Order_Summaries::where('user_id', auth()->id())
-            ->latest('id')->simplepaginate(1);
+            ->latest('id')->simplepaginate(10);
         return view('frontend.Profile.customer-profile', [
             'orders' => $orders,
         ]);

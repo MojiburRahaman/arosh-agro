@@ -266,11 +266,15 @@
                                                                 <a href="#" class="title " data-abc="true">{{
                                                                     $item->Product->title }}</a>
                                                                 <p class=" product_details">
+                                                                    @if ($item->Size->size_name !=
+                                                                    '' && $item->Size->size_name !=
+                                                                    'None' )
                                                                     Weight :
                                                                     {{ $item->Size->size_name }}
-
+                                                                    @endif
                                                                     @if ($item->Color->color_name !=
-                                                                    '')
+                                                                    '' && $item->Color->color_name !=
+                                                                    'None' )
                                                                     <br>
                                                                     Varient : {{ $item->Color->color_name }}
                                                                     @endif

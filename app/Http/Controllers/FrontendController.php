@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Cache;
 
 class FrontendController extends Controller
 {
+  
     public function Frontendhome(Request $request)
     {
         if ($request->ajax()) {

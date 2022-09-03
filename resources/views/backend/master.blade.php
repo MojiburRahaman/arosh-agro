@@ -145,100 +145,6 @@
 
 
 
-                        {{-- Sister Concern Start --}}
-
-                        <li class="nav-item   ">
-                            <a href="#" class="nav-link  ">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Sister Concern
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-
-
-                                <li class="nav-item">
-                                    <a href="{{route('sister-concern.index')}}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>View Sister Concern</p>
-                                    </a>
-                                </li>
-
-
-                                <li class="nav-item">
-                                    <a href="{{route('sister-concern.create')}}" class="nav-link  ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Sister Concern</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        {{-- Sister Concern Start --}}
-
-                        {{-- Services Start --}}
-                        <li class="nav-item   ">
-                            <a href="#" class="nav-link  ">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Our Services <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-
-
-                                <li class="nav-item">
-                                    <a href="{{route('services.index')}}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>View Services</p>
-                                    </a>
-                                </li>
-
-
-                                <li class="nav-item">
-                                    <a href="{{route('services.create')}}" class="nav-link  ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Services</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        {{-- Services End --}}
-
-                        {{-- Selling Point --}}
-
-                        <li class="nav-item   ">
-                            <a href="#" class="nav-link  ">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Selling Points
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-
-
-                                <li class="nav-item">
-                                    <a href="{{route('spoints.index')}}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>View Selling Point</p>
-                                    </a>
-                                </li>
-
-
-                                <li class="nav-item">
-                                    <a href="{{route('spoints.create')}}" class="nav-link  ">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Selling Point</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        {{-- Selling Point --}}
-
 
 
                         @if (auth()->user()->can('View Sub-Category') || auth()->user()->can('Create Sub-Category'))
@@ -266,35 +172,6 @@
                                         class="nav-link @yield('subcat_add-active')">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Add SubCatagory</p>
-                                    </a>
-                                </li>
-                                @endcan
-                            </ul>
-                        </li>
-                        @endif
-                        @if (auth()->user()->can('View Brand') || auth()->user()->can('Create Brand'))
-                        <li class="nav-item @yield('brand_dropdown_active')">
-                            <a href="#" class="nav-link @yield('brand_active')">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Brands
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @can('View Brand')
-                                <li class="nav-item">
-                                    <a href="{{route('brand.index')}}" class="nav-link @yield('brand_view-active')">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>View Brands</p>
-                                    </a>
-                                </li>
-                                @endcan
-                                @can('Create Brand')
-                                <li class="nav-item">
-                                    <a href="{{route('brand.create')}}" class="nav-link @yield('brand_add-active')">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Brand</p>
                                     </a>
                                 </li>
                                 @endcan
@@ -381,6 +258,8 @@
                             </a>
                         </li>
                         @endcan
+
+                        @if (auth()->user()->can('Gallery View') || auth()->user()->can('Gallery Create'))
                         <li class="nav-item   ">
                             <a href="#" class="nav-link  ">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -390,7 +269,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-
+                                @can('Gallery View')
 
                                 <li class="nav-item">
                                     <a href="{{route('gallery.index')}}" class="nav-link">
@@ -398,7 +277,10 @@
                                         <p>View Gallery</p>
                                     </a>
                                 </li>
+                                @endcan
 
+
+                                @can('Gallery Create')
 
                                 <li class="nav-item">
                                     <a href="{{route('gallery.create')}}" class="nav-link  ">
@@ -406,9 +288,121 @@
                                         <p>Add Gallery</p>
                                     </a>
                                 </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+
+                        {{-- Sister Concern Start --}}
+                        @if (auth()->user()->can('Sister-Concern View') || auth()->user()->can('Sister-Concern Create'))
+
+                        <li class="nav-item   ">
+                            <a href="#" class="nav-link  ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Sister Concern
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @can('Sister-Concern View')
+                                <li class="nav-item">
+                                    <a href="{{route('sister-concern.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Sister Concern</p>
+                                    </a>
+                                </li>
+                                @endcan
+
+                                @can('Sister-Concern Create')
+
+                                <li class="nav-item">
+                                    <a href="{{route('sister-concern.create')}}" class="nav-link  ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Sister Concern</p>
+                                    </a>
+                                </li>
+                                @endcan
 
                             </ul>
                         </li>
+                        @endif
+                        {{-- Sister Concern Start --}}
+
+                        {{-- Services Start --}}
+                        @if (auth()->user()->can('Service View') || auth()->user()->can('Service Create'))
+                        <li class="nav-item   ">
+                            <a href="#" class="nav-link  ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Our Services <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @can('Service View')
+
+                                <li class="nav-item">
+                                    <a href="{{route('services.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Services</p>
+                                    </a>
+                                </li>
+                                @endcan
+
+                                @can('Service Create')
+
+                                <li class="nav-item">
+                                    <a href="{{route('services.create')}}" class="nav-link  ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Services</p>
+                                    </a>
+                                </li>
+                                @endcan
+
+                            </ul>
+                        </li>
+                        @endif
+                        {{-- Services End --}}
+
+                        {{-- Selling Point --}}
+                        @if (auth()->user()->can('Selling-Points View') || auth()->user()->can('Selling-Points Create'))
+                        <li class="nav-item   ">
+                            <a href="#" class="nav-link  ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Selling Points
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+
+                                @can('Selling-Points View')
+                                <li class="nav-item">
+                                    <a href="{{route('spoints.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Selling Point</p>
+                                    </a>
+                                </li>
+                                @endcan
+
+                                @can('Selling-Points Create')
+
+                                <li class="nav-item">
+                                    <a href="{{route('spoints.create')}}" class="nav-link  ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Selling Point</p>
+                                    </a>
+                                </li>
+                                @endcan
+
+                            </ul>
+                        </li>
+                        @endif
+                        {{-- Selling Point --}}
+
+
+
                         @if (auth()->user()->can('Create Role') || auth()->user()->can('View Role') ||
                         auth()->user()->can('Assign User') ||
                         auth()->user()->can('Add User'))
@@ -456,35 +450,7 @@
                             </ul>
                         </li>
                         @endif
-                        @if (auth()->user()->can('Create Blog') || auth()->user()->can('View Blog'))
-                        <li class="nav-item @yield('blog_dropdown_active')">
-                            <a href="#" class="nav-link @yield('blog_active')">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Blogs
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @can('Create Blog')
-                                <li class="nav-item">
-                                    <a href="{{route('blogs.create')}}" class="nav-link @yield('add_blog-active')">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Create Blog</p>
-                                    </a>
-                                </li>
-                                @endcan
-                                @can('View Blog')
-                                <li class="nav-item">
-                                    <a href="{{route('blogs.index')}}" class="nav-link @yield('view_blog-active')">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>View Blogs</p>
-                                    </a>
-                                </li>
-                                @endcan
-                            </ul>
-                        </li>
-                        @endif
+
                         @can('Order')
                         <li class="nav-item">
                             <a href="{{route('orders.index')}}" class="nav-link @yield('view_order-active')">
@@ -496,7 +462,8 @@
                         </li>
                         @endcan
 
-                        {{-- MD Message Start --}}
+                        @if (auth()->user()->can('Pages View') || auth()->user()->can('Pages Create'))
+
                         <li class="nav-item @yield('pages_dropdown_active') ">
                             <a href="#" class="nav-link @yield('pages_active')">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -507,6 +474,7 @@
                             </a>
                             <ul class="nav nav-treeview">
 
+                                @can('Pages View')
 
                                 <li class="nav-item">
                                     <a href="{{route('pages.index')}}" class="nav-link  @yield('pages-active')">
@@ -514,7 +482,9 @@
                                         <p>View Pages</p>
                                     </a>
                                 </li>
+                                @endcan
 
+                                @can('Pages Create')
 
                                 <li class="nav-item">
                                     <a href="{{route('pages.create')}}" class="nav-link @yield('pages-add-active')">
@@ -522,10 +492,11 @@
                                         <p>Add Pages</p>
                                     </a>
                                 </li>
+                                @endcan
 
                             </ul>
                         </li>
-                        {{-- MD Message End --}}
+                        @endif
 
                         @if (auth()->user()->can('Setting') || auth()->user()->can('Banner') ||
                         auth()->user()->can('About'))

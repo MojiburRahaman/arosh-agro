@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\CkeditorFileUpload;
 use App\Models\Newsletter;
 use App\Models\Order_Summaries;
 use App\Models\Product;
@@ -12,7 +13,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
+use Intervention\Image\Facades\Image;
+
 
 class DashboardController extends Controller
 {
@@ -162,5 +166,19 @@ class DashboardController extends Controller
             }
         }
         return back();
+    }
+    function CkfileUpload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $blog_image = $request->file('upload');
+            $Blog_image_extension = Str::random(5) . '.' . $blog_image->getClientOriginalExtension();
+            $url = public_path('blogs/ckeditor/' . $Blog_image_extension);
+            Image::make($blog_image)->save($url, 100);
+            $ckeditor = new CkeditorFileUpload();
+            $ckeditor->ckeditor_image = $Blog_image_extension;
+            $ckeditor->save();
+            $image_url = asset('blogs/ckeditor/' . $Blog_image_extension);
+            return response()->json(['url' => $image_url]);
+        }
     }
 }

@@ -16,7 +16,7 @@ class ProductViewController extends Controller
         $Product = Product::with('Catagory:id,catagory_name,slug', 'Gallery:product_id,product_img', 'Attribute.Color:color_name,id', 'Attribute.Size:id,size_name', )
             ->where('slug', $slug)
             ->where('status', 1)
-            ->select('id', 'most_view', 'meta_description', 'thumbnail_img', 'meta_keyword', 'title', 'product_summary', 'product_description', 'slug', 'catagory_id')
+            ->select('id', 'comming_soon','most_view', 'meta_description', 'thumbnail_img', 'meta_keyword', 'title', 'product_summary', 'product_description', 'slug', 'catagory_id')
             ->firstorfail();
 
         $color = $Product->Attribute->where('color_id', '!=', 1)->count();

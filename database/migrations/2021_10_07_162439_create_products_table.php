@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->foreignId('catagory_id');
             $table->foreignId('subcatagory_id');
             // $table->foreignId('brand_id')->nullable();
+            $table->integer('comming_soon')->nullable()->comment('1=yes');
             $table->string('thumbnail_img');
             $table->string('status')->default(1)->comment('1=active , 2=Inactive');
             $table->integer('most_view')->default(0);

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sellingpoint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
- 
+
 class SellingpointController extends Controller
 {
     /**
@@ -15,11 +15,14 @@ class SellingpointController extends Controller
      */
     public function index()
     {
-         $points = Sellingpoint::latest()->paginate(10);
-    
-        return view('backend.spoint.index', [
-            'points' => $points,
-        ]);
+        if (auth()->user()->can('Selling-Points View')) {
+            $points = Sellingpoint::latest()->paginate(10);
+
+            return view('backend.spoint.index', [
+                'points' => $points,
+            ]);
+        }
+        abort('404');
     }
 
     /**
@@ -29,7 +32,10 @@ class SellingpointController extends Controller
      */
     public function create()
     {
-        return view('backend.spoint.create');
+        if (auth()->user()->can('Selling-Points Create')) {
+            return view('backend.spoint.create');
+        }
+        abort('404');
     }
 
     /**
@@ -40,26 +46,29 @@ class SellingpointController extends Controller
      */
     public function store(Request $request)
     {
-                  $request->validate([
-       
-            'p_name' => ['required'],
-            'mobile' => ['required'],
-            'address' => ['required'],
-            
-           
-        ]);
+        if (auth()->user()->can('Selling-Points Create')) {
+            $request->validate([
+
+                'p_name' => ['required'],
+                'mobile' => ['required'],
+                'address' => ['required'],
 
 
-                  $point = new Sellingpoint;
+            ]);
 
-        $point->p_name = $request->p_name;
-        $point->mobile = $request->mobile;
-        $point->address = $request->address;
-        $point->location = $request->location;
-      
-        
-        $point->save();
-          return redirect()->route('spoints.index')->with('success', 'Selling Point Added Successfully');
+
+            $point = new Sellingpoint();
+
+            $point->p_name = $request->p_name;
+            $point->mobile = $request->mobile;
+            $point->address = $request->address;
+            $point->location = $request->location;
+
+
+            $point->save();
+            return redirect()->route('spoints.index')->with('success', 'Selling Point Added Successfully');
+        }
+        abort('404');
     }
 
     /**
@@ -69,51 +78,56 @@ class SellingpointController extends Controller
      * @return \Illuminate\Http\Response
      */
       public function show($id)
-    {
+      {
           return redirect()->back();
-    }
+      }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sellingpoint  $sellingpoint
-     * @return \Illuminate\Http\Response
-     */
+       * Show the form for editing the specified resource.
+       *
+       * @param  \App\Models\Sellingpoint  $sellingpoint
+       * @return \Illuminate\Http\Response
+       */
    public function edit($id)
-    {
-        $data['point'] = Sellingpoint::find($id);
-        return view('backend.spoint.edit', $data);
-    }
+   {
+       if (auth()->user()->can('Selling-Points Edit')) {
+           $data['point'] = Sellingpoint::find($id);
+           return view('backend.spoint.edit', $data);
+       }
+       abort('404');
+   }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sellingpoint  $sellingpoint
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  \App\Models\Sellingpoint  $sellingpoint
+    * @return \Illuminate\Http\Response
+    */
     public function update(Request $request, $id)
     {
-                 $request->validate([
-       
-            'p_name' => ['required'],
-            'mobile' => ['required'],
-            'address' => ['required'],
-            
-           
-        ]);
+        if (auth()->user()->can('Selling-Points Edit')) {
+            $request->validate([
 
-        $point = Sellingpoint::findorfail($id);
-       
-        $point->p_name = $request->p_name;
-        $point->mobile = $request->mobile;
-        $point->address = $request->address;
-        $point->location = $request->location;
+                'p_name' => ['required'],
+                'mobile' => ['required'],
+                'address' => ['required'],
 
-             $point->save();
+
+            ]);
+
+            $point = Sellingpoint::findorfail($id);
+
+            $point->p_name = $request->p_name;
+            $point->mobile = $request->mobile;
+            $point->address = $request->address;
+            $point->location = $request->location;
+
+            $point->save();
 
             return redirect()->route('spoints.index')->with('warning', 'Selling Point Updated Successfully');
-
+        }
+        abort('404');
     }
 
     /**
@@ -124,8 +138,11 @@ class SellingpointController extends Controller
      */
     public function destroy($id)
     {
-        $point = Sellingpoint::findorfail($id);
+        if (auth()->user()->can('Selling-Points Delete')) {
+            $point = Sellingpoint::findorfail($id);
             $point->delete();
-        return back()->with('delete', 'Selling Point Deleted Successfully');
+            return back()->with('delete', 'Selling Point Deleted Successfully');
+        }
+        abort('404');
     }
 }

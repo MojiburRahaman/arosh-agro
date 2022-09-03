@@ -15,7 +15,6 @@ menu-open
 
         padding-left: 20px;
     }
-
 </style>
 
 <div class="content-wrapper">
@@ -41,14 +40,18 @@ menu-open
                     @csrf
                     <div class="form-group">
                         <label for="product_name">Product name</label>
-                        <input value="{{old('product_name')}}" name="product_name" type="text"
-                            placeholder="Product Name" id="product_name" autocomplete="none" class="form-control @error('product_name') is-invalid                                
+                        <input autofocus spellcheck="true" value="{{old('product_name')}}" name="product_name" type="text"
+                            placeholder="Product Name" id="product_name"  class="form-control @error('product_name') is-invalid                                
                             @enderror">
                         @error('product_name')
                         <div class="alert alert-danger">
                             {{$message}}
                         </div>
                         @enderror
+                    </div>
+                    <div class="form-group">
+                        <input class="pr-2" name="comming_soon" id="comming_soon" value="1" type="checkbox">
+                        <label for="comming_soon">Comming Soon</label>
                     </div>
                     <div class="form-group">
                         <label for="meta_description">Meta Description</label>
@@ -99,16 +102,6 @@ menu-open
                         </div>
                         @enderror
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="brand_id" class="font-weight-bold">Brands</label>
-                        <select class="form-control " name="brand_id" id="brand_id">
-                            <option value>Select One</option>
-                            @foreach ($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->brand_name }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div> --}}
                     <div class="form-group">
                         <div class="row">
                             <div class="col-lg-8 mt-4 pt-4">
@@ -161,15 +154,16 @@ menu-open
                     </div>
                     <div class="form-group">
                         <label for="product_description">Description</label>
-                        <textarea id="product_description"
-                            class="form-control @error('product_description') is-invalid @enderror"
-                            name="product_description" id="product_description"></textarea>
+                        <textarea id="editor" class="form-control @error('product_description') is-invalid @enderror"
+                            name="product_description" id="editor"></textarea>
                         @error('product_description')
                         <div class="alert alert-danger">
                             {{$message}}
                         </div>
                         @enderror
                     </div>
+
+                  
 
                     <div class="form-group ">
                         <div id="dynamic-field-1" class="form-group dynamic-field mt-4">
@@ -191,10 +185,6 @@ menu-open
                                         </option>
                                         @endforeach
                                     </select>
-                                </div>
-                                <div class="col-lg-4 col-4">
-                                    <label for="flavour_name" class="font-weight-bold">Flavour</label>
-                                   <input type="text" class="form-control" name="flavour_name[]">
                                 </div>
                                 <div class="col-lg-4 col-4">
                                     <label for="quantity" class="font-weight-bold">Quantity</label>
@@ -252,6 +242,7 @@ menu-open
 
 
 @section('script_js')
+@include('backend.ckeditor')
 <script>
     $('#catagory_id').change(function() {
             $catagory_id = $(this).val();
@@ -354,7 +345,7 @@ menu-open
 
 
         ClassicEditor
-            .create( document.querySelector( '#product_description' ) )
+            .create( document.querySelector( '#product_summary' ) )
             .then( editor => {
                     console.log( editor );
             } )

@@ -30,7 +30,6 @@ class OrderController extends Controller
      */
     public function create()
     {
-      
     }
 
     /**
@@ -53,7 +52,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order_Summaries::where('id', $id)
-            ->with('billing_details', 'order_details.Product', 'order_details.Color', 'order_details.Size', 'order_details.Flavour')->first();
+            ->with('billing_details', 'order_details.Product', 'order_details.Color', 'order_details.Size', )->first();
         // $order=Order_Summaries::findorfail($id);
 
         return view('backend.order.show', [
@@ -105,21 +104,23 @@ class OrderController extends Controller
     }
     public function DeliveryStatus($id)
     {
-        $status =   Order_Summaries::findorfail($id);
+        $status =  Order_Summaries::findorfail($id);
         $user = $status->User;
         $email = $status->User->email;
         if ($status->delivery_status == 1) {
+
             $status->delivery_status = 2;
             $status->save();
             return back();
-        } elseif ($status->delivery_status == 2) {
 
+        } elseif ($status->delivery_status == 2) {
             $status->delivery_status = 3;
             $status->save();
             Mail::to($email)->send(new OrderDeliverdMail($user->name, $status));
             return back();
         } elseif ($status->delivery_status == 3) {
-            return back();
+            Mail::to($email)->send(new OrderDeliverdMail($user->name, $status));
+            // return back();
         }
     }
 }

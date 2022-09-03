@@ -41,7 +41,6 @@ class ProductController extends Controller
         $catagories = Catagory::select('id', 'catagory_name')->latest('id')->get();
         $colors = Color::select('id', 'color_name')->get();
         $sizes = Size::select('id', 'size_name')->get();
-        // $brands = Brand::select('id', 'brand_name')->latest('id')->get();
         return view('backend.product.create', [
             'catagories' => $catagories,
             'colors' => $colors,
@@ -58,6 +57,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         $request->validate([
             'product_name' => ['required', 'string', 'max:250', 'unique:products,title,'],
             'catagory_name' => ['required'],
@@ -80,6 +80,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->title = $request->product_name;
         $product->slug = Str::slug($request->product_name);
+        $product->comming_soon = $request->comming_soon;
         $product->catagory_id = $request->catagory_name;
         $product->meta_description = $request->meta_description;
         $product->meta_keyword = $request->meta_keyword;
@@ -165,7 +166,6 @@ class ProductController extends Controller
             'catagories' => $catagories,
             'colors' => $colors,
             'sizes' => $sizes,
-            // 'brands' => $brands,
             'subcatagories' => $subcatagories,
         ]);
     }
@@ -205,6 +205,7 @@ class ProductController extends Controller
         $product->meta_description = $request->meta_description;
         $product->meta_keyword = $request->meta_keyword;
         $product->slug = Str::slug($request->product_name);
+        $product->comming_soon = $request->comming_soon;
         $product->catagory_id = $request->catagory_name;
         $product->subcatagory_id = $request->subcatagory_name;
         // $product->brand_id = $request->brand_id;

@@ -86,6 +86,7 @@
 
                         <div class="rating-wrap fix">
                             <span class="price">
+                                @if( $product->comming_soon != 1 )
                                 @php
                                 // regular price and selling price
                                 $sale = collect($product->Attribute)->min('sell_price');
@@ -119,12 +120,18 @@
                                 {{-- quantity section --}}
                                 @if ($product->Attribute->sum('quantity') != 0)
 
-                                <span style="display:none">(<span class="available">{{
+                                <span style="display:none">(<span class="available" id="span_Id">{{
                                         $product->Attribute->sum('quantity') }}</span>
                                     &nbsp;Product
                                     Available)</span>
                                 @else
                                 (<span>Out of Stock</span>)
+                                @endif
+                                <span id="stocknone" style="display: none" >(Out of Stock)</span>
+                                @endif
+                                @if($product->comming_soon == 1)
+                                    
+                                <span>(Coming Soon)</span>
                                 @endif
                             </span>
                         </div>
@@ -135,11 +142,12 @@
                         {{-- <div class="col-md-12 col-12 col-xl-12 col-lg 12"> --}}
                             <form action="{{ route('CartPost') }}" id="Form_submit" method="POST">
                                 @csrf
-                                <p style="color: black!important">{{$product->product_summary}}</p>
+                                <p style="color: black!important">{!! $product->product_summary !!}</p>
                                 @if ($product->Attribute->sum('quantity') != 0)
-
+                                @if( $product->comming_soon != 1 )
+                                    
                                 <input type="hidden" value="{{$product->id}}" name="product_id">
-                                @if ($color != '')
+                                @if ($color != 0)
                                 <ul class="cetagory">
                                     @php
                                     $attribute = collect($product->Attribute);
@@ -149,7 +157,7 @@
                                     <li class="cat_name">Varient :</li>
                                     @foreach ($group as $color)
                                     @if ($color->color_id != 1)
-                                    <input class=" {{($size == '')? 'no_size_color' : 'color_name'}}" type="radio"
+                                    <input class=" {{($size == 0)? 'no_size_color' : 'color_name'}}" type="radio"
                                         name="color_id" id="color_id{{$color->Color->id}}" value="{{$color->Color->id}}"
                                         data-product="{{$product->id}}">
                                     <label
@@ -157,7 +165,7 @@
                                     @endif
                                     @endforeach
                                 </ul>
-                                @if ($size != '')
+                                @if ($size != 0)
 
                                 <ul class="cetagory " style="margin-bottom: 0">
                                     <li style="margin-bottom: 0" class="cat_name">Weight :</li>
@@ -169,7 +177,7 @@
 
                                 @else
 
-                                @if ($size != '')
+                                @if ($size != 0)
                                 <ul class="cetagory">
 
                                     <li class="cat_name">Weight :</li>
@@ -186,17 +194,16 @@
                                 @endif
 
                                 @endif
-                                @if ($color == '')
+                                @if ($color === 0)
 
                                 <input type="hidden" name="color_id" value="1">
                                 @endif
-                                @if ($size == '')
-
+                                @if ($size === 0)
                                 <input type="hidden" name="size_id" value="1">
                                 @endif
 
                                 <br>
-                                <ul class="input-style">
+                                <ul class="input-style" id="cart-btn-hide">
                                     <div class="product-count">
                                         {{-- <label style="display: block" for="size">Quantity</label> --}}
                                         <li style="float: left" class="quantity display-flex">
@@ -211,6 +218,7 @@
                                     </div>
 
                                 </ul>
+                                @endif
                                 @endif
 
                                 <div style="display: block">
@@ -436,7 +444,16 @@
                             var regular_price = $(this).attr('data-regular_price');
                             var selling_price = $(this).attr('data-sell_price');
                             var quantity = $(this).attr('data-quantity');
+                          
                             $('.available').html(quantity);
+                            if (quantity == 0) {
+                                $('#cart-btn-hide').hide();
+                                $('#stocknone').show();
+                            
+                            }else{
+                                $('#cart-btn-hide').show();
+                                    $('#stocknone').hide();
+                            }
                             if (selling_price == '') {
                             $('.sell_Price').html( selling_price);
                                 // if theres no selling price
@@ -474,6 +491,18 @@
             if (res) {
                 // get price and quantity
                         $('.available').html(res);
+
+                        var quantity =  document.getElementById("span_Id").innerText
+
+                        if (quantity == 0) {
+                                $('#cart-btn-hide').hide();
+                                $('#stocknone').show();
+                            
+                            }else{
+                                $('#cart-btn-hide').show();
+                                    $('#stocknone').hide();
+                            }
+
                         var regular_price = $('.quantityadd').attr('data-regularprice');
                         var selling_price = $('.quantityadd').attr('data-sellprice');
                         if (selling_price == '') {
@@ -511,6 +540,19 @@
             if (res) {
                 // get price and quantity
                         $('.available').html(res);
+
+
+                        var quantity =  document.getElementById("span_Id").innerText
+
+                        if (quantity == 0) {
+                                $('#cart-btn-hide').hide();
+                                $('#stocknone').show();
+                            
+                            }else{
+                                $('#cart-btn-hide').show();
+                                    $('#stocknone').hide();
+                            }
+
                         var regular_price = $('.quantityadd').attr('data-regularprice');
                         var selling_price = $('.quantityadd').attr('data-sellprice');
                         // alert(selling_price);

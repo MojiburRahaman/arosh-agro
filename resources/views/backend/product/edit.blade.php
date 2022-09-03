@@ -41,6 +41,10 @@ menu-open
                         @enderror
                     </div>
                     <div class="form-group">
+                        <input class="pr-2" {{ ($product->comming_soon == 1) ? 'checked' : '' }} name="comming_soon" id="comming_soon" value="1" type="checkbox">
+                        <label for="comming_soon">Comming Soon</label>
+                    </div>
+                    <div class="form-group">
                         <label for="meta_description">Meta Description </label>
                         <input value="{{$product->meta_description}}" name="meta_description" type="text"
                             placeholder="Meta Description" id="meta_description" autocomplete="none" class="form-control @error('meta_description') is-invalid                                
@@ -177,11 +181,10 @@ menu-open
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="product_description">Description</label>
-                        <textarea id="product_description"
+                        <label for="editor">Description</label>
+                        <textarea id="editor"
                             class="form-control @error('product_description') is-invalid @enderror"
-                            name="product_description"
-                            id="product_description">{{$product->product_description}}</textarea>
+                            name="product_description">{{$product->product_description}}</textarea>
                         @error('product_description')
                         <div class="alert alert-danger">
                             {{$message}}
@@ -246,15 +249,7 @@ menu-open
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-lg-4 col-4">
-                        @php
-                        $flavour =
-                        App\Models\Flavour::where('size_id',$Attribute->size_id)->where('product_id',$product->id)->get()
-                        @endphp
-                        <label for="flavour_name" class="font-weight-bold">Flavour</label>
-                        <input type="text" class="form-control" name="flavour_name[]"
-                            value="@forelse($flavour as $f){{$f->flavour_name}} @empty @endforelse">
-                    </div>
+                    
                     <div class="col-lg-4 col-4">
                         <input type="hidden" value="{{$Attribute->id}}" name="attribute_id[]">
                         <label for="quantity" class="font-weight-bold">Quantity</label>
@@ -307,10 +302,6 @@ menu-open
                                         </option>
                                         @endforeach
                                     </select>
-                                </div>
-                                <div class="col-lg-4 col-4">
-                                    <label for="flavour_name" class="font-weight-bold">Flavour</label>
-                                   <input type="text" class="form-control" name="flavour_name[]">
                                 </div>
                                 <div class="col-lg-4 col-4">
                                     <label for="quantity" class="font-weight-bold">Quantity</label>
@@ -367,6 +358,7 @@ menu-open
 
 
 @section('script_js')
+@include('backend.ckeditor')
 <script>
     $('#catagory_id').change(function() {
             $catagory_id = $(this).val();
@@ -399,24 +391,24 @@ menu-open
 
         
         
-        $("#addRow").click(function () {
-        var html = '';
-        html += '<div id="inputFormRow">';
-        html += '<div class="input-group mb-3">';
-        html += '<input type="hidden" name="flavour_id[]">';
-        html += '<input type="text" name="flavour_name[]" class="form-control m-input " placeholder="Enter Flavour Name" autocomplete="off">';
-        html += '<div class="input-group-append">';
-        html += '<a id="removeRow" type="button" class="btn btn-danger">Remove</a>';
-        html += '</div>';
-        html += '</div>';
+    //     $("#addRow").click(function () {
+    //     var html = '';
+    //     html += '<div id="inputFormRow">';
+    //     html += '<div class="input-group mb-3">';
+    //     html += '<input type="hidden" name="flavour_id[]">';
+    //     html += '<input type="text" name="flavour_name[]" class="form-control m-input " placeholder="Enter Flavour Name" autocomplete="off">';
+    //     html += '<div class="input-group-append">';
+    //     html += '<a id="removeRow" type="button" class="btn btn-danger">Remove</a>';
+    //     html += '</div>';
+    //     html += '</div>';
 
-        $('#newRow').append(html);
-    });
+    //     $('#newRow').append(html);
+    // });
 
-    // remove row
-    $(document).on('click', '#removeRow', function () {
-        $(this).closest('#inputFormRow').remove();
-    });
+    // // remove row
+    // $(document).on('click', '#removeRow', function () {
+    //     $(this).closest('#inputFormRow').remove();
+    // });
 
 
 
@@ -495,7 +487,7 @@ menu-open
 
 
         ClassicEditor
-            .create( document.querySelector( '#product_description' ) )
+            .create( document.querySelector( '#product_summary' ) )
             .then( editor => {
                     console.log( editor );
             } )

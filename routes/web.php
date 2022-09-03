@@ -44,6 +44,23 @@ Route::get('login/callback', [SocialLoginController::class, 'GoogleCallbackUrlRe
 
 Auth::routes(['verify' => true]);
 
+
+Route::middleware(['auth', 'XssFilter', 'HtmlMinify', 'verified', 'checkcoustomer'])->group(function () {
+    // Profile route
+    Route::get('/profile', [UserProfileController::class, 'FrontendProfile'])->name('FrontendProfile');
+    Route::post('/change-password', [UserProfileController::class, 'ChangeUserPass'])->name('ChangeUserPass');
+    // wishlist route start
+    Route::get('/wishlist', [WishlistController::class, 'WishlistView'])->name('WishlistView');
+    Route::post('/wishlist-post', [WishlistController::class, 'WishlistPost'])->name('WishlistPost');
+    Route::get('/wishlist-remove/{id}', [WishlistController::class, 'WishlistRemove'])->name('WishlistRemove');
+    // checkout route start
+    Route::get('/checkout', [CheckoutController::class, 'CheckoutView'])->name('CheckoutView');
+    Route::post('/checkout-post', [CheckoutController::class, 'CheckoutPost'])->name('CheckoutPost');
+    Route::post('/checkout/billing/division_id', [CheckoutController::class, 'CheckoutajaxDivid'])->name('CheckoutajaxDivid');
+    Route::post('/checkout/billing/disctrict_id', [CheckoutController::class, 'CheckoutajaxDistrictid'])->name('CheckoutajaxDistrictid');
+});
+
+
 // frontend route start
 Route::middleware(['XssFilter'])->group(function () {
     // Route::get('/shop', [FrontendController::class, 'Frontendshop'])->name('Frontendshop');
@@ -61,7 +78,7 @@ Route::middleware(['XssFilter'])->group(function () {
     Route::get('/deals', [FrontendController::class, 'FrontendDeals'])->name('FrontendDeals');
     Route::get('/certified', [FrontendController::class, 'FrontendCertified'])->name('FrontendCertified');
     Route::post('/newsletter', [FrontendController::class, 'FrontendNewsLetter'])->name('FrontendNewsLetter');
-    
+
     // product route
     Route::get('/product/{slug}', [ProductViewController::class, 'SingleProductView'])->name('SingleProductView');
     // Route::post('/product/review', [ProductViewController::class, 'ProductReview'])->name('ProductReview');
@@ -92,29 +109,18 @@ Route::middleware(['XssFilter'])->group(function () {
     Route::get('/{page}', [FrontendController::class, 'DynamicPage'])->name('DynamicPage');
 });
 
-// cart route end
-Route::middleware(['auth', 'XssFilter', 'HtmlMinify', 'verified', 'checkcoustomer'])->group(function () {
-    // Profile route
-    Route::get('/profile', [UserProfileController::class, 'FrontendProfile'])->name('FrontendProfile');
-    Route::post('/change-password', [UserProfileController::class, 'ChangeUserPass'])->name('ChangeUserPass');
-    // wishlist route start
-    Route::get('/wishlist', [WishlistController::class, 'WishlistView'])->name('WishlistView');
-    Route::post('/wishlist-post', [WishlistController::class, 'WishlistPost'])->name('WishlistPost');
-    Route::get('/wishlist-remove/{id}', [WishlistController::class, 'WishlistRemove'])->name('WishlistRemove');
-    // checkout route start
-    Route::get('/checkout', [CheckoutController::class, 'CheckoutView'])->name('CheckoutView');
-    Route::post('/checkout-post', [CheckoutController::class, 'CheckoutPost'])->name('CheckoutPost');
-    Route::post('/checkout/billing/division_id', [CheckoutController::class, 'CheckoutajaxDivid'])->name('CheckoutajaxDivid');
-    Route::post('/checkout/billing/disctrict_id', [CheckoutController::class, 'CheckoutajaxDistrictid'])->name('CheckoutajaxDistrictid');
-});
 
 
+
+
+// backend route
 Route::get('/admin/login', [DashboardController::class, 'AdminLogin'])->name('AdminLogin')->middleware('guest', 'throttle:10,5');
 Route::post('/admin/login', [DashboardController::class, 'AdminLoginPost'])->name('AdminLoginPost')->middleware('guest', 'throttle:10,5');
 // backend route start
 Route::middleware(['auth', 'verified', 'HtmlMinify', 'checkadminpanel'])->prefix('admin')->group(function () {
     Route::get('/change-password', [DashboardController::class, 'AdminChangePassword'])->name('AdminChangePassword');
     Route::post('/change-password', [DashboardController::class, 'AdminChangePasswordPost'])->name('AdminChangePasswordPost');
+    Route::post('dashboard/ck-editor-upload', [DashboardController::class, 'CkfileUpload'])->name('CkfileUpload');
     Route::resource('dashboard', DashboardController::class)->except('destroy', 'update', 'edit', 'show', 'store', 'create');
     // catagory route
     Route::post('/catagory/mark-delete', [CatagoryController::class, 'MarkdeleteCatagory'])->name('MarkdeleteCatagory');
@@ -167,7 +173,7 @@ Route::middleware(['auth', 'verified', 'HtmlMinify', 'checkadminpanel'])->prefix
     Route::resource('/color', ColorController::class)->except('show');
     Route::resource('/size', SizeController::class)->except('show');
 
-    Route::post('blogs/ck-editor-upload', [BlogController::class, 'CkfileUpload'])->name('CkfileUpload');
+
     Route::resource('/blogs', BlogController::class);
 
     Route::resource('/deals', BestDealController::class)->except('edit', 'update');

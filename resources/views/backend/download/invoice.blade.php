@@ -210,19 +210,7 @@
                             {{$order_product->quantity}}
                         </td>
                         <td style="text-align: right">
-                            @php
-                            $product =$order_product->Product->WithTrash_Attribute
-                            ->where('color_id',$order_product->color_id)
-                            ->where('size_id',$order_product->size_id)->first();
-                            $sale_price = $product->sell_price;
-                            $regular_price = $product->regular_price;
-                            if ($sale_price) {
-                            echo $sale_price * $order_product->quantity;
-                            }
-                            if ($sale_price == '') {
-                            echo $regular_price * $order_product->quantity;
-                            }
-                            @endphp
+                            {{ $order_product->price * $order_product->quantity }}
                         </td>
                     </tr>
                     @empty

@@ -16,21 +16,27 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::latest()->paginate(10);
-    
-        return view('backend.service.index', [
-            'services' => $services,
-        ]);
+        if (auth()->user()->can('Service View')) {
+            $services = Service::latest()->paginate(10);
+
+            return view('backend.service.index', [
+                'services' => $services,
+            ]);
+        }
+        abort('404');
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+         * Show the form for creating a new resource.
+         *
+         * @return \Illuminate\Http\Response
+         */
     public function create()
     {
-       return view('backend.service.create');
+        if (auth()->user()->can('Service Create')) {
+            return view('backend.service.create');
+        }
+        abort('404');
     }
 
     /**
@@ -41,34 +47,33 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-                   $request->validate([
-       
-            'heading' => ['required'],
-            'description' => ['required'],
-            'service_image' => ['required', 'mimes:png,jpeg,jpg',],
-           
-            
-          
-            // 'regular_price[]' => ['required'],
-        ], [
-            'service_image.*.mimes' => '  Image must be png,jpg,jpeg formate',
-            'service_image.*.required' => '  Image required',
- 
-        ]);
+        if (auth()->user()->can('Service Edit')) {
+            $request->validate([
 
-            $service = new Service;
+                'heading' => ['required'],
+                'description' => ['required'],
+                'service_image' => ['required', 'mimes:png,jpeg,jpg',],
+            ], [
+                'service_image.*.mimes' => '  Image must be png,jpg,jpeg formate',
+                'service_image.*.required' => '  Image required',
 
-        $service->heading = $request->heading;
-        $service->description = $request->description;
-        if ($request->hasFile('service_image')) {
-            $product_thumbnail = $request->file('service_image');
-            $extension = Str::slug($request->heading) . '-' . Str::random(1) . '.' . $product_thumbnail->getClientOriginalExtension();
-            Image::make($product_thumbnail)->save(public_path('service_image/' . $extension), 90);
-            $service->service_image = $extension;
+            ]);
+
+            $service = new Service();
+
+            $service->heading = $request->heading;
+            $service->description = $request->description;
+            if ($request->hasFile('service_image')) {
+                $product_thumbnail = $request->file('service_image');
+                $extension = Str::slug($request->heading) . '-' . Str::random(1) . '.' . $product_thumbnail->getClientOriginalExtension();
+                Image::make($product_thumbnail)->save(public_path('service_image/' . $extension), 90);
+                $service->service_image = $extension;
+            }
+
+            $service->save();
+            return redirect()->route('services.index')->with('success', 'Service Added Successfully');
         }
-        
-        $service->save();
-          return redirect()->route('services.index')->with('success', 'Service Added Successfully');
+        abort('404');
     }
 
     /**
@@ -79,7 +84,7 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
-          return redirect()->back();
+        return redirect()->back();
     }
 
     /**
@@ -90,8 +95,11 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
-        $data['service'] = Service::find($id);
-        return view('backend.service.edit', $data);
+        if (auth()->user()->can('Service Edit')) {
+            $data['service'] = Service::find($id);
+            return view('backend.service.edit', $data);
+        }
+        abort('404');
     }
 
     /**
@@ -103,40 +111,40 @@ class ServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-                    $request->validate([
-       
-            'heading' => ['required'],
-            'description' => ['required'],
-            'service_image' => [  'mimes:png,jpeg,jpg',],
-           
-            
-          
-            // 'regular_price[]' => ['required'],
-        ], [
-            'service_image.*.mimes' => '  Image must be png,jpg,jpeg formate',
-            'service_image.*.required' => '  Image required',
- 
-        ]);
+        if (auth()->user()->can('Service Edit')) {
+            $request->validate([
 
-             
-        $service = Service::findorfail($id);
-       
-        $service->heading = $request->heading;
-        $service->description = $request->description;
-                if ($request->hasFile('service_image')) {
-            $old_thumbnail = public_path('service_image/' . $service->service_image);
-            if (file_exists($old_thumbnail)) {
-                unlink($old_thumbnail);
+                'heading' => ['required'],
+                'description' => ['required'],
+                'service_image' => [  'mimes:png,jpeg,jpg',],
+
+            ], [
+                'service_image.*.mimes' => '  Image must be png,jpg,jpeg formate',
+                'service_image.*.required' => '  Image required',
+
+            ]);
+
+
+            $service = Service::findorfail($id);
+
+            $service->heading = $request->heading;
+            $service->description = $request->description;
+            if ($request->hasFile('service_image')) {
+                $old_thumbnail = public_path('service_image/' . $service->service_image);
+                if (file_exists($old_thumbnail)) {
+                    unlink($old_thumbnail);
+                }
+                $service_thumbnail = $request->file('service_image');
+                $extension = Str::slug($request->heading) . '-' . Str::random(1) . '.' . $service_thumbnail->getClientOriginalExtension();
+                Image::make($service_thumbnail)->save(public_path('service_image/' . $extension), 90);
+
+                $service->service_image = $extension;
             }
-            $service_thumbnail = $request->file('service_image');
-            $extension = Str::slug($request->heading) . '-' . Str::random(1) . '.' . $service_thumbnail->getClientOriginalExtension();
-            Image::make($service_thumbnail)->save(public_path('service_image/' . $extension), 90);
-
-            $service->service_image = $extension;
-        }
-             $service->save();
+            $service->save();
 
             return redirect()->route('services.index')->with('warning', 'Service Edited Successfully');
+        }
+        abort('404');
     }
 
     /**
@@ -147,14 +155,17 @@ class ServiceController extends Controller
      */
     public function destroy($id)
     {
-                        $service = Service::findorfail($id);
-        // product thumbnail delete 
-        $old_img = public_path('service_image/' . $service->service_image);
-        if (file_exists($old_img)) {
-            unlink($old_img);
-        }
+        if (auth()->user()->can('Service Delete')) {
+            $service = Service::findorfail($id);
+            // product thumbnail delete
+            $old_img = public_path('service_image/' . $service->service_image);
+            if (file_exists($old_img)) {
+                unlink($old_img);
+            }
 
-        $service->delete();
-        return back()->with('delete', 'Service Deleted Successfully');
+            $service->delete();
+            return back()->with('delete', 'Service Deleted Successfully');
+        }
+        abort('404');
     }
 }

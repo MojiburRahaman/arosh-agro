@@ -42,6 +42,26 @@ class RoleController extends Controller
     public function create()
     {
         if (auth()->user()->can('Create Role')) {
+            // $permission = Permission::create(['name' => ' View']);
+            // $permission = Permission::create(['name' => 'Sister-Concern Create']);
+            // $permission = Permission::create(['name' => 'Sister-Concern Edit']);
+            // $permission = Permission::create(['name' => 'Sister-Concern Delete']);
+            // $permission = Permission::create(['name' => 'Service View']);
+            // $permission = Permission::create(['name' => 'Service Create']);
+            // $permission = Permission::create(['name' => 'Service Edit']);
+            // $permission = Permission::create(['name' => 'Service Delete']);
+            // $permission = Permission::create(['name' => 'Selling-Points View']);
+            // $permission = Permission::create(['name' => 'Selling-Points Create']);
+            // $permission = Permission::create(['name' => 'Selling-Points Edit']);
+            // $permission = Permission::create(['name' => 'Selling-Points Delete']);
+            // $permission = Permission::create(['name' => 'Gallery View']);
+            // $permission = Permission::create(['name' => 'Gallery Create']);
+            // $permission = Permission::create(['name' => 'Gallery Edit']);
+            // $permission = Permission::create(['name' => 'Gallery Delete']);
+            // $permission = Permission::create(['name' => 'Pages View']);
+            // $permission = Permission::create(['name' => 'Pages Create']);
+            // $permission = Permission::create(['name' => 'Pages Edit']);
+            // $permission = Permission::create(['name' => 'Pages Delete']);
             // $permission = Permission::create(['name' => 'Subscriber']);
             // $permission = Permission::create(['name' => 'About']);
             // $permission = Permission::create(['name' => 'Setting']);

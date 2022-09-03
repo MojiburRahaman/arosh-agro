@@ -32,8 +32,9 @@ menu-open
     <!-- Main content -->
     <section class="content">
         <div class="col-12 text-right mb-2 pr-2">
-
+            @can('Pages Create')
             <a href="{{ route('pages.create') }}" class="btn-sm btn-dark">Add Pages <i class="fa fa-plus"></i> </a>
+            @endcan
         </div>
         <div class="container-fluid">
             <div class="col-12">
@@ -54,29 +55,34 @@ menu-open
                             <td>{{$page->title}}</td>
                             <td>
                                 @if ($page->status == 1)
-                                <a href="{{ route('pages.show',$page->id) }}" class="btn btn-success">Active</a>
+                                <a href="{{ route('pages.show',$page->id) }}" class="btn-sm btn-success">Active</a>
 
                                 @else
-                                <a href="{{ route('pages.show',$page->id) }}" class="btn btn-warning">Inactive</a>
+                                <a href="{{ route('pages.show',$page->id) }}" class="btn-sm btn-warning">Inactive</a>
 
                                 @endif
 
                             </td>
                             <form action="{{route('pages.destroy',$page->id)}}" method="post">
                                 <td>
-                                    <a title="view" style="padding: 7px 8px" href="{{route('pages.edit',$page->id)}}"
-                                        class="btn-sm btn-dark mb-4"> <i class="fa fa-eye"></i> </a> &nbsp;
-
+                                    <a title="view" target="_blank" style="padding: 7px 8px"
+                                        href="{{route('DynamicPage',$page->slug)}}" class="btn-sm btn-dark "> <i
+                                            class="fa fa-eye"></i> </a>
+                                    @can('Pages Edit')
+                                    <br>
+                                    <br>
                                     <a style="padding: 7px 8px" href="{{route('pages.edit',$page->id)}}"
-                                        class="btn-sm btn-primary mb-2"><i class="fa fa-pen"></i></a>
-
+                                        class="btn-sm btn-primary "><i class="fa fa-pen"></i></a>
+                                    @endcan
                                     @csrf
-
+                                    @can('Pages Delete')
+                                    <br>
+                                    <br>
                                     @method('delete')
                                     <button class="btn-sm btn-danger mb-2" type="submit">
                                         <i class="fa fa-trash"></i>
                                     </button>
-
+                                    @endcan
                             </form>
                         </tr>
                         @empty
