@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         View::share('services', Service::latest('id')->get());
         View::share('pages', Pages::latest('id')->where('status', 1)->select('id', 'heading', 'slug')->get());
         View::share('catagory_menu', Catagory::select('id', 'catagory_name', 'catagory_image', 'slug')->inRandomOrder()->get());
+        
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage())
                 ->subject(' Email Address')

@@ -1,4 +1,4 @@
-<h1 style="text-align: center"><a style="text-decoration: none;color:#ef4836;"
+<h1 style="text-align: center"><a style="text-decoration: none;color:#39B54A;"
         href="{{route('Frontendhome')}}">{{config('app.name')}}</a>
 </h1>
 <h3>Hi {{$user_name}},</h3>

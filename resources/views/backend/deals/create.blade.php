@@ -54,23 +54,12 @@
                         <div class="alert alert-danger"> {{$message}}</div>
                         @enderror
                     </div>
+                   
                     <div class="form-group">
-                        <label for="deal_banner">Banner</label>
-                        <input  type="file" name="deal_banner" id="discount" class="form-control @error('deal_banner') is-invalid @enderror">
-                        @error('deal_banner')
-                        <div class="alert alert-danger"> {{$message}}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="deal_backgraound_color">Background Color Code</label>
-                        <input  type="text" name="deal_backgraound_color" id="discount" class="form-control @error('deal_backgraound_color') is-invalid @enderror">
-                        @error('deal_backgraound_color')
-                        <div class="alert alert-danger"> {{$message}}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="discount">Discount</label>
-                        <input required type="number" name="discount" id="discount" class="form-control @error('discount') is-invalid @enderror">
+                        <label for="discount">Discount(%)</label>
+                        <input required type="number" name="discount" id="discount" class="form-control mb-2 @error('discount') is-invalid @enderror">
+                        <input type="checkbox" name="random" id="random">
+                        <label for="random">Random Discount</label>
                         @error('discount')
                         <div class="alert alert-danger"> {{$message}}</div>
                             

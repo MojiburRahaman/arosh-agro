@@ -49,7 +49,8 @@ active
                         <div class="info-box-content">
                             <span class="info-box-text">Pending Order</span>
                             <span class="info-box-number"> {{$order->where('delivery_status',1)->count()}}</span>
-                            {{-- <span class="info-box-number"> {{$order->where('delivery_status',2)->sum('subtotal')}}</span>
+                            {{-- <span class="info-box-number">
+                                {{$order->where('delivery_status',2)->sum('subtotal')}}</span>
                             --}}
 
                         </div>
@@ -81,7 +82,7 @@ active
                         <div class="info-box-content">
                             <span class="info-box-text">Total Product</span>
                             <span class="info-box-number">
-                               {{$product}}
+                                {{$product}}
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -102,24 +103,6 @@ active
                 </div>
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-newspaper"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">Blogs</span>
-                            <span class="info-box-number">{{$Blog}}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-star"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">Total Reviews</span>
-                            <span class="info-box-number">{{$ProductReview}}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-heart"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Subscribers</span>
@@ -128,6 +111,121 @@ active
                     </div>
                 </div>
                 <!-- /.col -->
+                <div class="col-12 col-lg-8 mt-5">
+                    <div class="card">
+
+                        <div class="card-header border-transparent">
+                            <h3 class="card-title">Latest Orders</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table m-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Order Number</th>
+                                            <th>Order Time </th>
+                                            <th>Total Amount</th>
+                                            <th>Delivery Status</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($orders as $order)
+                                        <tr>
+                                            <td>{{$order->order_number}}</td>
+                                            <td>{{$order->created_at->diffForHumans()}}</td>
+                                            <td class="text-center">৳{{$order->subtotal}}</td>
+                                            <td class="text-center">
+                                                @if($order->cancel != '')
+                                                <a class="badge badge-danger">Order Canceled</a>
+            
+                                                @elseif ($order->delivery_status == 1)
+                                                <a 
+                                                    class="badge badge-danger">pending</a>
+                                                @elseif ($order->delivery_status == 2)
+                                                <a 
+                                                    class="badge badge-warning">On The
+                                                    way</a>
+                                                @else
+                                                <a class="badge badge-info">Deliverd</a>
+
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a class="btn-sm btn-dark"
+                                                    href="{{route('orders.show',$order->id)}}">Detail</a>
+                                                <a class="btn-sm btn-success"
+                                                    href="{{route('InvoiceDownload',$order->id)}}"><i
+                                                        class="fa fa-download"></i></a>
+                                            </td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="10">No Record</td>
+                                        </tr>
+                                        @endforelse
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer clearfix">
+                            <a href="{{ route('orders.index') }}" class="btn btn-sm btn-info float-left">View All Orders
+                            </a>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 mt-5">
+
+                    <div class="card-header border-transparent">
+                        <h3 class="card-title">Latest Products</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <ul class="products-list product-list-in-card pl-2 pr-2">
+                            @foreach ($Products as $Product)
+                                
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="{{ asset('thumbnail_img/'.$Product->thumbnail_img) }}" alt="Product Image" class="img-size-50">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">{{ $Product->title }}
+                                   
+                                </div>
+                            </li>
+                            @endforeach
+
+                        </ul>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <a href="{{ route('products.index') }}" class="uppercase">View All Products</a>
+                    </div>
+
+
+                </div>
             </div>
             <!-- /.row -->
 

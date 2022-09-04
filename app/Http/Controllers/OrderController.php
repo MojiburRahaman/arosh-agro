@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderCancel;
 use App\Mail\OrderDeliverdMail;
 use App\Models\Order_Summaries;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Mail;
+use phpDocumentor\Reflection\Types\Null_;
 
 class OrderController extends Controller
 {
@@ -106,21 +108,35 @@ class OrderController extends Controller
     {
         $status =  Order_Summaries::findorfail($id);
         $user = $status->User;
-        $email = $status->User->email;
+        $email = $status->billing_details->user_email;
         if ($status->delivery_status == 1) {
-
             $status->delivery_status = 2;
             $status->save();
             return back();
-
         } elseif ($status->delivery_status == 2) {
             $status->delivery_status = 3;
             $status->save();
-            Mail::to($email)->send(new OrderDeliverdMail($user->name, $status));
+            Mail::to($email)->send(new OrderDeliverdMail($status->billing_details->billing_user_name, $status));
             return back();
         } elseif ($status->delivery_status == 3) {
-            Mail::to($email)->send(new OrderDeliverdMail($user->name, $status));
-            // return back();
+            return back();
+        }
+    }
+    public function OrderCancel($id)
+    {
+        $Order =  Order_Summaries::findorfail($id);
+        $user = $Order->User;
+        $email = $Order->billing_details->user_email;
+        if ($Order->cancel == 1) {
+            $Order->cancel =Null;
+            $Order->save();
+            return back()->with('success', 'Order Activate');
+        } else {
+            $Order->cancel =1;
+            $Order->save();
+            Mail::to($email)->send(new OrderCancel($Order->billing_details->billing_user_name, $Order));
+
+            return back()->with('delete', 'Order Canceled');
         }
     }
 }

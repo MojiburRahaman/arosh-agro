@@ -19,9 +19,9 @@
                     data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2=""
                     data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8=""
                     data-param9="" data-param10="" data-description="">
-                    <img src="{{asset('banner_image/'.$banner->banner_image)}}" alt="" title="home-1-slide-1"
+                    <img lazy="loading" src="{{asset('banner_image/'.$banner->banner_image)}}" alt="{{ config('app.name') }}" title="{{ config('app.name') }}"
                         width="1903" height="873" data-bgposition="center center" data-bgfit="cover"
-                        data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                        data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina >
                         @if($banner->banner_text != '')
                             
                         <div class="tp-caption BigWhiteText tp-resizeme" id=" slide-{{$loop->index+1}}-layer-1"
@@ -82,7 +82,7 @@
 
                                             <div class="h-divider">
                                                 <div class="shadows"></div>
-                                                <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}" />
+                                                <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}" alt="icon" />
                                                 </div>
                                             </div>
                                             <div class=" pt-3 sc_section_content_wrap">
@@ -111,24 +111,7 @@
                         </div>
                     </div>
                     <div class="vc_row-full-width"></div>
-                    {{-- <div class="vc_row wpb_row vc_row-fluid">
-                                <div class="wpb_column vc_column_container vc_col-sm-12">
-                                    <div class="vc_column-inner ">
-                                        <div class="wpb_wrapper">
-                                            <div class="sc_section aligncenter" data-animation="animated fadeInUp normal">
-                                                <div class="sc_section_inner">
-                                                    <div class="sc_section_content_wrap">
-                                                        <figure class="sc_image sc_image_shape_square margin_top_huge-">
-                                                           <img src="{{asset('round_logo/ok.png')}}" />
-                    </figure>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div>
-</div> --}}
-
+                  
 <div class="vc_row wpb_row vc_row-fluid">
     <div class="wpb_column vc_column_container vc_col-sm-12">
         <div class="vc_column-inner vc_custom_1475066123130 cat4">
@@ -153,8 +136,8 @@
                                         <div class="post_thumb" data-image="" data-title="Our Dairy Farm">
                                             <a class="hover_icon hover_icon_link"
                                                 href="{{route('CategorySearch',$cat->slug)}}">
-                                                <img alt="{{$cat->catagory_name}}"
-                                                    src="{{asset('category_images/'.$cat->catagory_image)}}">
+                                                <img lazy="loading" alt="{{$cat->catagory_name}}"
+                                                    src="{{asset('category_images/'.$cat->catagory_image)}}" title="{{$cat->catagory_name}}">
                                             </a>
                                         </div>
                                     </div>
@@ -181,21 +164,19 @@
 <section id="deals">
 <div class="container">
     <h2 class="mb-4 mb-lg-2">{{ $deal->title }}</h2>
+    
     <div class="row p-0 pt-2 pb-2  pl-0 " >
         <div class="col-7 text-left " >
             <div>
-                <span class="pr-2 pr-lg-4" style="color: #99CB55">On Sale Now</span>
-                <span >
-                    Ending in</span>
-                <span  id="clock">
-                </span>
+                <span id="demo" class="pr-2 pr-lg-4" style="color: #99CB55">On Sale Now</span>
+                <span id="timerBefore">Ending in</span>
+                <span  id="clock"> </span>
             </div>
         </div>
         <div class="col-5 text-right">
             <a href="{{ route('FrontendDeals') }}" class="pt-2 pb-2 pl-3 pr-3" style="color: #99CB55 !important;border:1px solid #99CB55 !important">
                 View More</a>
-        </div>
-            
+        </div>  
         </div>
 <hr style="background: #99CB55">
         <div class="sc_section_content_wrap">
@@ -206,28 +187,32 @@
                         <div class="post_item_wrap">
                             <div class="post_featured">
                                 <div class="post_thumb">
-                                    @if (collect($latest_product->Attribute)->max('discount') != '')
+                                    @if($latest_product->comming_soon === 1)
                                     <div class="text-center">
-                                        <span 
-                                            style=" z-index: 2">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                        <span class=" coming_soon_tag">Coming Soon</span>
                                     </div>
-                                    @endif
+                                                    @endif
                                     <a class="hover_icon hover_icon_link"
                                         href="{{route('SingleProductView',$latest_product->slug)}}">
-                                        <img src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
+                                        @if (collect($latest_product->Attribute)->max('discount') != '' && $latest_product->comming_soon == '')
+                                                    <span  class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                                    @endif
+                                        <img lazy="loading" src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
                                             class="attachment-shop_catalog size-shop_catalog"
                                             alt="{{ $latest_product->title }}" />
                                     </a>
                                 </div>
                             </div>
                             <div class="post_content text-center">
-                                <h2 class="woocommerce-loop-product__title"><a
+                                <h2 class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}"><a
                                         href="{{route('SingleProductView',$latest_product->slug)}}">{{ $latest_product->title }}</a>
                                 </h2>
                                 @php
                                 $sale = collect($latest_product->Attribute)->min('sell_price');
                                 $regular = collect($latest_product->Attribute)->min('regular_price');
                                 @endphp
+                                @if($latest_product->comming_soon == '')
+
                                 <span class="price">
                                     @if ($sale == '')
                                     <span class="woocommerce-Price-amount amount">
@@ -247,10 +232,20 @@
 
                                     @endif
                                 </span>
-                                <a rel="nofollow"
-                                    href="{{route('SingleProductView',$latest_product->slug)}}"
-                                    data-quantity="1" data-product_id="471" data-product_sku=""
-                                    class="button add_to_cart_button">Add To Cart</a>
+                                @endif
+                                @if($latest_product->comming_soon === 1)
+                                                            <a rel="nofollow"
+                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                                data-quantity="1" data-product_id="471"
+                                                                data-product_sku=""
+                                                                class="button add_to_cart_button">View Product</a>
+                                                            @else
+                                                            <a rel="nofollow"
+                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                                data-quantity="1" data-product_id="471"
+                                                                data-product_sku=""
+                                                                class="button add_to_cart_button">Add To Cart</a>
+                                                            @endif
                             </div>
                         </div>
                     </li>
@@ -285,26 +280,29 @@
                                         <div class="post_item_wrap">
                                             <div class="post_featured">
                                                 <div class="post_thumb">
-                                                    @if (collect($latest_product->Attribute)->max('discount') != '')
-                                                    <span
-                                                        style=" z-index: 2">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                                    @if($latest_product->comming_soon === 1)
+                                                    <span class="coming_soon_tag">Coming Soon</span>
                                                     @endif
                                                     <a class="hover_icon hover_icon_link"
                                                         href="{{route('SingleProductView',$latest_product->slug)}}">
-                                                        <img src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
+                                                    @if (collect($latest_product->Attribute)->max('discount') != '' && $latest_product->comming_soon == '')
+                                                    <span  class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                                    @endif
+                                                        <img lazy="loading" src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
                                                             class="attachment-shop_catalog size-shop_catalog"
                                                             alt="{{ $latest_product->title }}" />
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="post_content">
-                                                <h2 class="woocommerce-loop-product__title"><a
+                                                <h2 class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}"><a
                                                         href="{{route('SingleProductView',$latest_product->slug)}}">{{ $latest_product->title }}</a>
                                                 </h2>
                                                 @php
                                                 $sale = collect($latest_product->Attribute)->min('sell_price');
                                                 $regular = collect($latest_product->Attribute)->min('regular_price');
                                                 @endphp
+                                                @if($latest_product->comming_soon == '')
                                                 <span class="price">
                                                     @if ($sale == '')
                                                     <span class="woocommerce-Price-amount amount">
@@ -324,10 +322,20 @@
 
                                                     @endif
                                                 </span>
-                                                <a rel="nofollow"
-                                                    href="{{route('SingleProductView',$latest_product->slug)}}"
-                                                    data-quantity="1" data-product_id="471" data-product_sku=""
-                                                    class="button add_to_cart_button">Add To Cart</a>
+                                                @endif
+                                                @if($latest_product->comming_soon === 1)
+                                                            <a rel="nofollow"
+                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                                data-quantity="1" data-product_id="471"
+                                                                data-product_sku=""
+                                                                class="button add_to_cart_button">View Product</a>
+                                                @else
+                                                            <a rel="nofollow"
+                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                                data-quantity="1" data-product_id="471"
+                                                                data-product_sku=""
+                                                                class="button add_to_cart_button">Add To Cart</a>
+                                                 @endif
                                             </div>
                                         </div>
                                     </li>
@@ -344,8 +352,6 @@
                             </div>
                         </div>
                     </div>
-                    
-
                 </div>
             </div>
         </div>
@@ -361,7 +367,6 @@
                             <div class="text-center">
                                 <a class="loadMore_btn mleft-60" href="javascript:void(0);">Load More</a>
                             </div>
-
                         </div>
 
          @endif
@@ -401,7 +406,6 @@
                                                     aria-selected="true">All</a>
                                             </li>
                                             @foreach ($catGallery as $catGallerys)
-
                                             <li class="nav-item" role="presentation">
                                                 <a class="nav-link" id="pills-profile-tab" data-toggle="pill"
                                                     href="#{{ $catGallerys->slug }}" role="tab"
@@ -430,8 +434,6 @@
                                                 aria-labelledby="pills-profile-tab">
                                                 <div class="row">
                                                     @forelse ($catGallerys->gallery as $gallerys)
-
-
                                                     <div class=" col-sm-4 col-6 col-md-4 col-lg-3 col-xl-3 p-3">
                                                         <div class="lightbox-enabled"
                                                             style="background-image:url({{ asset('product_image/' . $gallerys->product_img) }})"
@@ -470,7 +472,6 @@
         </div>
     </div>
 </div>
-{{-- Filter End --}}
 
 
 
@@ -501,7 +502,19 @@
     
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
-    
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+        document.getElementById("timerBefore").innerHTML = " ";
+        $('#deals').hide();
+
+        $.ajax({
+                    type:"GET",
+                    url: '{{route('FrontendDealsStaus')}}',
+                }); 
+
+        return;
+      }
       // Time calculations for days, hours, minutes and seconds
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -516,6 +529,7 @@
       if (distance < 0) {
         clearInterval(x);
         document.getElementById("demo").innerHTML = "EXPIRED";
+        document.getElementById("timerBefore").innerHTML = " ";
       }
     }, 1000);
     @endif
@@ -609,18 +623,6 @@ e.stopPropagation();
 
    
   
-    // @if ($deal != '') 
-   if ($("#clock").length) {
-        $('#clock').countdown('2022-06-20', function(event) {
-            var $this = $(this).html(event.strftime('' +
-                '<div class="box"><div>%m</div> <span>month</span> </div>' +
-                '<div class="box"><div>%D</div> <span>Days</span> </div>' +
-                '<div class="box"><div>%H</div> <span>Hours</span> </div>' +
-                '<div class="box"><div>%M</div> <span>Mins</span> </div>' +
-                '<div class="box"><div>%S</div> <span>Secs</span> </div>'));
-        });
-    }
-//    @endif
 // @auth
 
 // @endauth

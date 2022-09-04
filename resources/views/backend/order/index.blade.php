@@ -32,8 +32,10 @@
                                 <th>SL</th>
                                 <th>Order Number</th>
                                 <th>Order Time </th>
-                                <th>Delivery Status</th>
+                                <th class="text-center">Total Amount</th>
+                                <th class="text-center">Delivery Status</th>
                                 <th>Details</th>
+                                <th>Cancel</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,8 +44,12 @@
                                 <td>{{$loop->index+1}}</td>
                                 <td>{{$order->order_number}}</td>
                                 <td>{{$order->created_at->diffForHumans()}}</td>
-                                <td>
-                                    @if ($order->delivery_status == 1)
+                                <td class="text-center">৳{{$order->subtotal}}</td>
+                                <td class="text-center">
+                                    @if($order->cancel != '')
+                                    <a class="badge badge-danger">Order Canceled</a>
+
+                                    @elseif ($order->delivery_status == 1)
                                     <a href="{{route('DeliveryStatus',$order->id)}}"
                                         class="btn-sm btn-danger">pending</a>
                                     @elseif ($order->delivery_status == 2)
@@ -58,6 +64,20 @@
                                     <a class="btn-sm btn-primary" href="{{route('orders.show',$order->id)}}">Details</a>
                                     <a class="btn-sm btn-success" href="{{route('InvoiceDownload',$order->id)}}"><i
                                             class="fa fa-download"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    @if($order->cancel != '')
+                                        
+                                    <a href="{{ route('OrderCancel',$order->id) }}"
+                                        onclick="return confirm('Are you sure you would like to undo  this order?');"
+                                        class="badge badge-info" href="">Undo
+                                    </a>
+                                    @else
+                                    <a href="{{ route('OrderCancel',$order->id) }}"
+                                        onclick="return confirm('Are you sure you would like to cancel  this order?');"
+                                        class="btn-sm btn-danger text-light" href="">X
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
                             @empty
@@ -74,11 +94,17 @@
 </div>
 @endsection
 @section('script_js')
+
+
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/autofill/2.4.0/js/dataTables.autoFill.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 <script>
+    function geek() {
+            confirm("Press OK to close this option");
+        };
+
     @if (session('delete')) 
 Command: toastr["error"]("{{session('delete')}}")
 

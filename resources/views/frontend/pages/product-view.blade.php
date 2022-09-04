@@ -24,29 +24,6 @@
         margin-right: 5px
     }
 </style>
-<!-- .breadcumb-area end -->
-<!-- single-product-area start-->
-@if (session('cart_added'))
-<div class="container">
-    <div class="alert alert-dismissible alert-success">{{session('cart_added')}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-</div>
-@endif
-{{-- <div class="top_panel_title top_panel_style_1  title_present breadcrumbs_present scheme_original">
-    <div class="bg_cust_1 top_panel_title_inner top_panel_inner_style_1 title_present_inner breadcrumbs_present_inner">
-        <div class="content_wrap">
-            <h1 class="page_title">Product View</h1>
-            <div class="breadcrumbs">
-                <a class="breadcrumbs_item home" href="{{ route('Frontendhome') }}">Home</a>
-                <span class="breadcrumbs_delimiter"></span>
-                <span class="breadcrumbs_item current">Product View</span>
-            </div>
-        </div>
-    </div>
-</div> --}}
 <div class="pd-wrap">
     <div class="container">
         <div class="post_content">
@@ -233,9 +210,6 @@
 
                                 <style>
                                     .socil-icon li a {
-                                        /* height: 30px;
-	width: 30px; */
-                                        /* line-height: 30px; */
                                         text-align: center;
                                         display: block;
                                         background: #99CB55;
@@ -402,6 +376,11 @@
 
 
         <script>
+
+@if (session('cart_added'))
+Command: toastr["success"]('{{ session('cart_added') }}');
+@endif
+
             @error('color_id')
     Swal.fire({
         icon: 'warning',

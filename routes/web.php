@@ -31,9 +31,7 @@ use App\Http\Controllers\GalleryAllController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\SellingpointController;
 
-// Route::get('/dashboard', function () {
-    //     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+
 
 
 // socialite
@@ -42,17 +40,16 @@ Route::get('register/google', [SocialLoginController::class, 'GoogleRegister'])-
 Route::get('login/callback', [SocialLoginController::class, 'GoogleCallbackUrlRegister'])->name('GoogleCallbackUrlRegister');
 
 
-Auth::routes(['verify' => true]);
 
 
-Route::middleware(['auth', 'XssFilter', 'HtmlMinify', 'verified', 'checkcoustomer'])->group(function () {
+Route::middleware(['auth', 'XssFilter', 'HtmlMinify',  'checkcoustomer'])->group(function () {
     // Profile route
     Route::get('/profile', [UserProfileController::class, 'FrontendProfile'])->name('FrontendProfile');
     Route::post('/change-password', [UserProfileController::class, 'ChangeUserPass'])->name('ChangeUserPass');
     // wishlist route start
-    Route::get('/wishlist', [WishlistController::class, 'WishlistView'])->name('WishlistView');
-    Route::post('/wishlist-post', [WishlistController::class, 'WishlistPost'])->name('WishlistPost');
-    Route::get('/wishlist-remove/{id}', [WishlistController::class, 'WishlistRemove'])->name('WishlistRemove');
+    // Route::get('/wishlist', [WishlistController::class, 'WishlistView'])->name('WishlistView');
+    // Route::post('/wishlist-post', [WishlistController::class, 'WishlistPost'])->name('WishlistPost');
+    // Route::get('/wishlist-remove/{id}', [WishlistController::class, 'WishlistRemove'])->name('WishlistRemove');
     // checkout route start
     Route::get('/checkout', [CheckoutController::class, 'CheckoutView'])->name('CheckoutView');
     Route::post('/checkout-post', [CheckoutController::class, 'CheckoutPost'])->name('CheckoutPost');
@@ -62,11 +59,10 @@ Route::middleware(['auth', 'XssFilter', 'HtmlMinify', 'verified', 'checkcoustome
 
 
 // frontend route start
-Route::middleware(['XssFilter'])->group(function () {
-    // Route::get('/shop', [FrontendController::class, 'Frontendshop'])->name('Frontendshop');
+Route::middleware(['XssFilter','HtmlMinify'])->group(function () {
 
     Route::get('/', [FrontendController::class, 'Frontendhome'])->name('Frontendhome');
-    Route::get('/searching', [FrontendController::class, 'Frontendsearching'])->name('Frontendsearching');
+    // Route::get('/searching', [FrontendController::class, 'Frontendsearching'])->name('Frontendsearching');
     Route::get('/shop', [FrontendController::class, 'Allproducts'])->name('allproducts');
     Route::get('/contact', [FrontendController::class, 'FrontndContact'])->name('FrontndContact');
     Route::post('/contact', [FrontendController::class, 'FrontendContactPost'])->name('FrontendContactPost');
@@ -76,6 +72,7 @@ Route::middleware(['XssFilter'])->group(function () {
     Route::get('/video-gallery', [FrontendController::class, 'VideoGallery'])->name('VideoGallery');
     Route::get('/sister-concerns', [FrontendController::class, 'Sisterconcern'])->name('sisterconcern');
     Route::get('/deals', [FrontendController::class, 'FrontendDeals'])->name('FrontendDeals');
+    Route::get('/deals/status', [FrontendController::class, 'FrontendDealsStaus'])->name('FrontendDealsStaus');
     Route::get('/certified', [FrontendController::class, 'FrontendCertified'])->name('FrontendCertified');
     Route::post('/newsletter', [FrontendController::class, 'FrontendNewsLetter'])->name('FrontendNewsLetter');
 
@@ -117,7 +114,7 @@ Route::middleware(['XssFilter'])->group(function () {
 Route::get('/admin/login', [DashboardController::class, 'AdminLogin'])->name('AdminLogin')->middleware('guest', 'throttle:10,5');
 Route::post('/admin/login', [DashboardController::class, 'AdminLoginPost'])->name('AdminLoginPost')->middleware('guest', 'throttle:10,5');
 // backend route start
-Route::middleware(['auth', 'verified', 'HtmlMinify', 'checkadminpanel'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'HtmlMinify', 'checkadminpanel'])->prefix('admin')->group(function () {
     Route::get('/change-password', [DashboardController::class, 'AdminChangePassword'])->name('AdminChangePassword');
     Route::post('/change-password', [DashboardController::class, 'AdminChangePasswordPost'])->name('AdminChangePasswordPost');
     Route::post('dashboard/ck-editor-upload', [DashboardController::class, 'CkfileUpload'])->name('CkfileUpload');
@@ -143,12 +140,6 @@ Route::middleware(['auth', 'verified', 'HtmlMinify', 'checkadminpanel'])->prefix
     Route::resource('/gallery', GalleryAllController::class);
     Route::resource('/spoints', SellingpointController::class);
 
-    /* Route::resource('/concerns', [SisterConcern::class]);*/
-
-    // brand route
-    // Route::post('/brand/mark-delete', [BrandController::class, 'Markdeletebrand'])->name('Markdeletebrand');
-    // Route::resource('/brand', BrandController::class)->except('show');
-
         //    roles route
     Route::get('/roles/add-user', [RoleController::class, 'CreateUser'])->name('CreateUser');
     Route::post('/roles/add-user-post', [RoleController::class, 'CreateUserPost'])->name('CreateUserPost');
@@ -156,6 +147,7 @@ Route::middleware(['auth', 'verified', 'HtmlMinify', 'checkadminpanel'])->prefix
     Route::get('/roles/assign-user', [RoleController::class, 'AssignUser'])->name('AssignUser');
     Route::resource('/roles', RoleController::class)->except('show');
     // order route
+    Route::get('orders/cancel/{id}', [OrderController::class, 'OrderCancel'])->name('OrderCancel');
     Route::get('orders/status/{id}', [OrderController::class, 'DeliveryStatus'])->name('DeliveryStatus');
     Route::get('orders/download-invoice/{id}', [OrderController::class, 'InvoiceDownload'])->name('InvoiceDownload');
     Route::resource('/orders', OrderController::class)->except('create', 'store', 'edit', 'destroy', 'update');
@@ -174,14 +166,9 @@ Route::middleware(['auth', 'verified', 'HtmlMinify', 'checkadminpanel'])->prefix
     Route::resource('/size', SizeController::class)->except('show');
 
 
-    Route::resource('/blogs', BlogController::class);
+    // Route::resource('/blogs', BlogController::class);
 
     Route::resource('/deals', BestDealController::class)->except('edit', 'update');
 
     Route::resource('/pages', PagesController::class);
 });
-
-
-require __DIR__ . '/auth.php';
-
-Auth::routes();

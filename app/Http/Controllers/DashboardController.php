@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Intervention\Image\Facades\Image;
 
-
 class DashboardController extends Controller
 {
     /**
@@ -28,19 +27,18 @@ class DashboardController extends Controller
     public function index()
     {
         $order = Order_Summaries::get();
-        $Blog = Blog::count();
         $subscribes = Newsletter::count();
-        $ProductReview = ProductReview::count();
         $product = Product::where('status', 1)->count();
         $user = User::role('Customer')->get()->count();
-        // $user = Role::where('name', 'Customer')->count();
+        $order = Order_Summaries::latest('id')->take(10)->get();
+        $Products =  Product::latest('id')->take(5)->get();
         return view('backend.main', [
             'order' => $order,
-            'Blog' => $Blog,
             'subscribes' => $subscribes,
-            'ProductReview' => $ProductReview,
             'product' => $product,
             'user' => $user,
+            'orders' => $order,
+            'Products' => $Products,
         ]);
     }
 
@@ -139,7 +137,6 @@ class DashboardController extends Controller
             ]);
             return back()->with('success', 'Password Updated Successfully');
         } else {
-
             return back()->with('warning', 'Password not matched');
         }
     }
@@ -167,7 +164,7 @@ class DashboardController extends Controller
         }
         return back();
     }
-    function CkfileUpload(Request $request)
+    public function CkfileUpload(Request $request)
     {
         if ($request->hasFile('upload')) {
             $blog_image = $request->file('upload');

@@ -129,7 +129,9 @@
                                 <td class="text-center">{{$order_summaries->created_at->diffForHumans()}}</td>
                                 @endif
                                 <td class="text-center">৳{{$order_summaries->subtotal}}</td>
-                                @if ($order_summaries->delivery_status == 1)
+                                @if($order_summaries->cancel != '')
+                                <td class="text-center">Order Canceled</td>
+                                @elseif ($order_summaries->delivery_status == 1)
 
                                 <td class="text-center">Pending...</td>
                                 @elseif ($order_summaries->delivery_status === 2)

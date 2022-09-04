@@ -35,6 +35,8 @@ class BestDealController extends Controller
      */
     public function create()
     {
+        // return rand(1,50);
+
         if (auth()->user()->can('View Deals')) {
             $products = Product::where('status', 1)->select('id', 'title')->latest('id')->get();
             return view('backend.deals.create', compact('products'));
@@ -65,30 +67,23 @@ class BestDealController extends Controller
                 $deal->discount = $request->discount;
                 $deal->expire_date = $request->date;
                 $deal->expire_time = $request->time;
-                if ($request->deal_banner != '') {
-                    if ($request->hasFile('deal_banner')) {
-                        $deal_banner = $request->file('deal_banner');
-                        $extension = config('app.name') . '-' . Str::random(2) . '.' . $deal_banner->getClientOriginalExtension();
-                        Image::make($deal_banner)->save(public_path('deal_banner/' . $extension), 90);
-                        $deal->deal_banner = $extension;
-                    }
-                } else {
-                    $request->validate(['deal_backgraound_color' => ['required']]);
-                    $deal->deal_backgraound_color = $request->deal_backgraound_color;
-                }
                 $deal->save();
 
                 foreach ($request->product_id as $key => $product_id) {
-
+                    if ($request->random != '') {
+                        $discount =random_int(3, $request->discount);
+                    } else {
+                        $discount =$request->discount;
+                    }
                     $attributes = Attribute::where('product_id', $product_id)->get();
                     foreach ($attributes as $key => $attribute) {
-                        $attribute->discount = $request->discount;
-                        $discount_amount = ($attribute->regular_price * $request->discount) / 100;
+                        $attribute->discount = $discount;
+                        $discount_amount = ($attribute->regular_price * $discount) / 100;
                         $sell_price = round($attribute->regular_price - $discount_amount);
                         $attribute->sell_price = $sell_price;
                         $attribute->save();
                     }
-                    $deal_product = new BestDealProduct;
+                    $deal_product = new BestDealProduct();
                     $deal_product->best_deal_id = $deal->id;
                     $deal_product->product_id = $product_id;
                     $deal_product->save();
@@ -125,9 +120,9 @@ class BestDealController extends Controller
                 $BestDeal->save();
                 return back()->with('warning', 'Inactive Successfully');
             } else {
-
                 if (Carbon::today()->format('Y-m-d') > $BestDeal->expire_date) {
-                    return back()->with('warning', 'Out of Date');;
+                    return back()->with('warning', 'Out of Date');
+                    ;
                 }
                 $best_deal_product = BestDealProduct::where('best_deal_id', $BestDeal->id)->get();
                 foreach ($best_deal_product as $key => $deal_product) {
@@ -180,12 +175,7 @@ class BestDealController extends Controller
     {
         if (auth()->user()->can('View Deals')) {
             $BestDeal =  BestDeal::findorfail($id);
-            if ($BestDeal->deal_banner) {
-                $old_banner = public_path('deal_banner/' . $BestDeal->deal_banner);
-                if (file_exists($old_banner)) {
-                    unlink($old_banner);
-                }
-            }
+            
             $best_deal_product = BestDealProduct::where('best_deal_id', $BestDeal->id)->get();
             foreach ($best_deal_product as $key => $deal_product) {
                 $attributes = Attribute::where('product_id', $deal_product->product_id)->get();
