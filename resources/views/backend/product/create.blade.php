@@ -51,7 +51,7 @@ menu-open
                     </div>
                     <div class="form-group">
                         <input class="pr-2" name="comming_soon" id="comming_soon" value="1" type="checkbox">
-                        <label for="comming_soon">Comming Soon</label>
+                        <label for="comming_soon">Coming Soon</label>
                     </div>
                     <div class="form-group">
                         <label for="meta_description">Meta Description</label>

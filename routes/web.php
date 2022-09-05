@@ -73,7 +73,7 @@ Route::middleware(['XssFilter','HtmlMinify'])->group(function () {
     Route::get('/sister-concerns', [FrontendController::class, 'Sisterconcern'])->name('sisterconcern');
     Route::get('/deals', [FrontendController::class, 'FrontendDeals'])->name('FrontendDeals');
     Route::get('/deals/status', [FrontendController::class, 'FrontendDealsStaus'])->name('FrontendDealsStaus');
-    Route::get('/certified', [FrontendController::class, 'FrontendCertified'])->name('FrontendCertified');
+    // Route::get('/certified', [FrontendController::class, 'FrontendCertified'])->name('FrontendCertified');
     Route::post('/newsletter', [FrontendController::class, 'FrontendNewsLetter'])->name('FrontendNewsLetter');
 
     // product route
@@ -83,24 +83,24 @@ Route::middleware(['XssFilter','HtmlMinify'])->group(function () {
     // Route::post('/product/get-flavour', [ProductViewController::class, 'GetFlavourBySize'])->name('GetFlavourBySize');
     Route::post('/product/get-pricebysize', [ProductViewController::class, 'GetPriceBySize'])->name('GetPriceBySize');
     //Md Message Route
-    Route::get('/md-message', [FrontendController::class, 'Mdmessage'])->name('Mdmessage');
+    // Route::get('/md-message', [FrontendController::class, 'Mdmessage'])->name('Mdmessage');
     Route::get('/service', [FrontendController::class, 'service'])->name('service');
     Route::get('/service/{slug}', [FrontendController::class, 'ServiceView'])->name('ServiceView');
     // blog route
-    Route::get('/blog', [FrontendController::class, 'Frontendblog'])->name('Frontendblog');
-    Route::get('/blog/{slug}', [FrontendController::class, 'FrontenblogView'])->name('FrontenblogView');
+    // Route::get('/blog', [FrontendController::class, 'Frontendblog'])->name('Frontendblog');
+    // Route::get('/blog/{slug}', [FrontendController::class, 'FrontenblogView'])->name('FrontenblogView');
 
-    Route::post('/blog/comment', [FrontendController::class, 'BlogComment'])->name('BlogComment');
+    // Route::post('/blog/comment', [FrontendController::class, 'BlogComment'])->name('BlogComment');
     // Route::post('/blog/reply', [FrontendController::class, 'BlogReply'])->name('BlogReply');
     // search route start
-    Route::get('/product-category/{slug}', [SearchController::class, 'CategorySearch'])->name('CategorySearch');
-    Route::get('/product-sub-category/{slug}', [SearchController::class, 'SubCategorySearch'])->name('SubCategorySearch');
-    Route::get('/brand/{slug}', [SearchController::class, 'BrandSearch'])->name('BrandSearch');
+    Route::get('/category/{slug}', [SearchController::class, 'CategorySearch'])->name('CategorySearch');
+    // Route::get('/product-sub-category/{slug}', [SearchController::class, 'SubCategorySearch'])->name('SubCategorySearch');
+    // Route::get('/brand/{slug}', [SearchController::class, 'BrandSearch'])->name('BrandSearch');
     // cart route start
     Route::get('/cart', [CartController::class, 'CartView'])->name('CartView');
     Route::post('/cart/coupon', [CartController::class, 'CouponCheck'])->name('CouponCheck');
     Route::get('/cart/cart-delete/{id}', [CartController::class, 'CartDelete'])->name('CartDelete');
-    Route::post('/cart/cart-clear/', [CartController::class, 'CartClear'])->name('CartClear');
+    // Route::post('/cart/cart-clear/', [CartController::class, 'CartClear'])->name('CartClear');
     Route::post('/cart/quantity-update', [CartController::class, 'CartUpdate'])->name('CartUpdate');
     Route::post('/cartpost', [CartController::class, 'CartPost'])->name('CartPost');
     Route::get('/{page}', [FrontendController::class, 'DynamicPage'])->name('DynamicPage');

@@ -2,7 +2,7 @@
 @section('title') @if (url()->current() == route('Frontendhome'))
 Search Result for "{{$search}}" {{config('app.name')}}
 @else
-{{$category}} - {{config('app.name')}}
+{{config('app.name')}} - {{$category}}
 @endif @endsection
 
 
@@ -17,7 +17,6 @@ Search Result for "{{$search}}" {{config('app.name')}}
     .cat-item {
         list-style-type: none !important;
     }
-
 </style>
 
 
@@ -28,7 +27,7 @@ Search Result for "{{$search}}" {{config('app.name')}}
         <h3 class="sc_title sc_title_regular  text-center mt-3 mb-1">{{$category}}</h3>
         <div class="h-divider">
             <div class="shadows"></div>
-            <div class="text2"><img src="http://localhost:8000/round_logo/logo 3 Big.png"></div>
+            <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}" /></div>
         </div>
 
         <div class="page_content_wrap page_paddings_yes">
@@ -51,8 +50,8 @@ Search Result for "{{$search}}" {{config('app.name')}}
                                 <option value="popularity">Sort by popularity</option>
                             </select> --}}
 
-                        {{-- <select name="orderby" class="orderby" onchange="this.form.submit()>
-                                <option value="popularity">Sort by popularity</option>
+                            {{-- <select name="orderby" class="orderby" onchange="this.form.submit()>
+                                <option value=" popularity">Sort by popularity</option>
                                 <option value="rating">Sort by average rating</option>
                                 <option value="date" selected="selected">Sort by newness</option>
                                 <option value="price">Sort by price: low to high</option>
@@ -62,16 +61,21 @@ Search Result for "{{$search}}" {{config('app.name')}}
                         <ul class="products">
                             @foreach ($Products as $latest_product)
 
-                            <li class="product has-post-thumbnail column-1_3  instock purchasable">
+                            <li class="product has-post-thumbnail column-1_3  instock purchasable mt-2 mb-5 mb-lg-2">
                                 <div class="post_item_wrap">
                                     <div class="post_featured">
                                         <div class="post_thumb text-center">
 
-                                            @if (collect($latest_product->Attribute)->max('discount') != '')
-                                            <span>{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                            @if($latest_product->comming_soon === 1)
+                                            <span class="coming_soon_tag">Coming Soon</span>
                                             @endif
                                             <a class="hover_icon hover_icon_link"
                                                 href="{{route('SingleProductView',$latest_product->slug)}}">
+                                                @if (collect($latest_product->Attribute)->max('discount') != '' &&
+                                                $latest_product->comming_soon == '')
+                                                <span
+                                                    class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                                @endif
                                                 <img src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
                                                     class="attachment-shop_catalog size-shop_catalog"
                                                     alt="{{ $latest_product->title }}" />
@@ -79,13 +83,17 @@ Search Result for "{{$search}}" {{config('app.name')}}
                                         </div>
                                     </div>
                                     <div class="post_content">
-                                        <h2 class="woocommerce-loop-product__title"><a
-                                                href="{{route('SingleProductView',$latest_product->slug)}}">{{ $latest_product->title }}</a>
+                                        <h2
+                                            class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}">
+                                            <a href="{{route('SingleProductView',$latest_product->slug)}}">{{
+                                                $latest_product->title }}</a>
                                         </h2>
                                         @php
                                         $sale = collect($latest_product->Attribute)->min('sell_price');
                                         $regular = collect($latest_product->Attribute)->min('regular_price');
                                         @endphp
+                                        @if($latest_product->comming_soon == '')
+
                                         <span class="price">
                                             @if ($sale == '')
                                             <span class="woocommerce-Price-amount amount">
@@ -106,9 +114,16 @@ Search Result for "{{$search}}" {{config('app.name')}}
 
                                             @endif
                                         </span>
+                                        @endif
+                                        @if($latest_product->comming_soon === 1)
                                         <a rel="nofollow" href="{{route('SingleProductView',$latest_product->slug)}}"
-                                            data-quantity="1" data-product_id="458" data-product_sku=""
-                                            class=" button add_to_cart_button">Select options</a>
+                                            data-quantity="1" data-product_id="471" data-product_sku=""
+                                            class="button add_to_cart_button">View Product</a>
+                                        @else
+                                        <a rel="nofollow" href="{{route('SingleProductView',$latest_product->slug)}}"
+                                            data-quantity="1" data-product_id="471" data-product_sku=""
+                                            class="button add_to_cart_button">Add To Cart</a>
+                                        @endif
                                     </div>
                                 </div>
                             </li>
@@ -122,11 +137,26 @@ Search Result for "{{$search}}" {{config('app.name')}}
                             <br>
                             <li class="text-center"> No More Product</li>
                         </ul>
-                        @if ($Products->links() != '')
-                        <div class="col-lg-12 text-center">
+                        {{-- @if ($Products->links() != '')
+                        <div class="col-12 text-center">
                             <div class="fortextbutton m-auto">
                                 <div class="load_image" style="display: none">
-                                        <img width="30%" src="{{asset('front/images/Reload-Image-Gif-1.gif')}}" alt="">
+                                    <img width="30%" src="{{asset('front/images/Reload-Image-Gif-1.gif')}}" alt="">
+                                </div>
+                            </div>
+
+                            <div class="text-center m-auto">
+                                <a class="loadMore_btn " href="javascript:void(0);">Load More</a>
+                            </div>
+                        </div>
+
+                        @endif --}}
+                    </div>
+                    @if ($Products->links() != '')
+                        <div class="col-lg-12 text-center mt-5">
+                            <div class="fortextbutton m-auto">
+                                <div class="load_image" style="display: none">
+                                    <img width="30%" src="{{asset('front/images/Reload-Image-Gif-1.gif')}}" alt="">
                                 </div>
                             </div>
 
@@ -136,11 +166,11 @@ Search Result for "{{$search}}" {{config('app.name')}}
                         </div>
 
                         @endif
-                    </div>
                 </div>
+                
                 <div class="sidebar widget_area scheme_light" role="complementary">
                     <div class="sidebar_inner widget_area_inner">
-                             
+
                         <aside class="widget woocommerce widget_product_categories">
                             <h4 class="widget_title">Categories</h4>
                             <ul class="product-categories">
@@ -171,7 +201,6 @@ Search Result for "{{$search}}" {{config('app.name')}}
     $(document).on('click', '.loadMore_btn', function(event){
     page++;
     loadMoreData(page)
-    // alert('ok');
  });
 
 function loadMoreData(page){
@@ -189,31 +218,30 @@ function loadMoreData(page){
            
             return;
         }
-        // $(".result").html( val +data.total);
-        // $(".result").load(location.href + " .result");
+      
         $('#ajax-data').append(data.html);
         $('.load_image').hide();
         $('.loadMore_btn').show();
     })
 }
 
-$("#slider-range").slider({
-  range: true,
-  orientation: "horizontal",
-  min: 0,
-  max: 10000,
-  values: [0, 10000],
-  step: 100,
+// $("#slider-range").slider({
+//   range: true,
+//   orientation: "horizontal",
+//   min: 0,
+//   max: 10000,
+//   values: [0, 10000],
+//   step: 100,
 
-  slide: function (event, ui) {
-    if (ui.values[0] == ui.values[1]) {
-      return false;
-    }
+//   slide: function (event, ui) {
+//     if (ui.values[0] == ui.values[1]) {
+//       return false;
+//     }
     
-    $("#min_price").val(ui.values[0]);
-    $("#max_price").val(ui.values[1]);
-  }
-});
+//     $("#min_price").val(ui.values[0]);
+//     $("#max_price").val(ui.values[1]);
+//   }
+// });
 
 
 </script>

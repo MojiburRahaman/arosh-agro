@@ -44,11 +44,11 @@ active
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">Pending Order</span>
-                            <span class="info-box-number"> {{$order->where('delivery_status',1)->count()}}</span>
+                            <span class="info-box-number"> {{$order->where('delivery_status',1)->where('cancel',null)->count()}}</span>
                             {{-- <span class="info-box-number">
                                 {{$order->where('delivery_status',2)->sum('subtotal')}}</span>
                             --}}
@@ -65,11 +65,39 @@ active
 
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
+                        <span class="info-box-icon bg-red elevation-1"><i class="fas fa-ban"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Cancel Order</span>
+                            <span class="info-box-number">
+                                ৳ {{$order->where('cancel',1)->count()}}
+                                {{-- ৳ {{$order->where('delivery_status',3)->sum('subtotal')}} --}}
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Sales</span>
                             <span class="info-box-number">
-                                ৳ {{$order->where('delivery_status',3)->sum('subtotal')}}
+                                ৳ {{$order->where('delivery_status',3)->where('cancel',null)->sum('subtotal')}}
+                                {{-- ৳ {{$order->where('delivery_status',3)->sum('subtotal')}} --}}
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-bag"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Product</span>
+                            <span class="info-box-number">
+                                {{$product}}
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -80,9 +108,9 @@ active
                     <div class="info-box mb-3">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Total Product</span>
+                            <span class="info-box-text">Total Cart Item</span>
                             <span class="info-box-number">
-                                {{$product}}
+                                {{$cart}}
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -212,7 +240,10 @@ active
                                 </div>
                                 <div class="product-info">
                                     <a href="javascript:void(0)" class="product-title">{{ $Product->title }}
-                                   
+                                        
+                                        <a href="{{ route('SingleProductView',$Product->slug) }}" target="_blank" class="badge badge-info float-right mr-4" title="view product">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
                                 </div>
                             </li>
                             @endforeach

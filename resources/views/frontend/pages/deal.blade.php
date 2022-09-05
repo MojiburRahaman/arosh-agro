@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div> --}}
-        <div class="row">
+        <div class="row mt-5 mb-5">
             <div class="sc_section_content_wrap">
                 <div class="woocommerce columns-4">
                     <ul class="products ">
@@ -31,14 +31,16 @@
                             <div class="post_item_wrap">
                                 <div class="post_featured">
                                     <div class="post_thumb">
-                                        @if (collect($latest_product->Attribute)->max('discount') != '')
-                                        <div class="text-center">
-                                            <span
-                                                style=" z-index: 2">{{collect($latest_product->Attribute)->max('discount')}}%</span>
-                                        </div>
+                                        @if($latest_product->comming_soon === 1)
+                                        <span class="coming_soon_tag">Coming Soon</span>
                                         @endif
                                         <a class="hover_icon hover_icon_link"
                                             href="{{route('SingleProductView',$latest_product->slug)}}">
+                                            @if (collect($latest_product->Attribute)->max('discount') != '' &&
+                                            $latest_product->comming_soon == '')
+                                            <span
+                                                class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                            @endif
                                             <img src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
                                                 class="attachment-shop_catalog size-shop_catalog"
                                                 alt="{{ $latest_product->title }}" />
@@ -46,14 +48,17 @@
                                     </div>
                                 </div>
                                 <div class="post_content text-center">
-                                    <h2 class="woocommerce-loop-product__title"><a
-                                            href="{{route('SingleProductView',$latest_product->slug)}}">{{
+                                    <h2
+                                        class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}">
+                                        <a href="{{route('SingleProductView',$latest_product->slug)}}">{{
                                             $latest_product->title }}</a>
                                     </h2>
                                     @php
                                     $sale = collect($latest_product->Attribute)->min('sell_price');
                                     $regular = collect($latest_product->Attribute)->min('regular_price');
                                     @endphp
+                                    @if($latest_product->comming_soon == '')
+
                                     <span class="price">
                                         @if ($sale == '')
                                         <span class="woocommerce-Price-amount amount">
@@ -73,9 +78,16 @@
 
                                         @endif
                                     </span>
+                                    @endif
+                                    @if($latest_product->comming_soon === 1)
+                                    <a rel="nofollow" href="{{route('SingleProductView',$latest_product->slug)}}"
+                                        data-quantity="1" data-product_id="471" data-product_sku=""
+                                        class="button add_to_cart_button">View Product</a>
+                                    @else
                                     <a rel="nofollow" href="{{route('SingleProductView',$latest_product->slug)}}"
                                         data-quantity="1" data-product_id="471" data-product_sku=""
                                         class="button add_to_cart_button">Add To Cart</a>
+                                    @endif
                                 </div>
                             </div>
                         </li>

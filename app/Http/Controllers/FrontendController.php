@@ -278,7 +278,7 @@ class FrontendController extends Controller
     }
     public function FrontendDealsStaus()
     {
-        // return 1;
+        
         $BestDeal =  BestDeal::first();
         if ($BestDeal->status == 1) {
             $best_deal_product = BestDealProduct::where('best_deal_id', $BestDeal->id)->get();

@@ -40,8 +40,19 @@ Please, make all necessary changes in the corresponding .less-file!
 -------------------------------------------------------------- */
 /* 1. Theme typography
 -------------------------------------------------------------- */
-
-
+.socil-icon li{
+    float: left;
+}
+.socil-icon li a {
+    text-align: center;
+    display: block;
+    background: #99CB55;
+    color: #fff;
+    border-radius: 50%;
+    color: white !important;
+    padding: 3px 10px;
+    float: left;
+}
 .discount_tag {
     left: 0;top: 16px;position: absolute;background: #39B54A; color: white;padding: 2px 8px;font-size: 13px;z-index: 2;
 }

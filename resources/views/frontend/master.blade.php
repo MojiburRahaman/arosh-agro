@@ -324,68 +324,7 @@
     
     </div></div></div></li></ul> </div>
     </div>
-    <div class="side_wrap">
-    <div class="close">Close</div>
-    <div class="panel_top">
-    <nav class="menu_main_nav_area">
-    <ul id="menu_mobile" class="menu_main_nav"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-38"><a href="#"><span class="open_child_menu"></span><span>Home</span></a>
-    <ul class="sub-menu">
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-129 current_page_item menu-item-181"><a href="https://dairy-farm.ancorathemes.com/" aria-current="page"><span>Homepage 1</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-179"><a href="https://dairy-farm.ancorathemes.com/homepage-2/"><span>Homepage 2</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-180"><a href="https://dairy-farm.ancorathemes.com/homepage-3/"><span>Homepage 3</span></a></li>
-    </ul>
-    </li>
-    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-39"><a href="#"><span class="open_child_menu"></span><span>About us</span></a>
-    <ul class="sub-menu">
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-183"><a href="https://dairy-farm.ancorathemes.com/about-1/"><span>About 1</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-182"><a href="https://dairy-farm.ancorathemes.com/about-2/"><span>About 2</span></a></li>
-    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-329"><a href="#"><span class="open_child_menu"></span><span>Features</span></a>
-    <ul class="sub-menu">
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74"><a href="https://dairy-farm.ancorathemes.com/shortcodes/"><span>Shortcodes</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36"><a href="https://dairy-farm.ancorathemes.com/typography/"><span>Typography</span></a></li>
-    </ul>
-    </li>
-    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-185"><a href="#"><span class="open_child_menu"></span><span>Tools</span></a>
-    <ul class="sub-menu">
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-632"><a href="https://dairy-farm.ancorathemes.com/privacy-policy/"><span>Privacy Policy</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-815"><a href="https://dairy-farm.ancorathemes.com/service-plus/"><span>Service plus</span></a></li>
-    </ul>
-    </li>
-    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-330"><a href="#"><span class="open_child_menu"></span><span>Gallery</span></a>
-    <ul class="sub-menu">
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-331"><a href="https://dairy-farm.ancorathemes.com/gallery-cobbles/"><span>Gallery Cobbles</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-333"><a href="https://dairy-farm.ancorathemes.com/gallery-grid/"><span>Gallery Grid</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-332"><a href="https://dairy-farm.ancorathemes.com/gallery-masonry/"><span>Gallery Masonry</span></a></li>
-    </ul>
-    </li>
-    </ul>
-    </li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-184"><a href="https://dairy-farm.ancorathemes.com/farm/"><span>Farm</span></a></li>
-    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-41"><a href="#"><span class="open_child_menu"></span><span>Blog</span></a>
-    <ul class="sub-menu">
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-126"><a href="https://dairy-farm.ancorathemes.com/classic/"><span>Classic</span></a></li>
-    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-127"><a href="#"><span class="open_child_menu"></span><span>Masonry</span></a>
-    <ul class="sub-menu">
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-136"><a href="https://dairy-farm.ancorathemes.com/masonry-2-columns/"><span>Masonry 2 columns</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-144"><a href="https://dairy-farm.ancorathemes.com/masonry-3-columns/"><span>Masonry 3 columns</span></a></li>
-    </ul>
-    </li>
-    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-128"><a href="#"><span class="open_child_menu"></span><span>Portfolio</span></a>
-    <ul class="sub-menu">
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-135"><a href="https://dairy-farm.ancorathemes.com/portfolio-2-columns/"><span>Portfolio 2 columns</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-145"><a href="https://dairy-farm.ancorathemes.com/portfolio-3-columns/"><span>Portfolio 3 columns</span></a></li>
-    </ul>
-    </li>
-    </ul>
-    </li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37"><a href="https://dairy-farm.ancorathemes.com/shop/"><span>Products</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-168"><a href="https://dairy-farm.ancorathemes.com/our-recipes/"><span>Recipes</span></a></li>
-    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-112"><a href="https://dairy-farm.ancorathemes.com/contacts/"><span>Contacts</span></a></li>
-    </ul> </nav>
-    </div>
-    <div class="panel_bottom">
-    </div>
-    </div>
+    
     <div class="mask"></div>
     
             </div>
@@ -434,16 +373,9 @@
                                         </ul>
                                     </li>
                                    
-                                    <li class="menu-item menu-item-has-children"><a href="{{ route('FrontndContact') }}"><span>Contact Us</span></a>
-                                     {{--    <ul class="sub-menu">
-                                             <li class="menu-item"><a href=""><span>Contact Details </span></a></li>
-                                             </ul> --}}
-                                          {{--   <li class="menu-item"><a href="{{ route('spoints') }}"><span>Selling Points </span></a></li> --}}
-                                            
-                                           
-                                        
+                                    <li class="menu-item"><a href="{{ route('FrontndContact') }}"><span>Contact Us</span></a>
+            
                                     </li>
-                                          <li class="menu-item"><a href="{{ route('spoints') }}"><span>Selling Points</span></a></li>
 
                                      <li class="menu-item"><a href="{{route('CartView')}}"><span>Cart</span></a></li>
                         </ul>
@@ -454,22 +386,6 @@
             </div>
             <div class="mask"></div>
         </div>
-        <!-- search-form here -->
-{{--         <div class="search-area flex-style">
-            <span class="closebar">Close</span>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 offset-md-2 col-12">
-                        <div class="search-form">
-                            <form action="{{route('Frontendhome')}}">
-                                <input name="search" type="text" placeholder="Search Here...">
-                                <button><i class="fa fa-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         <!-- search-form here -->
         <!-- header-area start -->
 
@@ -509,7 +425,7 @@
                             <div class="menu-footer-menu-1-container">
                                 <ul id="menu-footer-menu-1" class="menu">
                                     <li class="menu-item"><a class="footer_link" href="{{route('FrontendAbout')}}">About Arosh Agro</a></li>
-                                    <li class="menu-item"><a class="footer_link" href="recipes.html">Our Sister Concerns</a></li>
+                                    <li class="menu-item"><a class="footer_link" href="{{ route('sisterconcern') }}">Our Sister Concerns</a></li>
                                     @forelse ($pages as $page)
                                                 
                                     <li class="menu-item"><a class="footer_link"  href="{{route('DynamicPage',$page->slug)}}"><span>{{ $page->heading }}</span></a></li>
@@ -520,13 +436,13 @@
                                         .subscribe_input{
                                             border: none !important;
                                             width: 80%;
-	font-size: 13px;
-	padding: 5px 5px !important;
+                                        font-size: 13px;
+                                        padding: 5px 5px !important;
                                         }
                                     </style>
                                         <form action="{{ route('FrontendNewsLetter') }}" method="POST" id="SubscribeForm">
                                     <div class="input-group mt-4">
-@csrf
+                                        @csrf
                                             <input required name="email" type="email" class="form-control p-0 subscribe_input" placeholder="Subscribe">
                                             <button type="submit" class="btn-sm text-light">
                                                 <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
@@ -572,122 +488,41 @@
                                     
                                       <li class="menu-item"><a class="footer_link" href="{{ route('FrontndContact') }}"><span>Contact Details</span></a></li>
                                             <li class="menu-item"><a  class="footer_link" href="{{ route('spoints') }}"><span>Selling Points </span></a></li>
-                                    
+                                            <ul class="socil-icon mt-4 mt-lg-2">
+                                                @if($setting->facebook_link != '')
+                                                    
+                                                <li class="pr-2"> &nbsp; <a target="_blank" href="{{ $setting->facebook_link }}">
+                                                    <i class="icon-facebook"></i></a>
+                                                </li>
+                                                @endif
+                                                @if($setting->instagram_link != '')
+                                                    
+                                                <li> &nbsp; <a href="{{ $setting->instagram_link }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                    width="20" height="24"
+                                                    viewBox="0 0 24 24"
+                                                    style=" fill:#fff;">    <path d="M 8 3 C 5.243 3 3 5.243 3 8 L 3 16 C 3 18.757 5.243 21 8 21 L 16 21 C 18.757 21 21 18.757 21 16 L 21 8 C 21 5.243 18.757 3 16 3 L 8 3 z M 8 5 L 16 5 C 17.654 5 19 6.346 19 8 L 19 16 C 19 17.654 17.654 19 16 19 L 8 19 C 6.346 19 5 17.654 5 16 L 5 8 C 5 6.346 6.346 5 8 5 z M 17 6 A 1 1 0 0 0 16 7 A 1 1 0 0 0 17 8 A 1 1 0 0 0 18 7 A 1 1 0 0 0 17 6 z M 12 7 C 9.243 7 7 9.243 7 12 C 7 14.757 9.243 17 12 17 C 14.757 17 17 14.757 17 12 C 17 9.243 14.757 7 12 7 z M 12 9 C 13.654 9 15 10.346 15 12 C 15 13.654 13.654 15 12 15 C 10.346 15 9 13.654 9 12 C 9 10.346 10.346 9 12 9 z"></path></svg>    
+                                                </a>
+                                                </li>
+                                                @endif
+                                                @if($setting->youtube_link != '')
+
+                                                <li> &nbsp; <a href="{{ $setting->youtube_link }}">
+                                                    <i class="icon-youtube"></i></a>
+                                                </li>
+                                                @endif
+                                                @if($setting->twitter_link != '')
+
+                                                <li> &nbsp; <a href="{{ $setting->twitter_link }}">
+                                                    <i class="icon-twitter"></i></a>
+                                                </li>
+                                                @endif
+                                                
+                                            </ul>
                                 </ul>
                             </div>
                         </aside>
-                        {{-- <div class="container">
-
-                            <div class="row ">
-                                <div class="col-lg-6 col-sm-6 col-12 text-left">
-                                    <div class="widget_inner">
-                                        <div class="logo mt-0">
-                                           <a href="{{route('Frontendhome')}}">
-                                             <img src="{{ asset('logo/'.$setting->site_logo) }}" class="logo_main" alt="{{config('app.name')}}" width="74" height="74" >
-         
-                                           </a>
-                                        </div>
-                                     </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6 col-12 text-left">
-                                    <div class="textwidget">
-                                        <br> Email: {{$setting->email}}
-                                        <br>
-                                        <span >Phone: {{$setting->number}}</span>
-                                        <br>
-                                        <span>Adderess:</span>{{$setting->address}}
-        
-                                           
-                                    </div>
-                                    <div class="widget_inner mt-4">
-                                        <div class="sc_socials sc_socials_type_icons sc_socials_shape_round sc_socials_size_tiny">
-                                            <div class="sc_socials_item">
-                                                <a href="#" target="_blank" class="social_icons social_twitter">
-                                                    <span class="icon-twitter text-light"></span>
-                                                </a>
-                                            </div>
-                                            <div class="sc_socials_item">
-                                                      @if ($setting->facebook_link != '')
-                                                <a href="{{$setting->facebook_link}}" target="_blank" class="social_icons social_facebook">
-                                                    <span class="icon-facebook text-light"></span>
-                                                </a>
-                                                    @endif
-        
-         
-                                            </div>
-                                            <div class="sc_socials_item">
-                                                <a href="#" target="_blank" class="social_icons social_gplus-1">
-                                                    <span class="icon-gplus-1 text-light"></span>
-                                                </a>
-                                            </div>
-                                            <div class="sc_socials_item">
-                                                    @if ($setting->youtube_link != '')
-                                                <a href="{{$setting->youtube_link}}" target="_blank" class="social_icons social_linkedin">
-                                                    <span class="icon-youtube text-light"></span>
-                                                </a> 
-                                            @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        {{-- <aside class="column-1_4 widget widget_socials">
-                            <div class="widget_inner">
-                               <div class="logo mt-0">
-                                  <a href="{{route('Frontendhome')}}">
-                                    <img src="{{ asset('logo/'.$setting->site_logo) }}" class="logo_main" alt="{{config('app.name')}}" width="74" height="74" >
-
-                                  </a>
-                               </div>
-                            </div>
-                        </aside>
-                      
-                        <aside class="column-1_4 widget widget_text">
-                            <div class="textwidget">{{$setting->address}}
-                                <br>
-                                <span class="accent1">Phone: {{$setting->number}}</span>
-                                 
-                                <br> Email: {{$setting->email}}
-
-                                   
-                            </div>
-                        </aside>
-                        <aside class="column-1_4 widget widget_text">
-                            <div class="textwidget"></div>
-                        </aside>
-                        <aside class="column-1_4 widget widget_socials">
-                            <div class="widget_inner">
-                                <div class="sc_socials sc_socials_type_icons sc_socials_shape_round sc_socials_size_tiny">
-                                    <div class="sc_socials_item">
-                                        <a href="#" target="_blank" class="social_icons social_twitter">
-                                            <span class="icon-twitter text-light"></span>
-                                        </a>
-                                    </div>
-                                    <div class="sc_socials_item">
-                                              @if ($setting->facebook_link != '')
-                                        <a href="{{$setting->facebook_link}}" target="_blank" class="social_icons social_facebook">
-                                            <span class="icon-facebook text-light"></span>
-                                        </a>
-                                            @endif
-
- 
-                                    </div>
-                                    <div class="sc_socials_item">
-                                        <a href="#" target="_blank" class="social_icons social_gplus-1">
-                                            <span class="icon-gplus-1 text-light"></span>
-                                        </a>
-                                    </div>
-                                    <div class="sc_socials_item">
-                                            @if ($setting->youtube_link != '')
-                                        <a href="{{$setting->youtube_link}}" target="_blank" class="social_icons social_linkedin">
-                                            <span class="icon-youtube text-light"></span>
-                                        </a> 
-                                    @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </aside> --}}
+                        
                     </div>
                 </div>
             </div>
@@ -696,7 +531,6 @@
       <div class="copyright_wrap copyright_style_menu scheme_original">
             <div class="copyright_wrap_inner">
                 <div class="content_wrap">
-                      
                     <div class="  ">
                         <p class="text-center">Copyright © {{now()->format('Y')}} {{config('app.name')}} All rights reserved.
                         
@@ -711,13 +545,6 @@
 
 
 
-        <!-- Your Chat plugin code -->
-        <!-- Messenger Chat plugin Code -->
-        <div id="fb-root"></div>
-
-        <!-- Your Chat plugin code -->
-        <div id="fb-customer-chat" class="fb-customerchat">
-        </div>
 
         <a href="#" class="scroll_to_top icon-up text-light" title="Scroll to top"></a>
 <div class="custom_html_section"></div>
@@ -802,12 +629,9 @@
         <script src="{{ asset('front/js/scripts.js') }}"></script>
 
         @yield('script_js')
-        {{-- <style>
-            .corner-btn{
-                color: white !important;
-            }
-        </style> --}}
+     
         <script>
+            
    jQuery(document).ready(function($) {
         $("#SubscribeForm").submit(function(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -839,16 +663,10 @@
     colors : '#99CB55',
     delay:70,    
     slide:true,
-    button1 :'Continue',
+    button1 :'<span class="text-light">Continue</span>',
 });
 
-             @if (session('subscribe'))
-            Swal.fire(
-                'Thanks',
-                '{{session("subscribe")}}',
-                'success'
-            )
-             @endif
+             
         @endguest
         </script>
 

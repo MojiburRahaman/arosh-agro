@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Cart;
 use App\Models\CkeditorFileUpload;
 use App\Models\Newsletter;
 use App\Models\Order_Summaries;
@@ -28,12 +29,14 @@ class DashboardController extends Controller
     {
         $order = Order_Summaries::get();
         $subscribes = Newsletter::count();
+        $cart = Cart::count();
         $product = Product::where('status', 1)->count();
         $user = User::role('Customer')->get()->count();
         $order = Order_Summaries::latest('id')->take(10)->get();
         $Products =  Product::latest('id')->take(5)->get();
         return view('backend.main', [
             'order' => $order,
+            'cart' => $cart,
             'subscribes' => $subscribes,
             'product' => $product,
             'user' => $user,

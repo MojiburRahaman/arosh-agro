@@ -209,7 +209,7 @@
                                 </div>
 
                                 <style>
-                                    .socil-icon li a {
+                                    /* .socil-icon li a {
                                         text-align: center;
                                         display: block;
                                         background: #99CB55;
@@ -218,19 +218,19 @@
                                         color: white !important;
                                         padding: 5px 10px;
                                         float: left;
-                                    }
+                                    } */
                                 </style>
                                 <ul class="socil-icon">
-                                    <li style="float: left" class="pr-2 pt-2 pt-lg-0">Share :</li>
-                                    <li style="float: left"> &nbsp; <a
+                                    <li  class="pr-2 pt-2 pt-lg-0">Share :</li>
+                                    <li > &nbsp; <a
                                             href="https://www.facebook.com/sharer/sharer.php?u={{route('SingleProductView',$product->slug)}}&display=popup"><i
                                                 class="icon-facebook"></i></a>
                                     </li>
-                                    <li style="float: left"> &nbsp; <a
+                                    <li > &nbsp; <a
                                             href="https://twitter.com/intent/tweet?url={{route('SingleProductView',$product->slug)}}"><i
                                                 class="icon-twitter"></i></a>
                                     </li>
-                                    <li style="float: left"> &nbsp; <a
+                                    <li > &nbsp; <a
                                             href="https://www.linkedin.com/shareArticle?mini=true&url={{route('SingleProductView',$product->slug)}}&title={{ $product->title }}"><i
                                                 class="icon-linkedin"></i></a>
                                     </li>

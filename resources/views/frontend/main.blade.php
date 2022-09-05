@@ -62,7 +62,7 @@
     </div>
 </section>
 
-<div class="page_content_wrap page_paddings_no">
+<div class="page_content_wrap page_paddings_no mt-5">
     <div class="content_wrap">
         <div class="content">
             <article
@@ -159,105 +159,7 @@
     </div>
 </div>
 <div class="vc_row-full-width"></div>
-@if($deal)
-    
-<section id="deals">
-<div class="container">
-    <h2 class="mb-4 mb-lg-2">{{ $deal->title }}</h2>
-    
-    <div class="row p-0 pt-2 pb-2  pl-0 " >
-        <div class="col-7 text-left " >
-            <div>
-                <span id="demo" class="pr-2 pr-lg-4" style="color: #99CB55">On Sale Now</span>
-                <span id="timerBefore">Ending in</span>
-                <span  id="clock"> </span>
-            </div>
-        </div>
-        <div class="col-5 text-right">
-            <a href="{{ route('FrontendDeals') }}" class="pt-2 pb-2 pl-3 pr-3" style="color: #99CB55 !important;border:1px solid #99CB55 !important">
-                View More</a>
-        </div>  
-        </div>
-<hr style="background: #99CB55">
-        <div class="sc_section_content_wrap">
-            <div class="woocommerce columns-4">
-                <ul class="products " >
-                    @foreach ($deal->Product as $latest_product)
-                    <li class="product has-post-thumbnail   instock purchasable">
-                        <div class="post_item_wrap">
-                            <div class="post_featured">
-                                <div class="post_thumb">
-                                    @if($latest_product->comming_soon === 1)
-                                    <div class="text-center">
-                                        <span class=" coming_soon_tag">Coming Soon</span>
-                                    </div>
-                                                    @endif
-                                    <a class="hover_icon hover_icon_link"
-                                        href="{{route('SingleProductView',$latest_product->slug)}}">
-                                        @if (collect($latest_product->Attribute)->max('discount') != '' && $latest_product->comming_soon == '')
-                                                    <span  class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
-                                                    @endif
-                                        <img lazy="loading" src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
-                                            class="attachment-shop_catalog size-shop_catalog"
-                                            alt="{{ $latest_product->title }}" />
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="post_content text-center">
-                                <h2 class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}"><a
-                                        href="{{route('SingleProductView',$latest_product->slug)}}">{{ $latest_product->title }}</a>
-                                </h2>
-                                @php
-                                $sale = collect($latest_product->Attribute)->min('sell_price');
-                                $regular = collect($latest_product->Attribute)->min('regular_price');
-                                @endphp
-                                @if($latest_product->comming_soon == '')
 
-                                <span class="price">
-                                    @if ($sale == '')
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span>
-                                        {{$regular}}
-                                    </span>
-                                    @else
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span style="text-decoration:line-through"
-                                            class="woocommerce-Price-currencySymbol">&#2547;
-                                            {{$regular}} </span>
-                                    </span>
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span>
-                                        {{$sale}}
-                                    </span>
-
-                                    @endif
-                                </span>
-                                @endif
-                                @if($latest_product->comming_soon === 1)
-                                                            <a rel="nofollow"
-                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
-                                                                data-quantity="1" data-product_id="471"
-                                                                data-product_sku=""
-                                                                class="button add_to_cart_button">View Product</a>
-                                                            @else
-                                                            <a rel="nofollow"
-                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
-                                                                data-quantity="1" data-product_id="471"
-                                                                data-product_sku=""
-                                                                class="button add_to_cart_button">Add To Cart</a>
-                                                            @endif
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
-
-                </ul>
-            </div>
-        </div>
-</div>
-
-</section>
-@endif
 
 
 <div class="vc_row wpb_row vc_row-fluid">
@@ -357,8 +259,8 @@
         </div>
     </div>
 </div>
-<div class="row">
-         @if ($latest_products->links() != '')
+@if ($latest_products->links() != '')
+<div class="row mb-5">
                         <div class="col-12 text-center ">
                             <div class="load_image " style="display:none">
                                     <img width="30%" src="{{asset('front/images/Reload-Image-Gif-1.gif')}}"
@@ -369,10 +271,117 @@
                             </div>
                         </div>
 
-         @endif
-</div>
+                    </div>
+                    @endif
 <div class="vc_row-full-width"></div>
 {{-- Filter Start --}}
+
+{{-- deal start --}}
+
+@if($deal)
+    
+<section id="deals mt-5">
+<div class="container">
+    <h2 class="mb-4 mb-lg-2">{{ $deal->title }}</h2>
+    
+    <div class="row p-0 pt-2 pb-2  pl-0 " >
+        <div class="col-7 text-left " >
+            <div>
+                <span id="demo" class="pr-2 pr-lg-4" style="color: #99CB55">On Sale Now</span>
+                <span id="timerBefore">Ending in</span>
+                <span  id="clock"> </span>
+            </div>
+        </div>
+        <div class="col-5 text-right">
+            <a href="{{ route('FrontendDeals') }}" class="pt-2 pb-2 pl-3 pr-3" style="color: #99CB55 !important;border:1px solid #99CB55 !important">
+                View More</a>
+        </div>  
+        </div>
+<hr style="background: #99CB55">
+        <div class="sc_section_content_wrap">
+            <div class="woocommerce columns-4">
+                <ul class="products " >
+                    @foreach ($deal->Product as $latest_product)
+                    <li class="product has-post-thumbnail   instock purchasable">
+                        <div class="post_item_wrap">
+                            <div class="post_featured">
+                                <div class="post_thumb">
+                                    @if($latest_product->comming_soon === 1)
+                                    <div class="text-center">
+                                        <span class=" coming_soon_tag">Coming Soon</span>
+                                    </div>
+                                                    @endif
+                                    <a class="hover_icon hover_icon_link"
+                                        href="{{route('SingleProductView',$latest_product->slug)}}">
+                                        @if (collect($latest_product->Attribute)->max('discount') != '' && $latest_product->comming_soon == '')
+                                                    <span  class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                                    @endif
+                                        <img lazy="loading" src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
+                                            class="attachment-shop_catalog size-shop_catalog"
+                                            alt="{{ $latest_product->title }}" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="post_content text-center">
+                                <h2 class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}"><a
+                                        href="{{route('SingleProductView',$latest_product->slug)}}">{{ $latest_product->title }}</a>
+                                </h2>
+                                @php
+                                $sale = collect($latest_product->Attribute)->min('sell_price');
+                                $regular = collect($latest_product->Attribute)->min('regular_price');
+                                @endphp
+                                @if($latest_product->comming_soon == '')
+
+                                <span class="price">
+                                    @if ($sale == '')
+                                    <span class="woocommerce-Price-amount amount">
+                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span>
+                                        {{$regular}}
+                                    </span>
+                                    @else
+                                    <span class="woocommerce-Price-amount amount">
+                                        <span style="text-decoration:line-through"
+                                            class="woocommerce-Price-currencySymbol">&#2547;
+                                            {{$regular}} </span>
+                                    </span>
+                                    <span class="woocommerce-Price-amount amount">
+                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span>
+                                        {{$sale}}
+                                    </span>
+
+                                    @endif
+                                </span>
+                                @endif
+                                @if($latest_product->comming_soon === 1)
+                                                            <a rel="nofollow"
+                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                                data-quantity="1" data-product_id="471"
+                                                                data-product_sku=""
+                                                                class="button add_to_cart_button">View Product</a>
+                                                            @else
+                                                            <a rel="nofollow"
+                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                                data-quantity="1" data-product_id="471"
+                                                                data-product_sku=""
+                                                                class="button add_to_cart_button">Add To Cart</a>
+                                                            @endif
+                            </div>
+                        </div>
+                    </li>
+                    @endforeach
+
+                </ul>
+            </div>
+        </div>
+</div>
+
+</section>
+@endif
+
+{{-- deal end --}}
+
+
+
 <style>
     .pb-100{
         padding-bottom: 100px ;
