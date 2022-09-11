@@ -85,7 +85,7 @@ class FrontendController extends Controller
             $Products = Product::with('Attribute')
                 ->where('status', 1)
                 ->select('id', 'slug', 'title', 'thumbnail_img', 'comming_soon')
-                ->latest('id')->simplePaginate(4);
+                ->latest('id')->simplePaginate(8);
 
             $view = view('frontend.pages.allproduct-pagination', compact('Products'))->render();
             return response()->json(['html' => $view,]);
@@ -95,7 +95,7 @@ class FrontendController extends Controller
             ->where('status', 1)
             ->select('id', 'slug', 'title', 'thumbnail_img', 'comming_soon')
             ->latest('id')
-            ->simplePaginate(4);
+            ->simplePaginate(8);
 
         return view('frontend.pages.all-product', [
             'latest_products' => $product,

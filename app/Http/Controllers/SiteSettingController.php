@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\Newsletter;
 use App\Models\AboutSite;
 use App\Models\Banner;
+use App\Models\DeliverCharge;
 use App\Models\Newsletter as ModelsNewsletter;
 use App\Models\Product;
 use App\Models\SiteSetting;
@@ -197,6 +198,7 @@ class SiteSettingController extends Controller
             if ($request->hasFile('banner_image')) {
                 $banner_image = $request->file('banner_image');
                 $extension = config('app.name') . '-' . Str::random(6) . '.' . $banner_image->getClientOriginalExtension();
+                // $extension = config('app.name') . '-' . Str::random(6) . '.' . 'WebP';
                 Image::make($banner_image)->save(public_path('banner_image/' . $extension), 95);
                 $banner = new Banner;
                 $banner->banner_image = $extension;
@@ -297,5 +299,20 @@ class SiteSettingController extends Controller
         } else {
             abort('404');
         }
+    }
+    function SiteDelivery()
+    {
+        return view('backend.site-settings.delivery-charge',[
+            'charge'=> DeliverCharge::findorfail(1),
+        ]);
+    }
+    function SiteDeliveryPost(Request $request)
+    {
+        $charge = DeliverCharge::findorfail(1);
+        $charge->disctrict_id = 15;
+        $charge->inside = $request->inside;
+        $charge->outside = $request->outside;
+        $charge->save();
+        return back()->with('success', 'Changed Successfully');
     }
 }

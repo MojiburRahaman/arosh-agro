@@ -13,6 +13,7 @@
     <meta name="keyword" content="@yield('meta_keyword',$setting->meta_keyword)">
     <meta name="csrf-token" content="{{csrf_token()}}">
     <meta name="description" content="@yield('meta_description',$setting->meta_description)">
+    @yield('social_thumbnail')
 
     <link rel="shortcut icon" type="image/png" href="{{ asset('logo/'.$setting->site_logo) }}">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Average|Droid+Serif:400,700|Libre+Baskerville:400,400i,700|Open+Sans:300,400,600,700,800|Oswald:300,400,700|Raleway:100,200,300,400,500,600,700,800,900&amp;subset=latin-ext' type='text/css' media='all' />
@@ -35,7 +36,7 @@
     <link rel='stylesheet' href="{{ asset('front/jss/vendor/woo/woocommerce.css') }}" type='text/css' media='all' />
     <link rel='stylesheet' href="{{ asset('front/css/fontello/css/fontello.css') }}" type='text/css' media='all' />
     <link rel="stylesheet" href="{{asset('front/css/corner-popup.min.css')}}">
-
+    
     <link rel='stylesheet' href="{{ asset('front/css/core.animation.css') }}" type='text/css' media='all' />
     <link rel='stylesheet' href="{{ asset('front/css/shortcodes.css') }}" type='text/css' media='all' />
     <link rel='stylesheet' href="{{ asset('front/css/style.css') }}" type='text/css' media='all' />
@@ -46,6 +47,8 @@
     <link rel='stylesheet' href="{{ asset('front/jss/vendor/comp/comp.min.css') }}" type='text/css' media='all' />
     <link rel='stylesheet' href="{{ asset('front/jss/vendor/swiper/swiper.css') }}" type='text/css' media='all' />
     <link rel='stylesheet' href="{{ asset('front/css/responsive.css') }}" type='text/css' media='all' />
+    
+    
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css" rel="stylesheet">
     {{-- Filter --}}
@@ -73,7 +76,7 @@
 <div class="body_wrap">
     <div class="page_wrap">
         <div class="top_panel_fixed_wrap"> </div>
-        <header class="top_panel_wrap top_panel_style_4 scheme_original">
+        <header class="top_panel_wrap top_panel_style_4 scheme_original d-none d-lg-block">
             <div class="top_panel_wrap_inner top_panel_inner_style_4 top_panel_position_above">
                 <div class="top_panel_middle">
                     <div class="content_wrap">
@@ -201,26 +204,14 @@
                                      <li class="menu-item"><a href="{{ route('allproducts') }}"><span>Products</span></a></li>
 
                                     
-                                    {{-- <li class="menu-item menu-item-has-children"><a href="#"><span>Gallery</span></a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="{{ route('ImageGallery') }}"><span>Image Gallery</span></a></li>
-
-                                             <li class="menu-item"><a href="{{ route('VideoGallery') }}"><span>Video Gallery</span></a></li>
-                                            
-                                           
-                                        </ul>
-                                    </li> --}}
+                                  
                                    
                                     <li class="menu-item menu-item-has-children"><a href="{{ route('FrontndContact') }}"><span>Contact Us</span></a>
-                                     {{--    <ul class="sub-menu">
-                                            <li class="menu-item"><a href=""><span>Contact Details </span></a></li>
-                                            
-                                            <li class="menu-item"><a href=""><span>Selling Points </span></a></li>
-                                            </ul> --}}
+                                   
                                            
                                         
                                     </li>
-                                    {{-- <li class="menu-item"><a href="{{ route('spoints') }}"><span>Selling Points</span></a></li> --}}
+                                 
 
                                      <li class="menu-item"><a href="{{route('CartView')}}"><span>Cart</span></a></li>
                                     
@@ -233,11 +224,11 @@
                 </div>
             </div>
         </header>
-        <div class="header_mobile">
+        <div class="header_mobile d-lg-none d-md-block">
             
            
             
-            <div class="header-mobile">
+            <div class="header-mobile ">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 text-center mt-3 mb-3">
@@ -551,6 +542,7 @@
 
 
 <script type='text/javascript' src="{{ asset('front/jss/vendor/jquery/jquery.js') }}"></script>
+
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
           <script type='text/javascript' src="{{ asset('front/js/bootstrap.min.js') }}"></script>
@@ -561,7 +553,7 @@
                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
                    <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
   
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="   sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="   sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
       
 
 {{--      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.js"></script>
@@ -570,6 +562,8 @@
           
 
 <script type='text/javascript' src="{{ asset('front/jss/vendor/jquery/jquery-migrate.min.js') }}"></script>
+{{-- <script type='text/javascript' src="{{ asset('front/jss/custom/core.init.js') }}"></script> --}}
+
 <script type='text/javascript' src="{{ asset('front/jss/custom/custom.js') }}"></script>
 <script type='text/javascript' src='{{ asset('front/jss/vendor/esg/jquery.themepunch.tools.min.js') }}'></script>
 <script type='text/javascript' src="{{ asset('front/jss/vendor/revslider/jquery.themepunch.revolution.min.js') }}"></script>
@@ -578,10 +572,10 @@
 <script type='text/javascript' src="{{ asset('front/jss/vendor/revslider/extensions/revolution.extension.navigation.min.js') }}"></script>
 <script type='text/javascript' src="{{ asset('front/jss/vendor/revslider/extensions/revolution.extension.slideanims.min.js') }}"></script>
 <script type='text/javascript' src="{{ asset('front/jss/vendor/modernizr.min.js') }}"></script>
-<script type='text/javascript' src="{{ asset('front/jss/vendor/jquery/js.cookie.min.js') }}"></script>
+{{-- <script type='text/javascript' src="{{ asset('front/jss/vendor/jquery/js.cookie.min.js') }}"></script> --}}
 <script type='text/javascript' src="{{ asset('front/jss/vendor/superfish.js') }}"></script>
 <script type='text/javascript' src="{{ asset('front/jss/custom/core.utils.js') }}"></script>
-<script type='text/javascript' src="{{ asset('front/jss/custom/core.init.js') }}"></script>
+{{-- <script type='text/javascript' src="{{ asset('front/jss/custom/core.init.js') }}"></script> --}}
 <script type='text/javascript' src="{{ asset('front/jss/custom/init.js') }}"></script>
 <script type='text/javascript' src="{{ asset('front/jss/custom/core.debug.js') }}"></script>
 <script type='text/javascript' src="{{ asset('front/jss/custom/embed.min.js') }}"></script>
@@ -614,18 +608,19 @@
         {{-- <script src="{{ asset('front/js/price_range_script.js') }}"></script> --}}
         <!-- metisMenu.min.js -->
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="{{ asset('front/js/metisMenu.min.js') }}"></script>
+        {{-- <script src="{{ asset('front/js/metisMenu.min.js') }}"></script> --}}
         <script src="{{ asset('front/js/test.js') }}"></script>
         <!-- mailchimp.js -->
-        <script src="{{ asset('front/js/mailchimp.js') }}"></script>
+        {{-- <script src="{{ asset('front/js/mailchimp.js') }}"></script> --}}
         <!-- jquery-ui.min.js -->
         <script src="{{ asset('front/js/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('front/js/corner-popup.min.js') }}"></script>
         <!-- main js -->
 
         <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
+        
         <script src="{{ asset('front/js/selectsearch.js') }}"></script>
+        <script type='text/javascript' src="{{ asset('front/jss/custom/core.init.js') }}"></script>
         <script src="{{ asset('front/js/scripts.js') }}"></script>
 
         @yield('script_js')

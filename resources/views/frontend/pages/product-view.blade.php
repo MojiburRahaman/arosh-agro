@@ -104,10 +104,10 @@
                                 @else
                                 (<span>Out of Stock</span>)
                                 @endif
-                                <span id="stocknone" style="display: none" >(Out of Stock)</span>
+                                <span id="stocknone" style="display: none">(Out of Stock)</span>
                                 @endif
                                 @if($product->comming_soon == 1)
-                                    
+
                                 <span>(Coming Soon)</span>
                                 @endif
                             </span>
@@ -122,7 +122,7 @@
                                 <p style="color: black!important">{!! $product->product_summary !!}</p>
                                 @if ($product->Attribute->sum('quantity') != 0)
                                 @if( $product->comming_soon != 1 )
-                                    
+
                                 <input type="hidden" value="{{$product->id}}" name="product_id">
                                 @if ($color != 0)
                                 <ul class="cetagory">
@@ -221,20 +221,20 @@
                                     } */
                                 </style>
                                 <ul class="socil-icon">
-                                    <li  class="pr-2 pt-2 pt-lg-0">Share :</li>
-                                    <li > &nbsp; <a
+                                    <li class="pr-2 pt-2 pt-lg-0">Share :</li>
+                                    <li> &nbsp; <a
                                             href="https://www.facebook.com/sharer/sharer.php?u={{route('SingleProductView',$product->slug)}}&display=popup"><i
                                                 class="icon-facebook"></i></a>
                                     </li>
-                                    <li > &nbsp; <a
+                                    <li> &nbsp; <a
                                             href="https://twitter.com/intent/tweet?url={{route('SingleProductView',$product->slug)}}"><i
                                                 class="icon-twitter"></i></a>
                                     </li>
-                                    <li > &nbsp; <a
+                                    <li> &nbsp; <a
                                             href="https://www.linkedin.com/shareArticle?mini=true&url={{route('SingleProductView',$product->slug)}}&title={{ $product->title }}"><i
                                                 class="icon-linkedin"></i></a>
                                     </li>
-                                    
+
                                 </ul>
                             </form>
                         </div>
@@ -303,7 +303,7 @@
                                     {!!$product->product_description!!}
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -317,19 +317,25 @@
                             <div class="post_item_wrap">
                                 <div class="post_featured">
                                     <div class="post_thumb text-center">
-                                        @if (collect($latest_product->Attribute)->max('discount') != '')
-                                        <span>{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                        @if($latest_product->comming_soon === 1)
+                                        <span class="coming_soon_tag">Coming Soon</span>
                                         @endif
                                         <a class="hover_icon hover_icon_link"
                                             href="{{route('SingleProductView',$latest_product->slug)}}">
-                                            <img src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
+                                            @if(collect($latest_product->Attribute)->max('discount')
+                                            != '' && $latest_product->comming_soon ==
+                                            '')
+                                            <span
+                                                class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                            @endif
+                                            <img src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}" lazy="loading"
                                                 class="attachment-shop_catalog size-shop_catalog"
                                                 alt="{{ $latest_product->title }}" />
                                         </a>
                                     </div>
                                 </div>
                                 <div class="post_content">
-                                    <h2 class="woocommerce-loop-product__title"><a
+                                    <h2 class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}"><a
                                             href="{{route('SingleProductView',$latest_product->slug)}}">{{
                                             $latest_product->title }}</a>
                                     </h2>
@@ -337,6 +343,8 @@
                                     $sale = collect($latest_product->Attribute)->min('sell_price');
                                     $regular = collect($latest_product->Attribute)->min('regular_price');
                                     @endphp
+                                                                    @if($latest_product->comming_soon == '')
+
                                     <span class="price">
                                         @if ($sale == '')
                                         <span class="woocommerce-Price-amount amount">
@@ -356,9 +364,22 @@
 
                                         @endif
                                     </span>
-                                    <a rel="nofollow" href="{{route('SingleProductView',$latest_product->slug)}}"
-                                        data-quantity="1" data-product_id="458" data-product_sku=""
-                                        class="button add_to_cart_button">Select options</a>
+                                    @endif
+                                    @if($latest_product->comming_soon === 1)
+                                    <a rel="nofollow"
+                                        href="{{route('SingleProductView',$latest_product->slug)}}"
+                                        data-quantity="1" data-product_id="471"
+                                        data-product_sku=""
+                                        class="button add_to_cart_button">View
+                                        Product</a>
+                                    @else
+                                    <a rel="nofollow"
+                                        href="{{route('SingleProductView',$latest_product->slug)}}"
+                                        data-quantity="1" data-product_id="471"
+                                        data-product_sku=""
+                                        class="button add_to_cart_button">Add To
+                                        Cart</a>
+                                    @endif
                                 </div>
                             </div>
                         </li>
@@ -376,8 +397,7 @@
 
 
         <script>
-
-@if (session('cart_added'))
+            @if (session('cart_added'))
 Command: toastr["success"]('{{ session('cart_added') }}');
 @endif
 

@@ -222,7 +222,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: right">Shipping</td>
-                        <td colspan="1" style="text-align: right">{{$order->shipping}}</td>
+                        <td colspan="1" style="text-align: right">{{($order->shipping == 0) ? 'Free' : $order->shipping}}</td>
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: right">Discount</td>

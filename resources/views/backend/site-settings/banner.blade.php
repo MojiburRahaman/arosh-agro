@@ -122,7 +122,7 @@ menu-open
 @endsection
 
 @section('script_js')
-@include('backend.ckeditor')
+{{-- @include('backend.ckeditor') --}}
 <script>
     $(document).ready(function() {
     $('.product_id').select2();

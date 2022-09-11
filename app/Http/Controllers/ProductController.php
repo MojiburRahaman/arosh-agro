@@ -57,7 +57,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
         $request->validate([
             'product_name' => ['required', 'string', 'max:250', 'unique:products,title,'],
             'catagory_name' => ['required'],
@@ -92,6 +92,7 @@ class ProductController extends Controller
         if ($request->hasFile('thumbnail_img')) {
             $product_thumbnail = $request->file('thumbnail_img');
             $extension = Str::slug($request->product_name) . '-' . Str::random(1) . '.' . $product_thumbnail->getClientOriginalExtension();
+            // $extension = Str::slug($request->product_name) . '-' . Str::random(1) . '.' . 'WebP';
             Image::make($product_thumbnail)->save(public_path('thumbnail_img/' . $extension), 90);
         }
         $product->thumbnail_img = $extension;

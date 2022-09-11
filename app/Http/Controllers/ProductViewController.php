@@ -27,7 +27,7 @@ class ProductViewController extends Controller
         ->where('id', '!=', $Product->id)
         ->where('status', 1)
         ->latest('id')
-        ->select('id', 'title', 'slug', 'thumbnail_img')
+        ->select('id', 'title', 'slug', 'thumbnail_img','comming_soon')
         ->take(12)
         ->get();
 

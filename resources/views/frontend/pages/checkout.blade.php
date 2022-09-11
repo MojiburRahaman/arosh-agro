@@ -5,10 +5,11 @@
     .ptb-100 {
         padding: 100px 0;
     }
-.select2-selection__clear{
-    background: none !important;
-    display: none !important;
-}
+
+    .select2-selection__clear {
+        background: none !important;
+        display: none !important;
+    }
 </style>
 <!-- header-area end -->
 <!-- checkout-area start -->
@@ -110,24 +111,24 @@
                         <ul class="total-cost">
                             {{-- @foreach (cart_product_view() as $cart_product)
 
-                    <li> {{$cart_product->product->title}} <span class="pull-right">৳
-                                @php
-                                $product = App\Models\attribute::where('product_id', $cart_product->product_id)
-                                ->where('color_id', $cart_product->color_id)
-                                ->where('size_id', $cart_product->size_id)
-                                ->first();
+                            <li> {{$cart_product->product->title}} <span class="pull-right">৳
+                                    @php
+                                    $product = App\Models\attribute::where('product_id', $cart_product->product_id)
+                                    ->where('color_id', $cart_product->color_id)
+                                    ->where('size_id', $cart_product->size_id)
+                                    ->first();
 
-                                $sale_price = $product->selling_price;
-                                $regular_price = $product->regular_price;
+                                    $sale_price = $product->selling_price;
+                                    $regular_price = $product->regular_price;
 
-                                if ($sale_price) {
-                                echo $sale_price * $cart_product->quantity;
-                                }
-                                if ($sale_price == '') {
-                                echo $regular_price *$cart_product->quantity;
-                                }
-                                @endphp
-                            </span></li>
+                                    if ($sale_price) {
+                                    echo $sale_price * $cart_product->quantity;
+                                    }
+                                    if ($sale_price == '') {
+                                    echo $regular_price *$cart_product->quantity;
+                                    }
+                                    @endphp
+                                </span></li>
                             @endforeach --}}
                             <li>Total <span class="pull-right"> <strong>৳{{session()->get('cart_total')}}</strong>
                                 </span>
@@ -137,14 +138,15 @@
                             <li>Discount<span
                                     class="pull-right"><strong>৳{{session()->get('cart_discount')}}</strong></span></li>
                             {{-- @endif --}}
-                            <li>Shipping <span class="pull-right">৳<strong id="shipping_id">0</spstrongan></span></li>
+                            <li>Shipping <span class="pull-right"><strong id="shipping_id">৳0</strong></span></li>
                             <li> Subtotal<span class="pull-right"
                                     id="sub_total"><strong>৳{{session()->get('cart_subtotal')}}
                                     </strong></span></li>
                         </ul>
                         <ul class="payment-method">
                             {{-- <li>
-                                <input @error('payment_option') required  @enderror name="payment_option" style="background: orange" id="bank" value="pay_now" type="radio">
+                                <input @error('payment_option') required @enderror name="payment_option"
+                                    style="background: orange" id="bank" value="pay_now" type="radio">
                                 <label for="bank">Direct Bank Transfer</label>
                             </li> --}}
                             <li>
@@ -237,21 +239,6 @@ if (division_id) {
         var disctrict_id = $(this).val();
         var total_amount = {{session()->get('cart_subtotal')}};
         if (!disctrict_id == '') {
-           if (disctrict_id == 15) {
-               $('#shipping_id').html(60);
-               @php
-                   session()->put('shipping',60);
-               @endphp
-               $('#sub_total').html(60 + parseInt(total_amount));
-            }
-            else{
-                @php
-                   session()->put('shipping',120);
-               @endphp
-                $('#shipping_id').html(120)
-                $('#sub_total').html(120 + parseInt(total_amount));
-                
-           }
         $.ajaxSetup({
         headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -264,9 +251,18 @@ if (division_id) {
 
                 success: function(res) {
                     if (res) {
+
+                    if(res.free == null){
+                        $('#shipping_id').html('Free');
+                    }
+                    if(res.free != null){
+                        $('#shipping_id').html('৳'+res.shipping);
+                        $('#sub_total').html('৳'+(res.shipping + parseInt(total_amount)));
+                    }
+
                         $("#upozila_name").empty();
                         $("#upozila_name").append('<option>Select One</option>');
-                        $.each(res, function(key, value) {
+                        $.each(res.district, function(key, value) {
                             $("#upozila_name").append('<option value="' + value.id + '" >' +
                                 value.name + '</option>');
                         });

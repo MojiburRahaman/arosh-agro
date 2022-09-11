@@ -40,6 +40,9 @@ Please, make all necessary changes in the corresponding .less-file!
 -------------------------------------------------------------- */
 /* 1. Theme typography
 -------------------------------------------------------------- */
+body{
+    overflow: hidden;
+}
 .socil-icon li{
     float: left;
 }

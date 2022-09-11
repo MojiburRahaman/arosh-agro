@@ -14,6 +14,7 @@ use App\Models\billing_details;
 use App\Models\Order_Summaries;
 use Illuminate\Support\Carbon;
 use App\Models\Coupon;
+use App\Models\DeliverCharge;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -38,9 +39,35 @@ class CheckoutController extends Controller
     }
     function CheckoutajaxDistrictid(Request $request)
     {
+        $free = '';
+        $charge = DeliverCharge::findorfail(1);
+        if ($request->district_id == 15) {
+            if ($charge->inside != '') {
+                session()->put('shipping', $charge->inside);
+                $free = $charge->inside;
+                $shipping = $charge->inside;
+            }
+            $free = $charge->inside;
+            session()->put('shipping', $charge->inside);
+            $shipping = $charge->inside;
+        } else {
+            if ($charge->outside != '') {
+                session()->put('shipping', $charge->outside);
+                $free = $charge->outside;
+                $shipping = $charge->outside;
+            }
+            $free = $charge->outside;
+            session()->put('shipping', $charge->outside);
+            $shipping = $charge->outside;
+        }
+
         $district = Upazila::where('district_id', $request->district_id)
             ->select('id', 'name')->get();
-        return response()->json($district);
+        return response()->json([
+            'district' =>   $district,
+            'shipping' =>   $shipping,
+            'free' =>   $free,
+        ]);
     }
     function CheckoutPost(Request $request)
     {
@@ -57,14 +84,15 @@ class CheckoutController extends Controller
             'billing_address' => ['required', 'string'],
             'payment_option' => ['required', Rule::in(['cash_on_delivery', 'second-zone'])],
         ]);
-        // return $request;
         // for only cash_on delivery
         abort_if($request->payment_option != 'cash_on_delivery', 404);
 
-        if ($request->district_name == 15) {
-            session()->put('shipping', 60);
+        if (empty(session()->get('shipping'))) {
+            $subtotal = session()->get('cart_subtotal');
+            $shipping = 0;
         } else {
-            session()->put('shipping', 120);
+            $shipping = session()->get('shipping');
+            $subtotal = session()->get('cart_subtotal') + session()->get('shipping');
         }
         $order_number = now()->format('dm') . Auth::id() . mt_rand(1, 1000);
         $billing_details = billing_details::insertGetId($request->except('_token') + [
@@ -72,25 +100,26 @@ class CheckoutController extends Controller
             'user_email' => auth()->user()->email,
             'user_id' => Auth::id(),
         ]);
+
         $Order_Summaries_id = Order_Summaries::insertGetId([
             'billing_details_id' => $billing_details,
             'user_id' => Auth::id(),
             'order_number' => $order_number,
             'coupon_name' => session()->get('coupon_name'),
             'total' => session()->get('cart_total'),
-            'subtotal' => session()->get('cart_subtotal') + session()->get('shipping'),
+            'subtotal' => $subtotal,
             'discount' => session()->get('cart_discount'),
-            'shipping' => session()->get('shipping'),
+            'shipping' => $shipping,
             'created_at' => now(),
         ]);
         $carts = Cart::Where('cookie_id', Cookie::get('cookie_id'))->with('Product:id')->get();
         foreach ($carts as  $cart) {
 
-            $product =$cart->Product->Attribute
-            ->where('color_id',$cart->color_id)
-            ->where('size_id',$cart->size_id)->first();
+            $product = $cart->Product->Attribute
+                ->where('color_id', $cart->color_id)
+                ->where('size_id', $cart->size_id)->first();
 
-            
+
             if ($product->sell_price != '') {
                 $price = $product->sell_price;
             } else {

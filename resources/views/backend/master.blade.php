@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{config('app.name')}} | Dashboard </title>
+    <meta name="robots" content="noindex,nofollow">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -92,7 +93,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{route('Frontendhome')}}" class="nav-link">
+                            <a target="_blank" href="{{route('Frontendhome')}}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Home Page
@@ -542,6 +543,18 @@
                                 </li>
                             </ul>
                             @endcan
+                            {{-- @can('Setting') --}}
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    {{-- <a href="{{Illuminate\Support\Facades\URL::signedRoute('settings.edit',1)}}" --}}
+                                    <a href="{{route('SiteDelivery')}}"
+                                        class="nav-link @yield('courier-active')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Courier Charges</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            {{-- @endcan --}}
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{route('settings.create')}}" class="nav-link @yield('subs-active')">

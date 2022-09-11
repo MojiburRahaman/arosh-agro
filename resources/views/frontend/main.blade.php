@@ -1,6 +1,6 @@
 @extends('frontend.master')
 {{-- @section('social_thumbnail')
- 
+
 @endsection --}}
 @section('content')
 <style>
@@ -8,59 +8,121 @@
 </style>
 {{-- my slider start --}}
 <section class="slider_wrap slider_fullwide slider_engine_revo slider_alias_slider-1">
-    <div id="rev_slider_1_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container">
-        <div id="rev_slider_1_1" class="rev_slider fullwidthabanner" data-version="5.2.6">
-            <ul>
-                @forelse ($banners as $key => $banner)
-                @if ($banner->banner_image != '')
-                <li data-index="rs-{{$loop->index+1}}" data-transition="{{$key%2 == 0 ? 'cube' : 'cube-horizontal'}}"
-                    data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="default"
-                    data-easeout="default" data-masterspeed="default" data-thumb="images/home-1-slide-1-100x50.jpg"
-                    data-rotate="0" data-saveperformance="off" data-title="Slide" data-param1="" data-param2=""
-                    data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8=""
-                    data-param9="" data-param10="" data-description="">
-                    <img lazy="loading" src="{{asset('banner_image/'.$banner->banner_image)}}" alt="{{ config('app.name') }}" title="{{ config('app.name') }}"
-                        width="1903" height="873" data-bgposition="center center" data-bgfit="cover"
-                        data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina >
-                        @if($banner->banner_text != '')
-                            
-                        <div class="tp-caption BigWhiteText tp-resizeme" id=" slide-{{$loop->index+1}}-layer-1"
-                            data-x="center" data-hoffset="" data-y="center" data-voffset="-60" data-width="['auto']"
-                            data-height="['auto']" data-transform_idle="o:1;"
-                            data-transform_in="x:{-250,250};y:{-150,150};rX:{-90,90};rY:{-90,90};rZ:{-360,360};sX:0;sY:0;opacity:0;s:1000;e:Back.easeOut;"
-                            data-transform_out="opacity:0;s:300;" data-start="730" data-splitin="chars" data-splitout="none"
-                            data-responsive_offset="on" data-elementdelay="0.1">{!! $banner->banner_text !!} </div>
-                        @endif
-                    {{-- <div class="tp-caption SmallWhiteText tp-resizeme" id="slide-{{$loop->index+1}}-layer-2"
-                        data-x="center" data-hoffset="" data-y="center" data-voffset="35" data-width="['auto']"
-                        data-height="['auto']" data-transform_idle="o:1;"
-                        data-transform_in="y:50px;opacity:0;s:800;e:Power2.easeInOut;"
-                        data-transform_out="opacity:0;s:300;" data-start="3030" data-splitin="none" data-splitout="none"
-                        data-responsive_offset="on">Fresh. Local. Delivered </div> --}}
-                    {{-- <div class="tp-caption ButtonText rev-btn"
-                        style="background-color: #99CB55; border-color: #0C743F ; color: #0C743F;"
-                        id="slide-{{$loop->index+1}}-layer-3" data-x="center" data-hoffset="" data-y="center"
-                        data-voffset="151" data-width="['auto']" data-height="['auto']" data-transform_idle="o:1;"
-                        data-transform_hover="o:1;rX:0;rY:0;rZ:0;z:0;s:0;e:Linear.easeNone;"
-                        data-style_hover="c:rgba(255, 255, 255, 1.00);bg:rgba(255, 255, 255, 0);bc:rgba(255, 255, 255, 1.00);"
-                        data-transform_in="y:bottom;rZ:90deg;sX:2;sY:2;s:800;e:Quad.easeIn;"
-                        data-transform_out="opacity:0;s:300;" data-start="4090" data-splitin="none" data-splitout="none"
-                        data-actions='[{"event":"click","action":"simplelink","target":"_blank","url":"\/all-products\/","delay":""}]'
-                        data-responsive_offset="on" data-responsive="off">View our products </div> --}}
-                </li>
+    
+    <style>
+        .carousel-caption {
+            top: 330px;
+            color: white !important;
+        }
+
+        .carousel-caption h2 {
+            color: white !important;
+            animation-delay: 2s;
+            font-size: 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
 
 
-                @endif
-                
-                @empty
-                @endforelse
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation-delay: .4s;
 
+        }
 
-            </ul>
-            <div class="tp-bannertimer tp-bottom"></div>
+        .carousel-item {
+            height: 800px;
+        }
+
+        @media (max-width: 575px) {
+            .carousel-caption h2 {
+                line-height: 32px;
+           
+            font-size: 25px;
+        }
+            .carousel-item {
+                height: 350px;
+            }
+
+            .carousel-caption {
+                top: 120px;
+                color: white !important;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 767px) {
+            .carousel-item {
+                height: 600px;
+            }
+
+            .carousel-item .carousel-caption {
+                top: 220px;
+                color: white !important;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .carousel-item {
+                height: 700px;
+            }
+
+            .carousel-item .carousel-caption {
+                top: 250px;
+                color: white !important;
+            }
+        }
+        @media (min-width: 1200px) {
+            .carousel-item {
+                height: 800px;
+            }
+
+            .carousel-item .carousel-caption {
+                top: 330px;
+                color: white !important;
+            }
+        }
+    </style>
+   
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-bs-touch="true" >
+        
+        <ol class="carousel-indicators">
+            @forelse ($banners as $key => $banner)
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="{{ ($loop->index+1 == 1)? 'active' : '' }}"></li>
+            
+            @empty
+            @endforelse
+        </ol>
+        <div class="carousel-inner">
+            @forelse ($banners as $key => $banner)
+            @php
+                $array = array("rollIn", "fadeInDownBig",'bounceInRight','bounceInDown','rotateInUpRight','zoomInDown');
+                $Imgarray = array("rollIn", "zoomIn",'slideInRight','fadeInUp','rotateInUpRight','zoomInDown');
+            @endphp
+            <div class="carousel-item {{ ($loop->index+1 == 1)? 'active' : '' }}">
+                <img lazy="loading" class="d-block w-100 animated {{  $Imgarray[array_rand($Imgarray, 1)] }} slower" src="{{asset('banner_image/'.$banner->banner_image)}}"
+                    alt="{{ config('app.name') }}">
+                <div class="carousel-caption ">
+                    <h2 class="animated {{  $array[array_rand($array, 1)] }}  ">{{$banner->banner_text}}</h2>
+                </div>
+            </div>
+            @empty
+            @endforelse
         </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 </section>
+    
 
 <div class="page_content_wrap page_paddings_no mt-5">
     <div class="content_wrap">
@@ -82,7 +144,8 @@
 
                                             <div class="h-divider">
                                                 <div class="shadows"></div>
-                                                <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}" alt="icon" />
+                                                <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}"
+                                                        alt="icon" />
                                                 </div>
                                             </div>
                                             <div class=" pt-3 sc_section_content_wrap">
@@ -96,7 +159,7 @@
                                                                 <a style="font-weight: 700;"
                                                                     href="{{route('FrontendAbout')}}">@lang('Read
                                                                     More')</a>
-                                                                    </p>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -111,160 +174,180 @@
                         </div>
                     </div>
                     <div class="vc_row-full-width"></div>
-                  
-<div class="vc_row wpb_row vc_row-fluid">
-    <div class="wpb_column vc_column_container vc_col-sm-12">
-        <div class="vc_column-inner vc_custom_1475066123130 cat4">
 
-            <div class="wpb_wrapper">
-                <div id="sc_services_918_wrap" class="sc_services_wrap">
-                    <div id="sc_services_918"
-                        class="sc_services sc_services_style_services-1 sc_services_type_images  margin_top_large margin_bottom_large fwidth cat3"
-                        data-animation="animated fadeInUp normal">
-                        <div class="sc_columns columns_wrap">
-                            <h2 class="sc_title sc_title_regular   text-center mt-3  mb-4">Product Category</h2>
+                    <div class="vc_row wpb_row vc_row-fluid">
+                        <div class="wpb_column vc_column_container vc_col-sm-12">
+                            <div class="vc_column-inner vc_custom_1475066123130 cat4">
 
-                            <div class="h-divider">
-                                <div class="shadows"></div>
-                                <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}" /></div>
-                            </div>
-                            @foreach ($catagory_menu as $cat)
-                            <div class="column-1_4 column_padding_bottom">
-                                <div id="sc_services_918_1" class="sc_services_item sc_services_item_1 odd first"
-                                    onclick="window.location='{{route('CategorySearch',$cat->slug)}}';">
-                                    <div class="sc_services_item_featured post_featured cat1">
-                                        <div class="post_thumb" data-image="" data-title="Our Dairy Farm">
-                                            <a class="hover_icon hover_icon_link"
-                                                href="{{route('CategorySearch',$cat->slug)}}">
-                                                <img lazy="loading" alt="{{$cat->catagory_name}}"
-                                                    src="{{asset('category_images/'.$cat->catagory_image)}}" title="{{$cat->catagory_name}}">
-                                            </a>
+                                <div class="wpb_wrapper">
+                                    <div id="sc_services_918_wrap" class="sc_services_wrap">
+                                        <div id="sc_services_918"
+                                            class="sc_services sc_services_style_services-1 sc_services_type_images  margin_top_large margin_bottom_large fwidth cat3"
+                                            data-animation="animated fadeInUp normal">
+                                            <div class="sc_columns columns_wrap">
+                                                <h2 class="sc_title sc_title_regular   text-center mt-3  mb-4">Product
+                                                    Category</h2>
+
+                                                <div class="h-divider">
+                                                    <div class="shadows"></div>
+                                                    <div class="text2"><img
+                                                            src="{{asset('round_logo/logo 3 Big.png')}}" /></div>
+                                                </div>
+                                                @foreach ($catagory_menu as $cat)
+                                                <div class="column-1_4 column_padding_bottom">
+                                                    <div id="sc_services_918_1"
+                                                        class="sc_services_item sc_services_item_1 odd first"
+                                                        onclick="window.location='{{route('CategorySearch',$cat->slug)}}';">
+                                                        <div class="sc_services_item_featured post_featured cat1">
+                                                            <div class="post_thumb" data-image=""
+                                                                data-title="Our Dairy Farm">
+                                                                <a class="hover_icon hover_icon_link"
+                                                                    href="{{route('CategorySearch',$cat->slug)}}">
+                                                                    <img lazy="loading" alt="{{$cat->catagory_name}}"
+                                                                        src="{{asset('category_images/'.$cat->catagory_image)}}"
+                                                                        title="{{$cat->catagory_name}}">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc_services_item_content">
+                                                            <h4 class="sc_services_item_title cat2">
+                                                                <a
+                                                                    href="{{route('CategorySearch',$cat->slug)}}">{{$cat->catagory_name}}</a>
+                                                            </h4>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="sc_services_item_content">
-                                        <h4 class="sc_services_item_title cat2">
-                                            <a href="{{route('CategorySearch',$cat->slug)}}">{{$cat->catagory_name}}</a>
-                                        </h4>
-
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
-
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="vc_row-full-width"></div>
+                    <div class="vc_row-full-width"></div>
 
 
 
-<div class="vc_row wpb_row vc_row-fluid">
-    <div class="wpb_column vc_column_container vc_col-sm-12">
-        <div class="vc_column-inner ">
-            <div class="wpb_wrapper">
-                <div class="sc_section margin_top_huge cat4" data-animation="animated fadeInUp normal">
-                    <div class="sc_section_inner">
-                        <h2 class="sc_title sc_title_regular   text-center mt-3  mb-4">Our Shop</h2>
+                    <div class="vc_row wpb_row vc_row-fluid">
+                        <div class="wpb_column vc_column_container vc_col-sm-12">
+                            <div class="vc_column-inner ">
+                                <div class="wpb_wrapper">
+                                    <div class="sc_section margin_top_huge cat4"
+                                        data-animation="animated fadeInUp normal">
+                                        <div class="sc_section_inner">
+                                            <h2 class="sc_title sc_title_regular   text-center mt-3  mb-4">Our Shop</h2>
 
-                        <div class="h-divider">
-                            <div class="shadows"></div>
-                            <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}" /></div>
-                        </div>
-                        <div class="sc_section_content_wrap">
-                            <div class="woocommerce columns-4">
-                                <ul class="products">
-                                    @foreach ($latest_products as $latest_product)
-                                    <li class="product has-post-thumbnail   instock purchasable">
-                                        <div class="post_item_wrap">
-                                            <div class="post_featured">
-                                                <div class="post_thumb">
-                                                    @if($latest_product->comming_soon === 1)
-                                                    <span class="coming_soon_tag">Coming Soon</span>
-                                                    @endif
-                                                    <a class="hover_icon hover_icon_link"
-                                                        href="{{route('SingleProductView',$latest_product->slug)}}">
-                                                    @if (collect($latest_product->Attribute)->max('discount') != '' && $latest_product->comming_soon == '')
-                                                    <span  class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
-                                                    @endif
-                                                        <img lazy="loading" src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
-                                                            class="attachment-shop_catalog size-shop_catalog"
-                                                            alt="{{ $latest_product->title }}" />
-                                                    </a>
+                                            <div class="h-divider">
+                                                <div class="shadows"></div>
+                                                <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}" />
                                                 </div>
                                             </div>
-                                            <div class="post_content">
-                                                <h2 class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}"><a
-                                                        href="{{route('SingleProductView',$latest_product->slug)}}">{{ $latest_product->title }}</a>
-                                                </h2>
-                                                @php
-                                                $sale = collect($latest_product->Attribute)->min('sell_price');
-                                                $regular = collect($latest_product->Attribute)->min('regular_price');
-                                                @endphp
-                                                @if($latest_product->comming_soon == '')
-                                                <span class="price">
-                                                    @if ($sale == '')
-                                                    <span class="woocommerce-Price-amount amount">
-                                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span>
-                                                        {{$regular}}
-                                                    </span>
-                                                    @else
-                                                    <span class="woocommerce-Price-amount amount">
-                                                        <span style="text-decoration:line-through"
-                                                            class="woocommerce-Price-currencySymbol">&#2547;
-                                                            {{$regular}} </span>
-                                                    </span>
-                                                    <span class="woocommerce-Price-amount amount">
-                                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span>
-                                                        {{$sale}}
-                                                    </span>
+                                            <div class="sc_section_content_wrap">
+                                                <div class="woocommerce columns-4">
+                                                    <ul class="products">
+                                                        @foreach ($latest_products as $latest_product)
+                                                        <li class="product has-post-thumbnail   instock purchasable">
+                                                            <div class="post_item_wrap">
+                                                                <div class="post_featured">
+                                                                    <div class="post_thumb">
+                                                                        @if($latest_product->comming_soon === 1)
+                                                                        <span class="coming_soon_tag">Coming Soon</span>
+                                                                        @endif
+                                                                        <a class="hover_icon hover_icon_link"
+                                                                            href="{{route('SingleProductView',$latest_product->slug)}}">
+                                                                            @if(collect($latest_product->Attribute)->max('discount')
+                                                                            != '' && $latest_product->comming_soon ==
+                                                                            '')
+                                                                            <span
+                                                                                class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
+                                                                            @endif
+                                                                            <img lazy="loading"
+                                                                                src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
+                                                                                class="attachment-shop_catalog size-shop_catalog"
+                                                                                alt="{{ $latest_product->title }}" />
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="post_content">
+                                                                    <h2
+                                                                        class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}">
+                                                                        <a
+                                                                            href="{{route('SingleProductView',$latest_product->slug)}}">{{
+                                                                            $latest_product->title }}</a>
+                                                                    </h2>
+                                                                    @php
+                                                                    $sale =
+                                                                    collect($latest_product->Attribute)->min('sell_price');
+                                                                    $regular =
+                                                                    collect($latest_product->Attribute)->min('regular_price');
+                                                                    @endphp
+                                                                    @if($latest_product->comming_soon == '')
+                                                                    <span class="price">
+                                                                        @if ($sale == '')
+                                                                        <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-currencySymbol">&#2547;</span>
+                                                                            {{$regular}}
+                                                                        </span>
+                                                                        @else
+                                                                        <span class="woocommerce-Price-amount amount">
+                                                                            <span style="text-decoration:line-through"
+                                                                                class="woocommerce-Price-currencySymbol">&#2547;
+                                                                                {{$regular}} </span>
+                                                                        </span>
+                                                                        <span class="woocommerce-Price-amount amount">
+                                                                            <span
+                                                                                class="woocommerce-Price-currencySymbol">&#2547;</span>
+                                                                            {{$sale}}
+                                                                        </span>
 
-                                                    @endif
-                                                </span>
-                                                @endif
-                                                @if($latest_product->comming_soon === 1)
-                                                            <a rel="nofollow"
-                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
-                                                                data-quantity="1" data-product_id="471"
-                                                                data-product_sku=""
-                                                                class="button add_to_cart_button">View Product</a>
-                                                @else
-                                                            <a rel="nofollow"
-                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
-                                                                data-quantity="1" data-product_id="471"
-                                                                data-product_sku=""
-                                                                class="button add_to_cart_button">Add To Cart</a>
-                                                 @endif
+                                                                        @endif
+                                                                    </span>
+                                                                    @endif
+                                                                    @if($latest_product->comming_soon === 1)
+                                                                    <a rel="nofollow"
+                                                                        href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                                        data-quantity="1" data-product_id="471"
+                                                                        data-product_sku=""
+                                                                        class="button add_to_cart_button">View
+                                                                        Product</a>
+                                                                    @else
+                                                                    <a rel="nofollow"
+                                                                        href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                                        data-quantity="1" data-product_id="471"
+                                                                        data-product_sku=""
+                                                                        class="button add_to_cart_button">Add To
+                                                                        Cart</a>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        @endforeach
+
+                                                    </ul>
+
+                                                    <ul class="row products" id="ajax-data">
+
+                                                    </ul>
+                                                    <ul class="no_data" style="display: none">
+                                                        <li class="text-center mt-5"> No More Product</li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </li>
-                                    @endforeach
-
-                                </ul>
-
-                                <ul class="row products" id="ajax-data">
-
-                                </ul>
-                                <ul class="no_data" style="display: none">
-                                    <li class="text-center mt-5"> No More Product</li>
-                                </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@if ($latest_products->links() != '')
-<div class="row mb-5">
+                    @if ($latest_products->links() != '')
+                    <div class="row mb-5">
                         <div class="col-12 text-center ">
                             <div class="load_image " style="display:none">
-                                    <img width="30%" src="{{asset('front/images/Reload-Image-Gif-1.gif')}}"
-                                        alt="load">
+                                <img width="30%" src="{{asset('front/images/Reload-Image-Gif-1.gif')}}" alt="load">
                             </div>
                             <div class="text-center">
                                 <a class="loadMore_btn mleft-60" href="javascript:void(0);">Load More</a>
@@ -273,219 +356,234 @@
 
                     </div>
                     @endif
-<div class="vc_row-full-width"></div>
-{{-- Filter Start --}}
+                    <div class="vc_row-full-width"></div>
+                    {{-- Filter Start --}}
 
-{{-- deal start --}}
+                    {{-- deal start --}}
 
-@if($deal)
-    
-<section id="deals mt-5">
-<div class="container">
-    <h2 class="mb-4 mb-lg-2">{{ $deal->title }}</h2>
-    
-    <div class="row p-0 pt-2 pb-2  pl-0 " >
-        <div class="col-7 text-left " >
-            <div>
-                <span id="demo" class="pr-2 pr-lg-4" style="color: #99CB55">On Sale Now</span>
-                <span id="timerBefore">Ending in</span>
-                <span  id="clock"> </span>
-            </div>
-        </div>
-        <div class="col-5 text-right">
-            <a href="{{ route('FrontendDeals') }}" class="pt-2 pb-2 pl-3 pr-3" style="color: #99CB55 !important;border:1px solid #99CB55 !important">
-                View More</a>
-        </div>  
-        </div>
-<hr style="background: #99CB55">
-        <div class="sc_section_content_wrap">
-            <div class="woocommerce columns-4">
-                <ul class="products " >
-                    @foreach ($deal->Product as $latest_product)
-                    <li class="product has-post-thumbnail   instock purchasable">
-                        <div class="post_item_wrap">
-                            <div class="post_featured">
-                                <div class="post_thumb">
-                                    @if($latest_product->comming_soon === 1)
-                                    <div class="text-center">
-                                        <span class=" coming_soon_tag">Coming Soon</span>
+                    @if($deal)
+
+                    <section id="deals mt-5">
+                        <div class="container">
+                            <h2 class="mb-4 mb-lg-2">{{ $deal->title }}</h2>
+
+                            <div class="row p-0 pt-2 pb-2  pl-0 ">
+                                <div class="col-7 text-left ">
+                                    <div>
+                                        <span id="demo" class="pr-2 pr-lg-4" style="color: #99CB55">On Sale Now</span>
+                                        <span id="timerBefore">Ending in</span>
+                                        <span id="clock"> </span>
                                     </div>
-                                                    @endif
-                                    <a class="hover_icon hover_icon_link"
-                                        href="{{route('SingleProductView',$latest_product->slug)}}">
-                                        @if (collect($latest_product->Attribute)->max('discount') != '' && $latest_product->comming_soon == '')
-                                                    <span  class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
-                                                    @endif
-                                        <img lazy="loading" src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
-                                            class="attachment-shop_catalog size-shop_catalog"
-                                            alt="{{ $latest_product->title }}" />
-                                    </a>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <a href="{{ route('FrontendDeals') }}" class="pt-2 pb-2 pl-3 pr-3"
+                                        style="color: #99CB55 !important;border:1px solid #99CB55 !important">
+                                        View More</a>
                                 </div>
                             </div>
-                            <div class="post_content text-center">
-                                <h2 class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}"><a
-                                        href="{{route('SingleProductView',$latest_product->slug)}}">{{ $latest_product->title }}</a>
-                                </h2>
-                                @php
-                                $sale = collect($latest_product->Attribute)->min('sell_price');
-                                $regular = collect($latest_product->Attribute)->min('regular_price');
-                                @endphp
-                                @if($latest_product->comming_soon == '')
-
-                                <span class="price">
-                                    @if ($sale == '')
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span>
-                                        {{$regular}}
-                                    </span>
-                                    @else
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span style="text-decoration:line-through"
-                                            class="woocommerce-Price-currencySymbol">&#2547;
-                                            {{$regular}} </span>
-                                    </span>
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span>
-                                        {{$sale}}
-                                    </span>
-
-                                    @endif
-                                </span>
-                                @endif
-                                @if($latest_product->comming_soon === 1)
-                                                            <a rel="nofollow"
-                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
-                                                                data-quantity="1" data-product_id="471"
-                                                                data-product_sku=""
-                                                                class="button add_to_cart_button">View Product</a>
-                                                            @else
-                                                            <a rel="nofollow"
-                                                                href="{{route('SingleProductView',$latest_product->slug)}}"
-                                                                data-quantity="1" data-product_id="471"
-                                                                data-product_sku=""
-                                                                class="button add_to_cart_button">Add To Cart</a>
+                            <hr style="background: #99CB55">
+                            <div class="sc_section_content_wrap">
+                                <div class="woocommerce columns-4">
+                                    <ul class="products ">
+                                        @foreach ($deal->Product as $latest_product)
+                                        <li class="product has-post-thumbnail   instock purchasable">
+                                            <div class="post_item_wrap">
+                                                <div class="post_featured">
+                                                    <div class="post_thumb">
+                                                        @if($latest_product->comming_soon === 1)
+                                                        <div class="text-center">
+                                                            <span class=" coming_soon_tag">Coming Soon</span>
+                                                        </div>
+                                                        @endif
+                                                        <a class="hover_icon hover_icon_link"
+                                                            href="{{route('SingleProductView',$latest_product->slug)}}">
+                                                            @if (collect($latest_product->Attribute)->max('discount') !=
+                                                            '' && $latest_product->comming_soon == '')
+                                                            <span
+                                                                class="discount_tag">{{collect($latest_product->Attribute)->max('discount')}}%</span>
                                                             @endif
+                                                            <img lazy="loading"
+                                                                src="{{ asset('thumbnail_img/' . $latest_product->thumbnail_img) }}"
+                                                                class="attachment-shop_catalog size-shop_catalog"
+                                                                alt="{{ $latest_product->title }}" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="post_content text-center">
+                                                    <h2
+                                                        class="woocommerce-loop-product__title {{ ($latest_product->comming_soon === 1) ? 'pb-2': '' }}">
+                                                        <a href="{{route('SingleProductView',$latest_product->slug)}}">{{
+                                                            $latest_product->title }}</a>
+                                                    </h2>
+                                                    @php
+                                                    $sale = collect($latest_product->Attribute)->min('sell_price');
+                                                    $regular =
+                                                    collect($latest_product->Attribute)->min('regular_price');
+                                                    @endphp
+                                                    @if($latest_product->comming_soon == '')
+
+                                                    <span class="price">
+                                                        @if ($sale == '')
+                                                        <span class="woocommerce-Price-amount amount">
+                                                            <span
+                                                                class="woocommerce-Price-currencySymbol">&#2547;</span>
+                                                            {{$regular}}
+                                                        </span>
+                                                        @else
+                                                        <span class="woocommerce-Price-amount amount">
+                                                            <span style="text-decoration:line-through"
+                                                                class="woocommerce-Price-currencySymbol">&#2547;
+                                                                {{$regular}} </span>
+                                                        </span>
+                                                        <span class="woocommerce-Price-amount amount">
+                                                            <span
+                                                                class="woocommerce-Price-currencySymbol">&#2547;</span>
+                                                            {{$sale}}
+                                                        </span>
+
+                                                        @endif
+                                                    </span>
+                                                    @endif
+                                                    @if($latest_product->comming_soon === 1)
+                                                    <a rel="nofollow"
+                                                        href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                        data-quantity="1" data-product_id="471" data-product_sku=""
+                                                        class="button add_to_cart_button">View Product</a>
+                                                    @else
+                                                    <a rel="nofollow"
+                                                        href="{{route('SingleProductView',$latest_product->slug)}}"
+                                                        data-quantity="1" data-product_id="471" data-product_sku=""
+                                                        class="button add_to_cart_button">Add To Cart</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </li>
+                                        @endforeach
+
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </li>
-                    @endforeach
 
-                </ul>
-            </div>
-        </div>
-</div>
+                    </section>
+                    @endif
 
-</section>
-@endif
-
-{{-- deal end --}}
+                    {{-- deal end --}}
 
 
 
-<style>
-    .pb-100{
-        padding-bottom: 100px ;
-    }
-</style>
-<div class="vc_row wpb_row vc_row-fluid pb-100">
-    <div class="wpb_column vc_column_container vc_col-sm-12">
-        <div class="vc_column-inner vc_custom_1475066123130 cat4">
+                    <style>
+                        .pb-100 {
+                            padding-bottom: 100px;
+                        }
+                    </style>
+                    <div class="vc_row wpb_row vc_row-fluid pb-100">
+                        <div class="wpb_column vc_column_container vc_col-sm-12">
+                            <div class="vc_column-inner vc_custom_1475066123130 cat4">
 
-            <div class="wpb_wrapper">
-                <div id="sc_services_918_wrap" class="sc_services_wrap">
-                    <div id="sc_services_918"
-                        class="sc_services sc_services_style_services-1 sc_services_type_images  margin_top_large margin_bottom_large fwidth cat3"
-                        data-animation="animated fadeInUp normal">
-                        <div class="sc_columns columns_wrap">
-                            <div class="sc_section_inner">
-                                <h2 class="sc_title sc_title_regular   text-center mt-3  mb-4">Image Gallery</h2>
+                                <div class="wpb_wrapper">
+                                    <div id="sc_services_918_wrap" class="sc_services_wrap">
+                                        <div id="sc_services_918"
+                                            class="sc_services sc_services_style_services-1 sc_services_type_images  margin_top_large margin_bottom_large fwidth cat3"
+                                            data-animation="animated fadeInUp normal">
+                                            <div class="sc_columns columns_wrap">
+                                                <div class="sc_section_inner">
+                                                    <h2 class="sc_title sc_title_regular   text-center mt-3  mb-4">Image
+                                                        Gallery</h2>
 
-                                <div class="h-divider">
-                                    <div class="shadows"></div>
-                                    <div class="text2"><img src="{{asset('round_logo/logo 3 Big.png')}}" /></div>
-                                </div>
-                                <div class="container">
-                                    <section id="lightbox_gallery" class="container">
-
-                                        <ul class="nav nav-pills mb-3 text-center" id="pills-tab" role="tablist">
-
-                                            <li class="nav-item" role="presentation">
-                                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill"
-                                                    href="#1" role="tab" aria-controls="pills-home"
-                                                    aria-selected="true">All</a>
-                                            </li>
-                                            @foreach ($catGallery as $catGallerys)
-                                            <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill"
-                                                    href="#{{ $catGallerys->slug }}" role="tab"
-                                                    aria-controls="pills-profile"
-                                                    aria-selected="false">{{ $catGallerys->catagory_name }}</a>
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                        <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active" id="1" role="tabpanel"
-                                                aria-labelledby="pills-home-tab">
-                                                <div class="row">
-                                                    @foreach ($gallery as $gallerys)
-
-                                                    <div class=" col-sm-4 col-6 col-md-4 col-lg-3 col-xl=3 p-3">
-                                                        <div class="lightbox-enabled"
-                                                            style="background-image:url({{ asset('product_image/' . $gallerys->product_img) }})"
-                                                            data-imgsrc="{{ asset('product_image/' . $gallerys->product_img) }}">
-                                                        </div>
+                                                    <div class="h-divider">
+                                                        <div class="shadows"></div>
+                                                        <div class="text2"><img
+                                                                src="{{asset('round_logo/logo 3 Big.png')}}" /></div>
                                                     </div>
-                                                    @endforeach
+                                                    <div class="container">
+                                                        <section id="lightbox_gallery" class="container">
+
+                                                            <ul class="nav nav-pills mb-3 text-center" id="pills-tab"
+                                                                role="tablist">
+
+                                                                <li class="nav-item" role="presentation">
+                                                                    <a class="nav-link active" id="pills-home-tab"
+                                                                        data-toggle="pill" href="#1" role="tab"
+                                                                        aria-controls="pills-home"
+                                                                        aria-selected="true">All</a>
+                                                                </li>
+                                                                @foreach ($catGallery as $catGallerys)
+                                                                <li class="nav-item" role="presentation">
+                                                                    <a class="nav-link" id="pills-profile-tab"
+                                                                        data-toggle="pill"
+                                                                        href="#{{ $catGallerys->slug }}" role="tab"
+                                                                        aria-controls="pills-profile"
+                                                                        aria-selected="false">{{
+                                                                        $catGallerys->catagory_name }}</a>
+                                                                </li>
+                                                                @endforeach
+                                                            </ul>
+                                                            <div class="tab-content" id="pills-tabContent">
+                                                                <div class="tab-pane fade show active" id="1"
+                                                                    role="tabpanel" aria-labelledby="pills-home-tab">
+                                                                    <div class="row">
+                                                                        @foreach ($gallery as $gallerys)
+
+                                                                        <div
+                                                                            class=" col-sm-4 col-6 col-md-4 col-lg-3 col-xl=3 p-3">
+                                                                            <div class="lightbox-enabled"
+                                                                                style="background-image:url({{ asset('product_image/' . $gallerys->product_img) }})"
+                                                                                data-imgsrc="{{ asset('product_image/' . $gallerys->product_img) }}">
+                                                                            </div>
+                                                                        </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                                @foreach ($catGallery as $catGallerys)
+                                                                <div class="tab-pane fade" id="{{ $catGallerys->slug }}"
+                                                                    role="tabpanel" aria-labelledby="pills-profile-tab">
+                                                                    <div class="row">
+                                                                        @forelse ($catGallerys->gallery as $gallerys)
+                                                                        <div
+                                                                            class=" col-sm-4 col-6 col-md-4 col-lg-3 col-xl-3 p-3">
+                                                                            <div class="lightbox-enabled"
+                                                                                style="background-image:url({{ asset('product_image/' . $gallerys->product_img) }})"
+                                                                                data-imgsrc="{{ asset('product_image/' . $gallerys->product_img) }}">
+                                                                            </div>
+                                                                        </div>
+                                                                        @empty
+                                                                        No Images
+                                                                        @endforelse
+
+                                                                    </div>
+                                                                </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </section>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            @foreach ($catGallery as $catGallerys)
-                                            <div class="tab-pane fade" id="{{ $catGallerys->slug }}" role="tabpanel"
-                                                aria-labelledby="pills-profile-tab">
-                                                <div class="row">
-                                                    @forelse ($catGallerys->gallery as $gallerys)
-                                                    <div class=" col-sm-4 col-6 col-md-4 col-lg-3 col-xl-3 p-3">
-                                                        <div class="lightbox-enabled"
-                                                            style="background-image:url({{ asset('product_image/' . $gallerys->product_img) }})"
-                                                            data-imgsrc="{{ asset('product_image/' . $gallerys->product_img) }}">
-                                                        </div>
-                                                    </div>
-                                                    @empty
-                                                    No Images
-                                                    @endforelse
+                                        </div>
+                                    </div>
+                                    <section class="lightbox-container">
+                                        <span class="material-icons-outlined lightbox-btn left" id="left">
+                                            <i class="fa fa-angle-left"></i>
 
-                                                </div>
-                                            </div>
-                                            @endforeach
+                                        </span>
+                                        <span class="material-icons-outlined lightbox-btn right" id="right">
+
+                                            <i class="fa fa-angle-right"></i>
+                                        </span>
+                                        <span class="close" id="close"><i class="fa fa-xmark"></i></span>
+                                        <div class="lightbox-image-wrapper">
+                                            <img alt="lightboximage" class="lightbox-image">
                                         </div>
                                     </section>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <section class="lightbox-container">
-                    <span class="material-icons-outlined lightbox-btn left" id="left">
-                        <i class="fa fa-angle-left"></i>
 
-                    </span>
-                    <span class="material-icons-outlined lightbox-btn right" id="right">
 
-                        <i class="fa fa-angle-right"></i>
-                    </span>
-                    <span class="close" id="close"><i class="fa fa-xmark"></i></span>
-                    <div class="lightbox-image-wrapper">
-                        <img alt="lightboximage" class="lightbox-image">
-                    </div>
-                </section>
-            </div>
+
         </div>
     </div>
-</div>
-
-
-
-</div>
-</div>
 </div>
 
 
@@ -542,7 +640,7 @@
       }
     }, 1000);
     @endif
-    </script>
+</script>
 
 <script>
     $('#dealslide').slick({
@@ -637,8 +735,26 @@ e.stopPropagation();
 // @endauth
 </script>
 <script>
+$('#carouselExampleIndicators').on('touchstart', function(event){
+    const xClick = event.originalEvent.touches[0].pageX;
+    $(this).one('touchmove', function(event){
+        const xMove = event.originalEvent.touches[0].pageX;
+        const sensitivityInPx = 15;
 
-var page = 1;
+        if( Math.floor(xClick - xMove) > sensitivityInPx ){
+            $(this).carousel('next');
+        }
+        else if( Math.floor(xClick - xMove) < -sensitivityInPx ){
+            $(this).carousel('prev');
+        }
+    });
+    $(this).on('touchend', function(){
+        $(this).off('touchmove');
+    });
+});
+
+
+    var page = 1;
     $(document).on('click', '.loadMore_btn', function(event){
     page++;
     loadMoreData(page)
@@ -679,9 +795,10 @@ $.fn.cornerpopup({
 variant: 5,
 slide: 1,
 displayOnce : 1,
+delay:70,    
 position : 'left',
-timeOut : '10',
-text2 : '<h6><span style="color:#ef4836">Hey,</span> {{Auth()->user()->name}}</h6>Welcome to {{config('app.name')}}',
+timeOut : '40000',
+text2 : '<h6><span class="text-dark">Hey,</span> {{Auth()->user()->name}}</h6>Welcome to {{config('app.name')}}',
 colors : '#ef4836',
 });
 @endauth

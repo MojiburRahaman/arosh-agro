@@ -61,8 +61,8 @@ class CatagoryController extends Controller
 
             if ($request->hasFile('catagory_image')) {
                 $product_thumbnail = $request->file('catagory_image');
-                $extension = Str::slug($request->catagory_name) . '-' . Str::random(1) . '.' . 'webP';
-                // $extension = Str::slug($request->catagory_name) . '-' . Str::random(1) . '.' . $product_thumbnail->getClientOriginalExtension();
+                // $extension = Str::slug($request->catagory_name) . '-' . Str::random(1) . '.' . 'webP';
+                $extension = Str::slug($request->catagory_name) . '-' . Str::random(1) . '.' . $product_thumbnail->getClientOriginalExtension();
                 Image::make($product_thumbnail)->save(public_path('category_images/' . $extension), 90);
             }
             $catagory->catagory_image = $extension;
@@ -139,8 +139,8 @@ class CatagoryController extends Controller
                     }
                 }
                 $product_thumbnail = $request->file('catagory_image');
-                $extension = Str::slug($request->catagory_name) . '-' . Str::random(1) . '.' . 'webP';
-                // $extension = Str::slug($request->catagory_name) . '-' . Str::random(1) . '.' . $product_thumbnail->getClientOriginalExtension();
+                // $extension = Str::slug($request->catagory_name) . '-' . Str::random(1) . '.' . 'webP';
+                $extension = Str::slug($request->catagory_name) . '-' . Str::random(1) . '.' . $product_thumbnail->getClientOriginalExtension();
                 Image::make($product_thumbnail)->save(public_path('category_images/' . $extension), 90);
                 $catagory->catagory_image = $extension;
             }
