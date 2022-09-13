@@ -9,8 +9,9 @@
 <meta property="og:image" content="{{ asset('thumbnail_img/' . $product->thumbnail_img) }}" />
 <meta property="og:image:url" content="{{ asset('thumbnail_img/' . $product->thumbnail_img) }}" />
 <meta property="og:image:secure_url" content="{{ asset('thumbnail_img/' . $product->thumbnail_img) }}" />
+<meta property="og:image:alt" content="{{$product->title}}" />
 <meta property="og:image:height" content="640" />
-<meta property="og:image:height" content="640" />
+<meta property="og:image:width" content="640" />
 @endsection
 @section('content')
 <style>
@@ -43,7 +44,7 @@
                     @endforeach
 
                 </div>
-                <div id="thumb" class="owl-carousel product-thumb">
+                <div id="thumb" class="owl-carousel product-thumb mt-4">
                     @foreach ($product->Gallery as $Gallery)
                     <div class="item">
                         <img src="{{asset('product_image/'.$Gallery->product_img)}}" alt="{{$product->title}}" />

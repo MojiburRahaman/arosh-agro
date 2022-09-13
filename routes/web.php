@@ -59,7 +59,7 @@
 
 
     // frontend route start
-    Route::middleware(['XssFilter',])->group(function () {
+    Route::middleware(['XssFilter', 'HtmlMinify'])->group(function () {
 
         Route::get('/', [FrontendController::class, 'Frontendhome'])->name('Frontendhome');
         // Route::get('/searching', [FrontendController::class, 'Frontendsearching'])->name('Frontendsearching');
@@ -99,6 +99,7 @@
         // cart route start
         Route::get('/cart', [CartController::class, 'CartView'])->name('CartView');
         Route::post('/cart/coupon', [CartController::class, 'CouponCheck'])->name('CouponCheck');
+        Route::post('/cart/credit/', [CartController::class, 'ReedemCredit'])->name('ReedemCredit');
         Route::get('/cart/cart-delete/{id}', [CartController::class, 'CartDelete'])->name('CartDelete');
         // Route::post('/cart/cart-clear/', [CartController::class, 'CartClear'])->name('CartClear');
         Route::post('/cart/quantity-update', [CartController::class, 'CartUpdate'])->name('CartUpdate');
@@ -155,6 +156,8 @@
         Route::get('settings/about/{id}', [SiteSettingController::class, 'SiteAbout'])->name('SiteAbout');
         Route::post('settings/delivery-charge', [SiteSettingController::class, 'SiteDeliveryPost'])->name('SiteDeliveryPost');
         Route::get('settings/delivery-charge', [SiteSettingController::class, 'SiteDelivery'])->name('SiteDelivery');
+        Route::get('settings/credit', [SiteSettingController::class, 'SiteCredit'])->name('SiteCredit');
+        Route::post('settings/credit', [SiteSettingController::class, 'SiteCreditPost'])->name('SiteCreditPost');
         Route::post('settings/about', [SiteSettingController::class, 'SiteAboutUpdate'])->name('SiteAboutUpdate');
         Route::get('settings/banner-status/{id}', [SiteSettingController::class, 'SiteBannerStatus'])->name('SiteBannerStatus');
         Route::get('settings/banner-delete/{id}', [SiteSettingController::class, 'SiteBannerDelete'])->name('SiteBannerDelete');

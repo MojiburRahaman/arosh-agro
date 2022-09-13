@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Credit;
 use App\Models\Newsletter;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,6 +36,11 @@ class SocialLoginController extends Controller
             $newsletter = new Newsletter;
             $newsletter->email = $user_detail->getEmail();
             $newsletter->save();
+
+            $credit = new Credit;
+            $credit->user_id = $user->id;
+            $credit->save();
+
 
             $user->assignrole('Customer');
             Auth::login($user);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\Newsletter;
 use App\Models\AboutSite;
 use App\Models\Banner;
+use App\Models\CreditControl;
 use App\Models\DeliverCharge;
 use App\Models\Newsletter as ModelsNewsletter;
 use App\Models\Product;
@@ -302,8 +303,8 @@ class SiteSettingController extends Controller
     }
     function SiteDelivery()
     {
-        return view('backend.site-settings.delivery-charge',[
-            'charge'=> DeliverCharge::findorfail(1),
+        return view('backend.site-settings.delivery-charge', [
+            'charge' => DeliverCharge::findorfail(1),
         ]);
     }
     function SiteDeliveryPost(Request $request)
@@ -312,6 +313,27 @@ class SiteSettingController extends Controller
         $charge->disctrict_id = 15;
         $charge->inside = $request->inside;
         $charge->outside = $request->outside;
+        $charge->save();
+        return back()->with('success', 'Changed Successfully');
+    }
+    function SiteCredit()
+    {
+        return view('backend.site-settings.credit', [
+            'charge' => CreditControl::findorfail(1),
+        ]);
+    }
+    function SiteCreditPost(Request $request)
+    {
+        // return $request;
+        $charge = CreditControl::findorfail(1);
+        $charge->credit_amount = $request->credit;
+        $charge->purchase_amount = $request->purchase_amount;
+        if ($request->status == null) {
+            $charge->status = 1;
+        } else {
+            $charge->status = $request->status;
+        }
+
         $charge->save();
         return back()->with('success', 'Changed Successfully');
     }

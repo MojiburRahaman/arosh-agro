@@ -6,13 +6,18 @@
 
      {{--    Start --}}
 
-         <title>@yield('title',$setting->meta_title)</title>
+    <title>@yield('title',$setting->meta_title)</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="title" content="@yield('title',$setting->meta_title) ">
+    <meta name="og:title" content="@yield('title',$setting->meta_title) ">
     <meta name="keyword" content="@yield('meta_keyword',$setting->meta_keyword)">
     <meta name="csrf-token" content="{{csrf_token()}}">
     <meta name="description" content="@yield('meta_description',$setting->meta_description)">
+    <meta property="og:description" content="@yield('meta_description',$setting->meta_description)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:site_name" content="{{ $setting->meta_title }}" />
     @yield('social_thumbnail')
 
     <link rel="shortcut icon" type="image/png" href="{{ asset('logo/'.$setting->site_logo) }}">

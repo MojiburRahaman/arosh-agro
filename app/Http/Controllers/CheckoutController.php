@@ -14,6 +14,7 @@ use App\Models\billing_details;
 use App\Models\Order_Summaries;
 use Illuminate\Support\Carbon;
 use App\Models\Coupon;
+use App\Models\CreditControl;
 use App\Models\DeliverCharge;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,7 @@ class CheckoutController extends Controller
         if (!session()->get('cart_total')) {
             return back();
         }
+
         return view('frontend.pages.checkout', [
             'divisions' => Division::select('id', 'name')->get(),
         ]);
@@ -94,6 +96,18 @@ class CheckoutController extends Controller
             $shipping = session()->get('shipping');
             $subtotal = session()->get('cart_subtotal') + session()->get('shipping');
         }
+
+        $check = CreditControl::findorfail(1);
+        $new_point = round($subtotal  / $check->purchase_amount) * $check->credit_amount;
+
+        $credit = auth()->user()->credit;
+        $point = $credit->wallet - session('wallet.point');
+
+        $credit->wallet = $point + $new_point;
+        $credit->last_deposit = $new_point;
+        $credit->last_usages = session('wallet.point');
+        $credit->save();
+
         $order_number = now()->format('dm') . Auth::id() . mt_rand(1, 1000);
         $billing_details = billing_details::insertGetId($request->except('_token') + [
             'created_at' => Carbon::now(),
@@ -125,7 +139,6 @@ class CheckoutController extends Controller
             } else {
                 $price = $product->regular_price;
             }
-
             Order_Details::insert([
                 'Order_Summaries_id' => $Order_Summaries_id,
                 'product_id' => $cart->product_id,
@@ -147,10 +160,15 @@ class CheckoutController extends Controller
         }
         Mail::to(auth()->user()->email)->send(new OrderPlace($order_number, auth()->user()->name));
         session()->forget('cart_total');
+        session()->forget('wallet');
         session()->forget('coupon_name');
         session()->forget('cart_discount');
         session()->forget('cart_subtotal');
         session()->forget('shipping');
-        return redirect('/')->with('orderPlace', $order_number);
+
+        return redirect()->route('Frontendhome')->with([
+            'orderPlace' => $order_number,
+            'new_point' => $new_point,
+        ]);
     }
 }

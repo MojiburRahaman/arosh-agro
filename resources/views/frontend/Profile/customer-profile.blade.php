@@ -15,7 +15,6 @@
     .active {
         color: white !important;
     }
-
 </style>
 
 <div class="container">
@@ -53,8 +52,18 @@
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#Dashboard" role="tab"
                     aria-controls="Dashboard" aria-selected="true">Dashboard</a>
+                @php
+                $credit = App\Models\CreditControl::findorfail(1);
+                $status = $credit->status ;
+                @endphp
+
                 <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#order-list" role="tab"
                     aria-controls="v-pills-messages" aria-selected="false">Order</a>
+                @if ($status == 2)
+
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#Credit" role="tab"
+                    aria-controls="v-pills-messages" aria-selected="false">Credit</a>
+                @endif
                 <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#change-passwords" role="tab"
                     aria-controls="change-passwords" aria-selected="false">Change Password</a>
                 <a class="nav-link" onclick="event.preventDefault();document.getElementById('from_logout').submit()"
@@ -74,6 +83,30 @@
                         orders and Change your
                         password .</p>
                 </div>
+                @if ($status == 2)
+                <div class="tab-pane fade " id="Credit" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    {{-- <h1>hello</h1> --}}
+                    <p style="font-size: 15px !important">You can redeem this credit when purchase some product</p>
+                    <table class="table  table-bordered  table-hover ">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Total Credit</td>
+                                <td>{{ auth()->user()->Credit->wallet }}</td>
+                            </tr>
+                            <tr>
+                                <td>Last Used</td>
+                                <td>{{ auth()->user()->Credit->last_usages }}</td>
+                            </tr>
+                            <tr>
+                                <td>Last Deposit</td>
+                                <td>{{ auth()->user()->Credit->last_deposit }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @endif
                 <div class="tab-pane fade" id="change-passwords" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <div class="ml-5 col-lg-5">
 
@@ -107,7 +140,6 @@
                     .order_border {
                         border-bottom: 1px solid rgb(211, 211, 211)
                     }
-
                 </style>
                 <div class="tab-pane fade" id="order-list" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                     <table class="table">
@@ -162,7 +194,7 @@
                             <img width="30%" src="{{asset('front/images/Reload-Image-Gif-1.gif')}}" alt="preloader">
                         </div>
                         <div class="no_data" style="display: none">
-                           <a >No more record</a>
+                            <a>No more record</a>
                         </div>
                     </li>
                 </div>

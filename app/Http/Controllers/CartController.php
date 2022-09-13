@@ -9,6 +9,7 @@ use App\Models\Attribute;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use App\Models\Coupon;
+use App\Models\CreditControl;
 use App\Models\Wishlist;
 
 class CartController extends Controller
@@ -34,7 +35,9 @@ class CartController extends Controller
         $current_date = Carbon::today()->format('Y-m-d');
         $coupon = Coupon::where('coupon_name', $coupon_name)->first();
 
+
         $total_cart_amount = session()->get('cart_total');
+
         $subtotal = 0;
         session()->put('coupon_name', '');
         session()->put('cart_discount', 0);
@@ -48,15 +51,16 @@ class CartController extends Controller
             return response()->json(['errors' => "Coupon Date Expired"]);
         } elseif ($coupon->exists()) {
             // if theres coupon name exist 
+
             $total_cart_amount = session()->get('cart_total');
             $discount = $coupon->coupon_amount;
             $discount_amount = round(($total_cart_amount * $discount) / 100);
-            $subtotal = $total_cart_amount - $discount_amount;
+            $subtotal = $total_cart_amount - $discount_amount - session()->get('wallet.amount');
             session()->put('coupon_name', $coupon_name);
             session()->put('cart_discount', $discount_amount);
             session()->put('cart_subtotal', $subtotal);
 
-            return response()->json(['yes' => $discount]);
+            return response()->json(['yes' => $discount,'message'=>'Coupon Applied']);
         }
     }
     function CartPost(Request $request)
@@ -68,8 +72,8 @@ class CartController extends Controller
 
             'cart_quantity' => ['required',],
         ], [
-            'color_id.required' => 'Please Choose a Color',
-            'size_id.required' => 'Please Choose a Size'
+            'color_id.required' => 'Please Choose a Varient',
+            'size_id.required' => 'Please Choose a Weight'
         ]);
         if ($request->has('wish_list_id')) {
             $request->validate([
@@ -144,9 +148,47 @@ class CartController extends Controller
         Cart::findorfail($id)->delete();
         return back();
     }
-    function CartClear(Request $request)
+    function ReedemCredit(Request $request)
     {
-        $carts = Cart::Where('cookie_id', Cookie::get('cookie_id'))->delete();
-        return back()->with('warning', 'Shopping cart clear successfully');
+        $request->validate([
+            'reedem' => ['required', 'integer'],
+        ]);
+
+
+        $last_use = $request->reedem;
+        $wallet = auth()->user()->credit;
+
+        if ($wallet->wallet < $last_use) {
+            return response()->json(['error' => 'Not Enough Credit In wallet'], 403);
+        }
+
+        $check = CreditControl::findorfail(1);
+        $reedem_amount = $request->reedem * $check->credit_value;
+
+        $reedem = session()->get('cart_total') - $reedem_amount - session('cart_discount');
+        session()->put('cart_subtotal', $reedem);
+        
+        session()->put(
+            'wallet',
+            [
+                'amount' => $reedem_amount,
+                'point' => $request->reedem,
+            ]
+        );
+        return response()->json([
+            'subtotal' => $reedem,
+            'amount' => $request->reedem,
+            'reedem_amount' => $reedem_amount,
+            'message' => "Credit Redeem Successfully",
+        ]);
+
+
+        // return    $last_deposit = round(session()->get('cart_total') / $check->purchase_amount) * $check->credit_amount;
+
     }
+    // function CartClear(Request $request)
+    // {
+    //     $carts = Cart::Where('cookie_id', Cookie::get('cookie_id'))->delete();
+    //     return back()->with('warning', 'Shopping cart clear successfully');
+    // }
 }

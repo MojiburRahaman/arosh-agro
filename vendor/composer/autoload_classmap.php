@@ -88,6 +88,8 @@ return array(
     'App\\Models\\CkeditorFileUpload' => $baseDir . '/app/Models/CkeditorFileUpload.php',
     'App\\Models\\Color' => $baseDir . '/app/Models/Color.php',
     'App\\Models\\Coupon' => $baseDir . '/app/Models/Coupon.php',
+    'App\\Models\\Credit' => $baseDir . '/app/Models/Credit.php',
+    'App\\Models\\CreditControl' => $baseDir . '/app/Models/CreditControl.php',
     'App\\Models\\DeliverCharge' => $baseDir . '/app/Models/DeliverCharge.php',
     'App\\Models\\Flavour' => $baseDir . '/app/Models/Flavour.php',
     'App\\Models\\Gallery' => $baseDir . '/app/Models/Gallery.php',

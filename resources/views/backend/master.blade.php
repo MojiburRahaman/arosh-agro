@@ -554,6 +554,16 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    {{-- <a href="{{Illuminate\Support\Facades\URL::signedRoute('settings.edit',1)}}" --}}
+                                    <a href="{{route('SiteCredit')}}"
+                                        class="nav-link @yield('credit-active')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Credit</p>
+                                    </a>
+                                </li>
+                            </ul>
                             {{-- @endcan --}}
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">

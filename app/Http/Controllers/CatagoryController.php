@@ -53,7 +53,7 @@ class CatagoryController extends Controller
         if (auth()->user()->can('Create Category')) {
             $request->validate([
                 'catagory_name' => ['required', 'string', 'unique:catagories,catagory_name'],
-                'catagory_image' => ['required', 'mimes:png,jpg']
+                'catagory_image' => ['required', ]
             ]);
             $catagory = new Catagory;
             $catagory->catagory_name = strip_tags($request->catagory_name);

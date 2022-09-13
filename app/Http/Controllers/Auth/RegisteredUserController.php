@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Credit;
 use App\Models\Newsletter as ModelsNewsletter;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -48,6 +49,12 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
         
+
+        $credit = new Credit;
+        $credit->user_id = $user->id;
+        $credit->save();
+
+
         $newsletter = new ModelsNewsletter;
         $newsletter->email = $request->email;
         $newsletter->save();

@@ -699,6 +699,8 @@ class ComposerStaticInit0084deb1b4701784d75d3f14f962f6fb
         'App\\Models\\CkeditorFileUpload' => __DIR__ . '/../..' . '/app/Models/CkeditorFileUpload.php',
         'App\\Models\\Color' => __DIR__ . '/../..' . '/app/Models/Color.php',
         'App\\Models\\Coupon' => __DIR__ . '/../..' . '/app/Models/Coupon.php',
+        'App\\Models\\Credit' => __DIR__ . '/../..' . '/app/Models/Credit.php',
+        'App\\Models\\CreditControl' => __DIR__ . '/../..' . '/app/Models/CreditControl.php',
         'App\\Models\\DeliverCharge' => __DIR__ . '/../..' . '/app/Models/DeliverCharge.php',
         'App\\Models\\Flavour' => __DIR__ . '/../..' . '/app/Models/Flavour.php',
         'App\\Models\\Gallery' => __DIR__ . '/../..' . '/app/Models/Gallery.php',

@@ -134,7 +134,11 @@
                                 </span>
                             </li>
                             {{-- @if (session('cart_discount')) --}}
+                            @if(!empty(session('wallet')))
 
+                            <li>Redeem Point({{ session('wallet.point') }})<span
+                                    class="pull-right"><strong>৳{{session()->get('wallet.amount')}}</strong></span></li>
+                            @endif
                             <li>Discount<span
                                     class="pull-right"><strong>৳{{session()->get('cart_discount')}}</strong></span></li>
                             {{-- @endif --}}
