@@ -31,6 +31,7 @@ class CartController extends Controller
         $request->validate([
             'coupon' => ['required', 'string', 'max:15',]
         ]);
+        
         $coupon_name = strip_tags($request->coupon);
         $current_date = Carbon::today()->format('Y-m-d');
         $coupon = Coupon::where('coupon_name', $coupon_name)->first();
@@ -60,7 +61,7 @@ class CartController extends Controller
             session()->put('cart_discount', $discount_amount);
             session()->put('cart_subtotal', $subtotal);
 
-            return response()->json(['yes' => $discount,'message'=>'Coupon Applied']);
+            return response()->json(['yes' => $discount, 'message' => 'Coupon Applied']);
         }
     }
     function CartPost(Request $request)
@@ -165,9 +166,17 @@ class CartController extends Controller
         $check = CreditControl::findorfail(1);
         $reedem_amount = $request->reedem * $check->credit_value;
 
+        if ($check->status == 1) {
+            return response()->json(['error' => 'Failed'], 403);
+        }
+
+        if (empty(session()->get('cart_total'))) {
+            return response()->json(['error' => 'No item in your cart'], 403);
+        }
+
         $reedem = session()->get('cart_total') - $reedem_amount - session('cart_discount');
         session()->put('cart_subtotal', $reedem);
-        
+
         session()->put(
             'wallet',
             [
@@ -181,10 +190,6 @@ class CartController extends Controller
             'reedem_amount' => $reedem_amount,
             'message' => "Credit Redeem Successfully",
         ]);
-
-
-        // return    $last_deposit = round(session()->get('cart_total') / $check->purchase_amount) * $check->credit_amount;
-
     }
     // function CartClear(Request $request)
     // {

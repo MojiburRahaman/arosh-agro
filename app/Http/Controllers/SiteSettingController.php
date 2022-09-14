@@ -324,10 +324,10 @@ class SiteSettingController extends Controller
     }
     function SiteCreditPost(Request $request)
     {
-        // return $request;
         $charge = CreditControl::findorfail(1);
         $charge->credit_amount = $request->credit;
         $charge->purchase_amount = $request->purchase_amount;
+        $charge->credit_value = $request->credit_value;
         if ($request->status == null) {
             $charge->status = 1;
         } else {

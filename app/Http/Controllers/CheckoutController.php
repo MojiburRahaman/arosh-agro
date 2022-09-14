@@ -98,15 +98,19 @@ class CheckoutController extends Controller
         }
 
         $check = CreditControl::findorfail(1);
-        $new_point = round($subtotal  / $check->purchase_amount) * $check->credit_amount;
 
-        $credit = auth()->user()->credit;
-        $point = $credit->wallet - session('wallet.point');
+        if ($check->status == 2) {
 
-        $credit->wallet = $point + $new_point;
-        $credit->last_deposit = $new_point;
-        $credit->last_usages = session('wallet.point');
-        $credit->save();
+            $new_point = round($subtotal  / $check->purchase_amount) * $check->credit_amount;
+
+            $credit = auth()->user()->credit;
+            $point = $credit->wallet - session('wallet.point');
+
+            $credit->wallet = $point + $new_point;
+            $credit->last_deposit = $new_point;
+            $credit->last_usages = session('wallet.point');
+            $credit->save();
+        }
 
         $order_number = now()->format('dm') . Auth::id() . mt_rand(1, 1000);
         $billing_details = billing_details::insertGetId($request->except('_token') + [
@@ -166,9 +170,14 @@ class CheckoutController extends Controller
         session()->forget('cart_subtotal');
         session()->forget('shipping');
 
+        if ($check->status == 2) {
+            return redirect()->route('Frontendhome')->with([
+                'orderPlace' => $order_number,
+                'new_point' => $new_point,
+            ]);
+        }
         return redirect()->route('Frontendhome')->with([
             'orderPlace' => $order_number,
-            'new_point' => $new_point,
         ]);
     }
 }

@@ -51,6 +51,11 @@ menu-open
                                 <input name="purchase_amount" class="form-control" placeholder="Purchase Amount"
                                     type="number" value="{{ $charge->purchase_amount }}">
                             </div>
+                            <div class="from-group mb-4">
+                                <label for="">Credit Value</label>
+                                <input name="credit_value" class="form-control" placeholder="Purchase Amount"
+                                    type="number" value="{{ $charge->credit_value }}">
+                            </div>
                             <div class="from-group ">
                                 <input type="checkbox" {{ ($charge->status == 2) ? 'checked' : '' }} name="status"
                                 id="status" value="2">

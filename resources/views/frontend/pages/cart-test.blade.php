@@ -405,6 +405,11 @@
                             </div>
                         </div>
                         @auth
+                        @php
+                        $credit = App\Models\CreditControl::findorfail(1);
+                        $status = $credit->status ;
+                        @endphp
+                        @if ($status == 2)
 
                         <div class="card mb-3">
                             <div class="card-body">
@@ -432,6 +437,7 @@
 
                             </div>
                         </div>
+                        @endif
                         @endauth
                         <div class="card">
                             <div class="card-body">
@@ -448,6 +454,7 @@
                                     </dd>
                                 </dl>
                                 @auth
+                                @if ($status == 2)
 
                                 <dl class="dlist-align" id="reedem">
                                     <dt>Redeem <span id="reedem_point">(0)</span> </dt>
@@ -455,6 +462,7 @@
                                             0</span>
                                     </dd>
                                 </dl>
+                                @endif
                                 @endauth
                                 <dl class="dlist-align">
                                     <dt>Sub Total:</dt>

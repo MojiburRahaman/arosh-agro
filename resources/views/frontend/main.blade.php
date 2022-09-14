@@ -784,9 +784,13 @@ function loadMoreData(page){
 
 @auth
 @if (session('orderPlace'))
-   Swal.fire(
-     'Thanks',
+Swal.fire(
+    'Thanks',
+    @if (session('new_point'))
     'Your order is placed order #{{session("orderPlace")}} <br> You have earned {{session("new_point")}} credit',
+    @else
+    'Your order is placed order #{{session("orderPlace")}}',
+    @endif
      'success'
    )
    @endif
