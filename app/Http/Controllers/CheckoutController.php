@@ -126,7 +126,7 @@ class CheckoutController extends Controller
             'coupon_name' => session()->get('coupon_name'),
             'total' => session()->get('cart_total'),
             'subtotal' => $subtotal,
-            'discount' => session()->get('cart_discount'),
+            'discount' => session()->get('cart_discount') + session('wallet.amount'),
             'shipping' => $shipping,
             'created_at' => now(),
         ]);

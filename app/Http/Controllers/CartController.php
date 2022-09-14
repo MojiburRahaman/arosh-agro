@@ -20,6 +20,7 @@ class CartController extends Controller
         $coupon_name = '';
         $Carts = Cart::with(['Product.Attribute', 'Color:id,color_name', 'Size:id,size_name',])
             ->Where('cookie_id', Cookie::get('cookie_id'))->latest('id')->get();
+
         return view('frontend.pages.cart-test', compact('Carts', 'discount', 'coupon_name'));
     }
     function CouponCheck(Request $request)
@@ -31,7 +32,7 @@ class CartController extends Controller
         $request->validate([
             'coupon' => ['required', 'string', 'max:15',]
         ]);
-        
+
         $coupon_name = strip_tags($request->coupon);
         $current_date = Carbon::today()->format('Y-m-d');
         $coupon = Coupon::where('coupon_name', $coupon_name)->first();
@@ -172,6 +173,9 @@ class CartController extends Controller
 
         if (empty(session()->get('cart_total'))) {
             return response()->json(['error' => 'No item in your cart'], 403);
+        }
+        if (session()->get('cart_total') < $reedem_amount) {
+            return response()->json(['error' => "Insufficient Amount"], 403);
         }
 
         $reedem = session()->get('cart_total') - $reedem_amount - session('cart_discount');
